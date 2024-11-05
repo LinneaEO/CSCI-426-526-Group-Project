@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/alcohol_programming"
+        android:name="com.example.drinkingmangerapp.Alcohol_Create"
+        android:label="fragment_alcohol__create"
+        tools:layout="@layout/fragment_alcohol__create" />
+    <fragment
+        android:id="@+id/weekly_view"
+        android:name="com.example.drinkingmangerapp.Alcohol_Create"
+        android:label="fragment_alcohol__create"
+        tools:layout="@layout/fragment_alcohol__create" />
+    <fragment
+        android:id="@+id/monthly_view"
+        android:name="com.example.drinkingmangerapp.Alcohol_Create"
+        android:label="fragment_alcohol__create"
+        tools:layout="@layout/fragment_alcohol__create" />
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.drinkingmangerapp.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_logging"
+            app:destination="@id/nav_logging" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_reporting"
+            app:destination="@id/nav_reporting" />
+        <action
+            android:id="@+id/action_nav_home_to_personal_info"
+            app:destination="@id/personal_info" />
+        <action
+            android:id="@+id/action_nav_home_to_personal_info2"
+            app:destination="@id/personal_info" />
+        <action
+            android:id="@+id/action_nav_home_to_goals"
+            app:destination="@id/goals" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_reporting"
+        android:name="com.example.drinkingmangerapp.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_nav_reporting_to_nav_logging"
+            app:destination="@id/nav_logging" />
+        <action
+            android:id="@+id/action_nav_reporting_to_daily_view"
+            app:destination="@id/daily_view" />
+        <action
+            android:id="@+id/action_nav_reporting_to_weekly_view"
+            app:destination="@id/weekly_view" />
+        <action
+            android:id="@+id/action_nav_reporting_to_monthly_view"
+            app:destination="@id/monthly_view" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_logging"
+        android:name="com.example.drinkingmangerapp.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/action_nav_logging_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_logging_to_nav_reporting"
+            app:destination="@id/nav_reporting" />
+        <action
+            android:id="@+id/action_nav_logging_to_alcohol_create"
+            app:destination="@id/alcohol_create" />
+        <action
+            android:id="@+id/action_nav_logging_to_alcohol_edit"
+            app:destination="@id/alcohol_edit" />
+        <action
+            android:id="@+id/action_nav_logging_to_alcohol_select"
+            app:destination="@id/alcohol_select" />
+    </fragment>
+    <fragment
+        android:id="@+id/alcohol_create"
+        android:name="com.example.drinkingmangerapp.Alcohol_Create"
+        android:label="fragment_alcohol__create"
+        tools:layout="@layout/fragment_alcohol__create" />
+    <fragment
+        android:id="@+id/alcohol_select"
+        android:name="com.example.drinkingmangerapp.Alcohol_Create"
+        android:label="fragment_alcohol__create"
+        tools:layout="@layout/fragment_alcohol__create" />
+    <fragment
+        android:id="@+id/daily_view"
+        android:name="com.example.drinkingmangerapp.Alcohol_Create"
+        android:label="fragment_alcohol__create"
+        tools:layout="@layout/fragment_alcohol__create" />
+    <fragment
+        android:id="@+id/goals"
+        android:name="com.example.drinkingmangerapp.Alcohol_Create"
+        android:label="fragment_alcohol__create"
+        tools:layout="@layout/fragment_alcohol__create" />
+    <fragment
+        android:id="@+id/personal_info"
+        android:name="com.example.drinkingmangerapp.Alcohol_Create"
+        android:label="fragment_alcohol__create"
+        tools:layout="@layout/fragment_alcohol__create" />
+    <fragment
+        android:id="@+id/alcohol_edit"
+        android:name="com.example.drinkingmangerapp.Alcohol_Create"
+        android:label="fragment_alcohol__create"
+        tools:layout="@layout/fragment_alcohol__create" />
+</navigation>
