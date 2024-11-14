@@ -6,6 +6,7 @@
 package com.example.alcoholconsumptiontracker.system;
 
 import android.content.Intent;
+import android.util.Log;
 
 import java.time.LocalTime;
 
@@ -22,7 +23,7 @@ public class Drink {
     private short servings; // Number of servings ( 0 >= )
     private float aPV; // Alcohol Per volume ( 0.0 >= )
     private float price; // Price ( 0.0 >= , dollars USD)
-    private Intent image; // Image from gallery
+    //private Intent image; // Image from gallery
     // End corresponding locals
 
     private String occassion; // Occasion for drinking
@@ -41,7 +42,7 @@ public class Drink {
         this.servings = 0;
         this.aPV = 0;
         this.price = 0;
-        this.image = new Intent();
+        //this.image = new Intent();
         this.occassion = Universals.General.EmptyString();
         this.hourOfConsumption = 0;
         this.minuteOfConsumption = 0;
@@ -59,11 +60,23 @@ public class Drink {
     ///
     /// Setters and Getters
     ///
+    // Name
+    public String GetName(){return this.name;}
+    // Type
+    public DrinkType GetType(){return this.type;}
+    // Servings
+    public short GetServings(){
+        return this.servings;
+    }
+    // APV
+    public float GetAPV(){return this.aPV;}
+    // Price
+    public float GetPrice(){return this.price;}
     // Occasion
     public String GetOccasion(){
         return this.occassion;
     }
-    public void SetOccassion(String newOccasion){
+    public void SetOccasion(String newOccasion){
         this.occassion = newOccasion;
     }
     // Hour of Consumption
@@ -82,5 +95,78 @@ public class Drink {
         if (newMinute < 0) this.minuteOfConsumption = 0;
         else this.minuteOfConsumption = newMinute;
     }
+
+    ///
+    /// Test Methods
+    ///
+    /// <summary>
+    ///  Each test method is self contained and runs different scenarios based on the
+    ///     method associated with that method. Results of tests are printed to LogCat using
+    ///     Log.d method
+    ///     Cases are split into two categories: Test non-exception and test exception
+    ///         Test non-exception tests normal use of methods
+    ///         Test exception test methods throwing exceptions when they should be
+    ///     Additionally, tests can be set to only print failure messages or all messages.
+    /// </summary>
+    ///
+    // Test Getters and Setters
+    public static void TestGettersAndSetters(boolean printAllMessages){
+
+        // Testing locals
+        Drink testingDrink = new Drink();
+        short testingShort = -1;
+        String testingString = Universals.General.EmptyString();
+
+        // Non-exception cases
+        //  -Case 1, normal values, minute of consumption get and set
+        testingDrink.SetMinuteOfConsumption((short)1);
+        testingShort = testingDrink.GetMinuteOfConsumption();
+        if (testingShort != 1){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(false, 1)
+            );
+        }
+        else if (printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(true, 1)
+            );
+        }
+
+        //  - Case 2, normal values, hour of consumption get and set
+        testingDrink.SetHourOfConsumption((short)1);
+        testingShort = testingDrink.GetHourOfConsumption();
+        if (testingShort != 1){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(false, 2)
+            );
+        }
+        else if (printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(true, 2)
+            );
+        }
+
+        //  - Case 3, normal values, occasion get and set
+        testingDrink.SetOccasion("testing string");
+        testingString = testingDrink.GetOccasion();
+        if (testingString.equals("testing string")){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(false, 3)
+            );
+        }
+        else if (printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(true, 3)
+            );
+        }
+
+    }
+
 
 }

@@ -1,7 +1,11 @@
 package com.example.alcoholconsumptiontracker;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
+import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
+import com.example.alcoholconsumptiontracker.system.Test;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +20,16 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    public String temp(boolean t){
+        if (t) return "true";
+        else return "false";
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Test Methods in System
+        Test.TestAll(true);
+
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -32,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+
+
     }
 
 }

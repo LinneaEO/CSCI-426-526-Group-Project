@@ -111,7 +111,7 @@ public class DrinkTemplateManager {
     ///     If it does, delete the template, return true
     ///     If it doesn't, return false
     /// </summary>
-    public boolean DeleteTemplate(String templateKey){
+    public boolean RemoveTemplate(String templateKey){
         if (this.templateHashMap.containsKey(templateKey)) {
             this.templateHashMap.remove(templateKey);
             return true;

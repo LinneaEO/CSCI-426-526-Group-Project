@@ -6,7 +6,7 @@
 ///
 package com.example.alcoholconsumptiontracker.system;
 
-import android.content.Intent;
+import android.util.Log;
 
 public class DrinkTemplate {
 
@@ -38,7 +38,9 @@ public class DrinkTemplate {
     public void SetName(String newName){this.name = newName;}
     // Type
     public DrinkType GetType(){return this.type;}
-    public void SetType(DrinkType newType){this.type = newType;}
+    public void SetType(short newType){
+        this.type.Set(newType);
+    }
     // Servings
     public short GetServings(){
         return this.servings;
@@ -70,10 +72,63 @@ public class DrinkTemplate {
     /// </summary>
     public Drink ProduceDrink(String occasion, short hour, short minute){
         Drink newDrink = new Drink(this);
-        newDrink.SetOccassion(occasion);
+        newDrink.SetOccasion(occasion);
         newDrink.SetHourOfConsumption(hour);
         newDrink.SetMinuteOfConsumption(minute);
         return newDrink;
     }
 
+
+
+    ///
+    /// Test Methods
+    ///
+    /// <summary>
+    ///  Each test method is self contained and runs different scenarios based on the
+    ///     method associated with that method. Results of tests are printed to LogCat using
+    ///     Log.d method
+    ///     Cases are split into two categories: Test non-exception and test exception
+    ///         Test non-exception tests normal use of methods
+    ///         Test exception test methods throwing exceptions when they should be
+    ///     Additionally, tests can be set to only print failure messages or all messages.
+    /// </summary>
+    ///
+
+    // Test ProduceDrink method
+    public static void TestProduceDrink(boolean printAllMessages){
+
+        DrinkTemplate temp = new DrinkTemplate();
+
+        // Non-Exception Tests
+        //  -Case 1, produce drink from valid template
+        if (temp.ProduceDrink("test string", (short)1, (short)1) != null){
+            if (printAllMessages) Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateMessages.ProduceDrinkMessage(true, 1));
+        }
+        else{
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateMessages.ProduceDrinkMessage(false, 1));
+        }
+        //  -Case 2, produce drink with initialized values
+        temp.SetName("test");
+        temp.SetAPV((float)1.1);
+        temp.SetPrice((float)1.1);
+        temp.SetType((short)1);
+        temp.SetServings((short)1);
+        if (temp.ProduceDrink("test string", (short)1, (short)1) != null){
+            if (printAllMessages) Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateMessages.ProduceDrinkMessage(true, 2));
+        }
+        else{
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateMessages.ProduceDrinkMessage(false, 2));
+        }
+
+        // Exception Tests
+
+    }
 }
