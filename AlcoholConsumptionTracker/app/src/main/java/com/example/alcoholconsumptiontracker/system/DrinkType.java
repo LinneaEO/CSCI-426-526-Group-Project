@@ -16,7 +16,7 @@ public class DrinkType {
     /// <summary>
     ///  Default constructor
     /// </summary>
-    DrinkType(){
+    public DrinkType(){
         this.value = (char)0;
     }
 
@@ -37,6 +37,7 @@ public class DrinkType {
     ///  Setter
     /// </summary>
     public void Set(short value){
-        this.value = value;
+        if (value < 0) this.value = 0;
+        else this.value = value;
     }
 }
