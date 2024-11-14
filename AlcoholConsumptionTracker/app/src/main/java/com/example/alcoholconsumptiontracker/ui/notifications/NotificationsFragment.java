@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.alcoholconsumptiontracker.databinding.FragmentNotificationsBinding;
+import androidx.navigation.Navigation;
+import com.example.alcoholconsumptiontracker.R;
 
 public class NotificationsFragment extends Fragment {
 
@@ -27,6 +29,26 @@ public class NotificationsFragment extends Fragment {
         final TextView textView = binding.textNotifications;
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Set up nav for daily view
+        view.findViewById(R.id.button_to_daily_view).setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.action_nav_reporting_to_daily_view)
+        );
+
+        // Set up nav for weekly view
+        view.findViewById(R.id.button_to_weekly_view).setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.action_nav_reporting_to_weekly_View)
+        );
+
+        // Set up nav for monthly view
+        view.findViewById(R.id.button_to_monthly_view).setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.action_nav_reporting_to_monthly_View)
+        );
     }
 
     @Override

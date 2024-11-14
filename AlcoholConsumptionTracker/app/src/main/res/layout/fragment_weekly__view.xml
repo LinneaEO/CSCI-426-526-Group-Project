@@ -6,9 +6,15 @@
     tools:context=".Weekly_View">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+
+    <EditText
+        android:id="@+id/editTextWeekRange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="none"
+        android:focusable="false"
+        android:clickable="false"
+        tools:text="Week range here"/>
 
 </FrameLayout>

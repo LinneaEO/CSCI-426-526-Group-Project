@@ -19,4 +19,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_to_monthly_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Go to Monthly View"
+        app:layout_constraintTop_toBottomOf="@+id/button_to_weekly_view"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="122dp" />
+
+    <Button
+        android:id="@+id/button_to_daily_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="188dp"
+        android:text="Go to Daily View"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="133dp" />
+
+    <Button
+        android:id="@+id/button_to_weekly_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Go to Weekly View"
+        app:layout_constraintTop_toBottomOf="@+id/button_to_daily_view"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="122dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

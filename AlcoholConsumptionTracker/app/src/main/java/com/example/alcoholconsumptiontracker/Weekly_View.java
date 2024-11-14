@@ -1,5 +1,6 @@
 package com.example.alcoholconsumptiontracker;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,58 +8,45 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Weekly_View#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class Weekly_View extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Weekly_View() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Weekly_View.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Weekly_View newInstance(String param1, String param2) {
-        Weekly_View fragment = new Weekly_View();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weekly__view, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_weekly__view, container, false);
+
+        // Find the EditText
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        EditText editTextWeekRange = view.findViewById(R.id.editTextWeekRange);
+
+        // Get current week start and end dates
+        String weekRange = getCurrentWeekRange();
+        editTextWeekRange.setText(weekRange);
+
+        return view;
+    }
+
+    private String getCurrentWeekRange() {
+
+        Calendar calendar = Calendar.getInstance();
+
+        // Set to the start of the week (e.g., Sunday)
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd", Locale.getDefault());
+        String startOfWeek = dateFormat.format(calendar.getTime());
+
+        // Move to the end of the week (Saturday)
+        calendar.add(Calendar.DAY_OF_WEEK, 6);
+        String endOfWeek = dateFormat.format(calendar.getTime());
+
+        return startOfWeek + " - " + endOfWeek;
     }
 }
