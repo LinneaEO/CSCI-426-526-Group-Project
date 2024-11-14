@@ -7,14 +7,61 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <EditText
-        android:id="@+id/editTextWeekRange"
+    <Button
+        android:id="@+id/button_calories2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="none"
-        android:focusable="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="600dp"
+        android:backgroundTint="#3A018A"
+        android:text="Calories"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/button_units2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="600dp"
+        android:text="Units"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/button_bac2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="210dp"
+        android:layout_marginTop="600dp"
+        android:text="BAC"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/button_money2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="600dp"
+        android:text="Money"
+        android:textSize="10sp" />
+
+    <EditText
+        android:id="@+id/editTextWeekRange"
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
         android:clickable="false"
-        tools:text="Week range here"/>
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="none"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        tools:text="11/10 - 11/16" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="60dp"
+        android:text="Total Calories: xxx" />
 
 </FrameLayout>
