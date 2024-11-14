@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         // Test Methods in System
-        Test.TestAll(true);
+        Test.TestAll(false);
 
         super.onCreate(savedInstanceState);
 

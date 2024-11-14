@@ -65,9 +65,36 @@ public class Universals {
                     return "Drink Getter Setter Methods Success. Test Case <" + testCase + ">";
                 }
                 else
-                    return "Produce Getter Setter Methods Failure. Test Case <" + testCase + ">";
+                    return "Drink Getter Setter Methods Failure. Test Case <" + testCase + ">";
             }
 
+        }
+
+        public static class DrinkTemplateManagerMessages{
+            public static String DrinkTemplateErrorMessageTitle = ErrorMessageTitle + "DrinkTemplateManager: ";
+            public static String DrinkTemplatePassMessageTitle = PassMessageTitle + "DrinkTemplateManager: ";
+
+            public static String TemplatePutMessage(boolean pass, int testCase){
+                if (pass){
+                    return "Template Put Pass. Test Case <" + testCase + ">";
+                }
+                else
+                    return "Template Put Failure. Test Case <" + testCase + ">";
+            }
+            public static String TemplateModifyMessage(boolean pass, int testCase){
+                if (pass){
+                    return "Template Modify Pass. Test Case <" + testCase + ">";
+                }
+                else
+                    return "Template Modify Failure. Test Case <" + testCase + ">";
+            }
+            public static String TemplateRemoveMessage(boolean pass, int testCase){
+                if (pass){
+                    return "Template Remove Pass. Test Case <" + testCase + ">";
+                }
+                else
+                    return "Template Remove Failure. Test Case <" + testCase + ">";
+            }
         }
     }
 

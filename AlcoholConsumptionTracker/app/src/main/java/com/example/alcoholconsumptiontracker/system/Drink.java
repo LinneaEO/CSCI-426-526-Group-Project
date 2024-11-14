@@ -23,7 +23,7 @@ public class Drink {
     private short servings; // Number of servings ( 0 >= )
     private float aPV; // Alcohol Per volume ( 0.0 >= )
     private float price; // Price ( 0.0 >= , dollars USD)
-    //private Intent image; // Image from gallery
+    private String imageFilePath; // Image from gallery. Path to image, but not the image itself.
     // End corresponding locals
 
     private String occassion; // Occasion for drinking
@@ -42,7 +42,7 @@ public class Drink {
         this.servings = 0;
         this.aPV = 0;
         this.price = 0;
-        //this.image = new Intent();
+        this.imageFilePath = Universals.General.EmptyString();
         this.occassion = Universals.General.EmptyString();
         this.hourOfConsumption = 0;
         this.minuteOfConsumption = 0;
@@ -54,7 +54,7 @@ public class Drink {
         this.servings = template.GetServings();
         this.aPV = template.GetAPV();
         this.price = template.GetPrice();
-        /// TODO, implement image case
+        this.imageFilePath = template.GetImageFilePath();
     }
 
     ///
@@ -72,6 +72,8 @@ public class Drink {
     public float GetAPV(){return this.aPV;}
     // Price
     public float GetPrice(){return this.price;}
+    // Image
+    public String GetImagefilePath(){return this.imageFilePath;}
     // Occasion
     public String GetOccasion(){
         return this.occassion;
@@ -153,7 +155,7 @@ public class Drink {
         //  - Case 3, normal values, occasion get and set
         testingDrink.SetOccasion("testing string");
         testingString = testingDrink.GetOccasion();
-        if (testingString.equals("testing string")){
+        if (!testingString.equals("testing string")){
             Log.d(
                     Universals.TestMessages.TestMessageTag,
                     Universals.TestMessages.DrinkMessages.GetterSetterMessage(false, 3)
@@ -163,6 +165,38 @@ public class Drink {
             Log.d(
                     Universals.TestMessages.TestMessageTag,
                     Universals.TestMessages.DrinkMessages.GetterSetterMessage(true, 3)
+            );
+        }
+
+        //  - Case 4, abnormal values, minute of consumption get set
+        testingDrink.SetMinuteOfConsumption((short)-1);
+        testingShort = testingDrink.GetMinuteOfConsumption();
+        if (testingShort != 0){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(false, 4)
+            );
+        }
+        else if (printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(true, 4)
+            );
+        }
+
+        //  - Case 5, abnormal values, hour of consumption get and set
+        testingDrink.SetHourOfConsumption((short)-1);
+        testingShort = testingDrink.GetHourOfConsumption();
+        if (testingShort != 0){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(false, 5)
+            );
+        }
+        else if (printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkMessages.GetterSetterMessage(true, 5)
             );
         }
 

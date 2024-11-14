@@ -7,6 +7,8 @@
 /// </summary>
 package com.example.alcoholconsumptiontracker.system;
 
+import android.util.Log;
+
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -125,7 +127,177 @@ public class DrinkTemplateManager {
     public boolean ReadTemplateList(String filePath){
         return false;
     }
+
+
     public boolean WriteTemplateList(String filePath){
         return false;
+    }
+
+
+    ///
+    /// Test Methods
+    ///
+    /// <summary>
+    ///  Each test method is self contained and runs different scenarios based on the
+    ///     method associated with that method. Results of tests are printed to LogCat using
+    ///     Log.d method
+    ///     Cases are split into two categories: Test non-exception and test exception
+    ///         Test non-exception tests normal use of methods
+    ///         Test exception test methods throwing exceptions when they should be
+    ///     Additionally, tests can be set to only print failure messages or all messages.
+    /// </summary>
+    ///
+
+    // Test Put Template System method
+    public static void TestPutTemplate(boolean printAllMessages){
+
+        // Test Locals
+        DrinkTemplateManager testManager = new DrinkTemplateManager();
+        DrinkTemplate testTemplate = new DrinkTemplate();
+        String testTemplateName = "test name ";
+        short testShort = 0;
+
+        // Non-exception cases
+        //  -Case 1, normal values
+        for (testShort = 0; testShort < 10; testShort++){
+            testTemplate.SetName(testTemplateName + testShort);
+            testManager.PutTemplate(testTemplate);
+        }
+        for (testShort = 0; testShort < 10; testShort++){
+            if (testManager.GetTemplate(testTemplateName + testShort) == null) {
+                testShort = 11;
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplatePutMessage(false, 1));
+            }
+        }
+        if (testShort == 10 && printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateManagerMessages.TemplatePutMessage(true, 1));
+        }
+
+        // -Case 2, put template while key of template exists within dictionary (expect false return)
+        testManager = new DrinkTemplateManager();
+        for (testShort = 0; testShort < 10; testShort++){
+            testTemplate.SetName(testTemplateName + testShort);
+            testManager.PutTemplate(testTemplate);
+        }
+        for (testShort = 0; testShort < 10; testShort++){
+            testTemplate.SetName(testTemplateName + testShort);
+            if (testManager.PutTemplate(testTemplate)) {
+                testShort = 11;
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplatePutMessage(false, 12));
+            }
+        }
+        if (testShort == 10 && printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateManagerMessages.TemplatePutMessage(true, 2));
+        }
+    }
+    // Test Modify Template System method
+    public static void TestModifyTemplate(boolean printAllMessages){
+
+        // Test Locals
+        DrinkTemplateManager testManager = new DrinkTemplateManager();
+        DrinkTemplate testTemplate = new DrinkTemplate();
+        String testTemplateName = "test name ";
+        short testShort = 0;
+
+        // Non-exception cases
+        //  -Case 1, normal values
+        testTemplate.SetServings((short)1);
+        for (testShort = 0; testShort < 10; testShort++){
+            testTemplate.SetName(testTemplateName + testShort);
+            testManager.PutTemplate(testTemplate);
+        }
+        for (testShort = 0; testShort < 10; testShort++){
+            testTemplate.SetName(testTemplateName + testShort);
+            testTemplate.SetServings((short)10);
+            if (!testManager.ModifyTemplate(testTemplate)) {
+                testShort = 11;
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateModifyMessage(false, 1));
+            }
+            else if (testManager.GetTemplate(testTemplate.GetName()).GetServings() != 10){
+                testShort = 11;
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateModifyMessage(false, 1));
+            }
+        }
+        if (testShort == 10 && printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateManagerMessages.TemplateModifyMessage(true, 1));
+        }
+
+        // -Case 2, modify a non-existent template (expected false return)
+        testManager = new DrinkTemplateManager();
+        for (testShort = 0; testShort < 10; testShort++){
+            testTemplate.SetName(testTemplateName + testShort);
+            if (testManager.ModifyTemplate(testTemplate)) {
+                testShort = 11;
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateModifyMessage(false, 2));
+            }
+        }
+        if (testShort == 10 && printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateManagerMessages.TemplateModifyMessage(true, 2));
+        }
+    }
+
+    // Test Remove Template System Method
+    public static void TestRemoveTemplate(boolean printAllMessages){
+        // Test Locals
+        DrinkTemplateManager testManager = new DrinkTemplateManager();
+        DrinkTemplate testTemplate = new DrinkTemplate();
+        String testTemplateName = "test name ";
+        short testShort = 0;
+
+        // Non-exception cases
+        //  -Case 1, normal values
+        for (testShort = 0; testShort < 10; testShort++){
+            testTemplate.SetName(testTemplateName + testShort);
+            testManager.PutTemplate(testTemplate);
+        }
+        for (testShort = 0; testShort < 10; testShort++){
+            testTemplate.SetName(testTemplateName + testShort);
+            if (!testManager.RemoveTemplate(testTemplate.GetName())) {
+                testShort = 11;
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateRemoveMessage(false, 1));
+            }
+        }
+        if (testShort == 10 && printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateManagerMessages.TemplateRemoveMessage(true, 1));
+        }
+
+        // -Case 2, remove a non-existent template (expected false return)
+        testManager = new DrinkTemplateManager();
+        for (testShort = 0; testShort < 10; testShort++){
+            testTemplate.SetName(testTemplateName + testShort);
+            if (testManager.RemoveTemplate(testTemplate.GetName())) {
+                testShort = 11;
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateRemoveMessage(false, 2));
+            }
+        }
+        if (testShort == 10 && printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateManagerMessages.TemplateRemoveMessage(true, 2));
+        }
     }
 }

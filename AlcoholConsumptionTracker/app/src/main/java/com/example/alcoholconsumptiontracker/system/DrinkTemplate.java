@@ -16,7 +16,7 @@ public class DrinkTemplate {
     private short servings; // Number of servings ( 0 >= )
     private float aPV; // Alcohol Per volume ( 0.0 >= )
     private float price; // Price ( 0.0 >= , dollars USD)
-    //private Intent image; // Image from gallery
+    private String imagefilePath; // File path to image within internal system.
 
     ///
     /// Constructors
@@ -28,6 +28,7 @@ public class DrinkTemplate {
         this.servings = 0;
         this.aPV = 0;
         this.price = 0;
+        this.imagefilePath = Universals.General.EmptyString();
     }
 
     ///
@@ -62,6 +63,8 @@ public class DrinkTemplate {
         else this.price = newPrice;
     }
     // Image
+    public String GetImageFilePath(){return this.imagefilePath;}
+    public void SetImageFilePath(String newFilePath){ this.imagefilePath = newFilePath;}
 
     ///
     /// Methods
@@ -98,6 +101,7 @@ public class DrinkTemplate {
     public static void TestProduceDrink(boolean printAllMessages){
 
         DrinkTemplate temp = new DrinkTemplate();
+        Drink tempDrink;
 
         // Non-Exception Tests
         //  -Case 1, produce drink from valid template
@@ -126,6 +130,62 @@ public class DrinkTemplate {
             Log.d(
                     Universals.TestMessages.TestMessageTag,
                     Universals.TestMessages.DrinkTemplateMessages.ProduceDrinkMessage(false, 2));
+        }
+
+        //  -Case 3, produce drink with abnormal initialized values. Verify values implemented into drink
+        temp.SetName("test");
+        temp.SetAPV((float)-1);
+        temp.SetPrice((float)-1);
+        temp.SetType((short)-1);
+        temp.SetServings((short)-1);
+        temp.SetImageFilePath("test");
+        tempDrink = temp.ProduceDrink("test string", (short)-1, (short)-1);
+        if (tempDrink.GetAPV() == 0
+                && tempDrink.GetName().equals("test")
+                && tempDrink.GetPrice() == 0
+                && tempDrink.GetOccasion().equals("test string")
+                && tempDrink.GetAPV() == 0
+                && tempDrink.GetType().Get().equals(DrinkType.DrinkTypeFromShort((short)0))
+                && tempDrink.GetServings() == 0
+                && tempDrink.GetHourOfConsumption() == 0
+                && tempDrink.GetMinuteOfConsumption() == 0
+                && tempDrink.GetImagefilePath().equals("test")
+        ){
+            if (printAllMessages) Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateMessages.ProduceDrinkMessage(true, 3));
+        }
+        else{
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateMessages.ProduceDrinkMessage(false, 3));
+        }
+
+        //  -Case 4, produce drink with normal initialized values. Verify values implemented into drink
+        temp.SetName("test");
+        temp.SetAPV((float)1);
+        temp.SetPrice((float)1);
+        temp.SetType((short)1);
+        temp.SetServings((short)1);
+        tempDrink = temp.ProduceDrink("test string", (short)1, (short)1);
+        if (    tempDrink.GetAPV() == 1
+                && tempDrink.GetName().equals("test")
+                && tempDrink.GetPrice() == 1
+                && tempDrink.GetOccasion().equals("test string")
+                && tempDrink.GetAPV() == 1
+                && tempDrink.GetType().Get().equals(DrinkType.DrinkTypeFromShort((short)1))
+                && tempDrink.GetServings() == 1
+                && tempDrink.GetHourOfConsumption() == 1
+                && tempDrink.GetMinuteOfConsumption() == 1
+        ){
+            if (printAllMessages) Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateMessages.ProduceDrinkMessage(true, 4));
+        }
+        else{
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateMessages.ProduceDrinkMessage(false, 4));
         }
 
         // Exception Tests
