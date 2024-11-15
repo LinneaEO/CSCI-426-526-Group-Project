@@ -28,17 +28,17 @@ public class Universals {
         /// Generic tag associated with test messages for logging functions.
         public static String TestMessageTag = "<Test Message>";
         /// Generic message title that appears in front of all error messages.
-        public static String ErrorMessageTitle = "Error - ";
+        public static String FailureMessageTitle = "Failure - ";
         /// Generic message title that appears in front of all test passing messages.
         public static String PassMessageTitle = "Pass - ";
 
         ///
-        ///  The class of error messages for drink template
+        ///  The class of test messages for drink template
         ///
         public static class DrinkTemplateMessages{
 
             ///
-            public static String DrinkTemplateErrorMessageTitle = ErrorMessageTitle + "DrinkTemplate: ";
+            public static String DrinkTemplateErrorMessageTitle = FailureMessageTitle + "DrinkTemplate: ";
             public static String DrinkTemplatePassMessageTitle = PassMessageTitle + "DrinkTemplate: ";
 
             public static String ProduceDrinkMessage(boolean pass, int testCase){
@@ -53,49 +53,147 @@ public class Universals {
         }
 
         ///
-        ///  The class of error messages for drink
+        ///  The class of test messages for drink
         ///
         public static class DrinkMessages{
             ///
-            public static String DrinkErrorMessageTitle = ErrorMessageTitle + "Drink: ";
+            public static String DrinkErrorMessageTitle = FailureMessageTitle + "Drink: ";
             public static String DrinkPassMessageTitle = PassMessageTitle + "Drink: ";
 
             public static String GetterSetterMessage(boolean pass, int testCase){
                 if (pass){
-                    return "Drink Getter Setter Methods Success. Test Case <" + testCase + ">";
+                    return PassMessageTitle +  "Drink Getter Setter Methods Success. Test Case <" + testCase + ">";
                 }
                 else
-                    return "Drink Getter Setter Methods Failure. Test Case <" + testCase + ">";
+                    return FailureMessageTitle + "Drink Getter Setter Methods Failure. Test Case <" + testCase + ">";
             }
 
         }
 
+        ///
+        ///  The class of test messages for drink template manager
+        ///
         public static class DrinkTemplateManagerMessages{
-            public static String DrinkTemplateErrorMessageTitle = ErrorMessageTitle + "DrinkTemplateManager: ";
-            public static String DrinkTemplatePassMessageTitle = PassMessageTitle + "DrinkTemplateManager: ";
+            public static String DrinkTemplateManagerFailureMessageTitle = FailureMessageTitle + "DrinkTemplateManager: ";
+            public static String DrinkTemplateManagerPassMessageTitle = PassMessageTitle + "DrinkTemplateManager: ";
 
             public static String TemplatePutMessage(boolean pass, int testCase){
                 if (pass){
-                    return "Template Put Pass. Test Case <" + testCase + ">";
+                    return DrinkTemplateManagerPassMessageTitle + "Template Put Pass. Test Case <" + testCase + ">";
                 }
                 else
-                    return "Template Put Failure. Test Case <" + testCase + ">";
+                    return DrinkTemplateManagerFailureMessageTitle + "Template Put Failure. Test Case <" + testCase + ">";
             }
             public static String TemplateModifyMessage(boolean pass, int testCase){
                 if (pass){
-                    return "Template Modify Pass. Test Case <" + testCase + ">";
+                    return DrinkTemplateManagerPassMessageTitle + "Template Modify Pass. Test Case <" + testCase + ">";
                 }
                 else
-                    return "Template Modify Failure. Test Case <" + testCase + ">";
+                    return DrinkTemplateManagerFailureMessageTitle + "Template Modify Failure. Test Case <" + testCase + ">";
             }
             public static String TemplateRemoveMessage(boolean pass, int testCase){
                 if (pass){
-                    return "Template Remove Pass. Test Case <" + testCase + ">";
+                    return DrinkTemplateManagerPassMessageTitle + "Template Remove Pass. Test Case <" + testCase + ">";
                 }
                 else
-                    return "Template Remove Failure. Test Case <" + testCase + ">";
+                    return DrinkTemplateManagerFailureMessageTitle + "Template Remove Failure. Test Case <" + testCase + ">";
+            }
+            public static String TemplateWriteTemplateListMessage(boolean pass, int testCase){
+                if (pass){
+                    return DrinkTemplateManagerPassMessageTitle + "Write Template List Pass. Test Case <" + testCase + ">";
+                }
+                else
+                    return DrinkTemplateManagerFailureMessageTitle + "Write Template List Failure. Test Case <" + testCase + ">";
             }
         }
+
+        ///
+        /// The class of test messages for drink template manager
+        ///
+        public static class DatabaseManagerMessages{
+            public static String DatabaseManagerFailureMessageTitle = FailureMessageTitle + "DatabaseManager: ";
+            public static String DatabaseManagerPassMessageTitle = PassMessageTitle + "DatabaseManager: ";
+
+            public static String DatabaseInitializeMessage(boolean pass, int testCase){
+                if (pass){
+                    return DatabaseManagerPassMessageTitle + "Database Manager Initialize Pass. Test Case <" + testCase + ">";
+                }
+                else
+                    return DatabaseManagerFailureMessageTitle + "Database Manager Initialize Failure. Test Case <" + testCase + ">";
+            }
+        }
+    }
+
+    ///
+    /// Class of messages associated with system classes that, when an error occurs
+    ///     are used to be displayed in the app logcat
+    ///
+    public static class ErrorMessages{
+        /// Generic tag associated with test messages for logging functions.
+        public static String ErrorMessageTag = "<Non-Fatal Error>";
+
+        ///
+        /// Database manager messages
+        ///
+        public static class DatabaseManagerErrorMessages{
+
+            public static String MessageTitle = "DatabaseManager: ";
+            public static String InitializeDatabaseSecurityError = MessageTitle + "Security error incurred while accessing database. Check app security settings.";
+        }
+
+        public static class DrinkTemplateManagerErrorMessages{
+            public static String MessageTitle = "DrinkTemplateManager: ";
+            public static String WriteTemplatesErrorFileNotFound = MessageTitle + "Target file not found.";
+            public static String WriteTemplatesErrorFailedToCreateFile = MessageTitle + "IO Error. Failed to create new XML file.";
+            public static String WriteTemplatesErrorFailedToCreateDocument = MessageTitle + "XML DOM Error. Failed to create XML document object.";
+            public static String WriteTemplatesErrorTransformerError = MessageTitle + "XML transformer error. Failed to convert DOM Document to XML file.";
+        }
+
+    }
+
+
+
+    ///
+    /// Class of XML tags used in app backend
+    ///
+    public static class XMLTags{
+        ///
+        ///  Tags for Drink
+        ///
+        public static class DrinkTags{
+            public static String Header(){return "drink";}
+            public static String Name(){ return "name";}
+            public static String Type(){ return "type";}
+            public static String Servings(){ return "servings";}
+            public static String APV(){ return "apv";}
+            public static String Calories(){ return "calories";}
+            public static String Price(){ return "price";}
+            public static String ImageFilePath(){ return "imgFilePath";}
+            public static String Occasion(){ return "occasion";}
+            public static String HourOfConsumption(){ return "hour";}
+            public static String MinuteOfConsumption(){ return "minute";}
+        }
+        ///
+        ///  Tags for DrinkTemplate
+        ///
+        public static class DrinkTemplateTags{
+            public static String Header(){return "drinkTemplate";}
+            public static String Name(){ return "name";}
+            public static String Type(){ return "type";}
+            public static String Servings(){ return "servings";}
+            public static String APV(){ return "apv";}
+            public static String Calories(){ return "calories";}
+            public static String Price(){ return "price";}
+            public static String ImageFilePath(){ return "imgFilePath";}
+        }
+        ///
+        ///  Tags for DrinkTemplateManager
+        ///     -Manager stores templates as a list within its header
+        ///
+        public static class DrinkTemplateManagerTags{
+            public static String Header(){return "drinkTemplateManager";}
+        }
+
     }
 
 }

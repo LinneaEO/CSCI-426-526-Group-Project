@@ -7,12 +7,31 @@
 /// </summary>
 package com.example.alcoholconsumptiontracker.system;
 
+import android.content.Context;
 import android.util.Log;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 ///
 /// Drink Template Class
@@ -124,12 +143,157 @@ public class DrinkTemplateManager {
     ///
     /// - Backend
     ///
-    public boolean ReadTemplateList(String filePath){
+    public boolean ReadTemplateList(File targetDirectory){
         return false;
     }
 
+    /// <summary>
+    ///     Writes the contents of the DrinkTemplateManager to a directory.
+    ///     targetDirectory: directory to store xml file
+    ///     fileName: name of file to be created or overwritten and stored to.
+    ///         name of file expected to NOT contain ".xml"
+    ///     Given an inputted directory file and file name,
+    ///     this method:
+    ///         - Creates a new XML file within the targetDirectory
+    ///             with the name of fileName
+    ///         - Stores the contents of its templateDictionary within fileName
+    ///     Returns true if successful in both steps.
+    ///     Returns false otherwise.
+    /// </summary>
+    public boolean WriteTemplateList(File targetDirectory, String fileName) throws IOException, ParserConfigurationException, TransformerException {
 
-    public boolean WriteTemplateList(String filePath){
+        // Locals
+        StreamResult targetStream;
+        Element root;
+        Element tempElement;
+        Element tempElement2;
+        DrinkTemplate tempTemplate;
+        Iterator<Map.Entry<String, DrinkTemplate>> hashmapIterator = this.templateHashMap.entrySet().iterator();
+        DocumentBuilderFactory f;
+        DocumentBuilder b;
+        Document d;
+        TransformerFactory tf;
+        Transformer t;
+        DOMSource DOMDocument;
+        File outputFile;
+
+        // From the inputted directory file and name, attempt to
+        //  create a file within that directory.
+        //      -If target directory doesn't exist, return false
+        if (!targetDirectory.exists()) return false;
+        //      -If file within directory exists, set the output stream to that file
+        //          Otherwise, create that file
+        //      Set the output stream of this method to the result of either case
+        try {
+            outputFile = new File(targetDirectory.getAbsolutePath() + "/" + fileName + ".xml");
+            if (outputFile.exists()) {
+                targetStream = new StreamResult(new PrintWriter(new FileOutputStream(outputFile, false)));
+            } else {
+                if (!outputFile.createNewFile()) return false;
+                targetStream = new StreamResult(new PrintWriter(new FileOutputStream(outputFile)));
+            }
+        }
+        catch (FileNotFoundException e){
+            // If file isn't found, file was deleted immediately after creation. Return false.
+            Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.WriteTemplatesErrorFailedToCreateFile);
+            return false;
+        }
+        catch (IOException e){
+            // If IO error encountered, return false.
+            Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.WriteTemplatesErrorFileNotFound);
+            return false;
+        }
+
+        // Create document to write XML elements to
+        try{
+            f = DocumentBuilderFactory.newInstance();
+            b = f.newDocumentBuilder();
+            d = b.newDocument();
+        } catch (ParserConfigurationException e) {
+            // If error encountered, close output stream an return false.
+            Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.WriteTemplatesErrorFailedToCreateDocument);
+            targetStream.getOutputStream().close();
+            return false;
+        }
+
+        // Write header as root
+        root = d.createElement(Universals.XMLTags.DrinkTemplateManagerTags.Header());
+        d.appendChild(root);
+
+        // For each template member, write its contents
+        while (hashmapIterator.hasNext()){
+
+            // Get current element
+            tempTemplate = hashmapIterator.next().getValue();
+
+            // Create template with following format:
+            //  -Name
+            //  -Servings
+            //  -Type
+            //  -APV
+            //  -Calories
+            //  -Price
+            //  -ImageFilePath
+            //
+
+            // Header
+            tempElement = d.createElement(Universals.XMLTags.DrinkTemplateTags.Header());
+
+            // Name
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Name());
+            tempElement2.appendChild(d.createTextNode(tempTemplate.GetName()));
+            tempElement.appendChild(tempElement2);
+
+            // Servings
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Servings());
+            tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetServings())));
+            tempElement.appendChild(tempElement2);
+
+            // Type
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Type());
+            tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetType().GetValue())));
+            tempElement.appendChild(tempElement2);
+
+            // APV
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.APV());
+            tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetAPV())));
+            tempElement.appendChild(tempElement2);
+
+            // Calories
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Calories());
+            tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetCalories())));
+            tempElement.appendChild(tempElement2);
+
+            // Price
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Price());
+            tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetPrice())));
+            tempElement.appendChild(tempElement2);
+
+            // Image File Path
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Name());
+            tempElement2.appendChild(d.createTextNode(tempTemplate.GetName()));
+            tempElement.appendChild(tempElement2);
+
+            // Append onto root
+            root.appendChild(tempElement);
+        }
+
+        // Write to file via transformer
+        try{
+            tf = TransformerFactory.newInstance();
+            t = tf.newTransformer();
+            DOMDocument = new DOMSource(d);
+            t.transform(DOMDocument, targetStream);
+
+        } catch (TransformerFactoryConfigurationError | TransformerException e) {
+            // If error encountered, close output stream an return false.
+            Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.WriteTemplatesErrorTransformerError);
+            targetStream.getOutputStream().close();
+            return false;
+        }
+
+        // Close stream when finished. Verify file exists and is unlocked before returning true
+        if (outputFile.exists()) return true;
         return false;
     }
 
@@ -300,4 +464,41 @@ public class DrinkTemplateManager {
                     Universals.TestMessages.DrinkTemplateManagerMessages.TemplateRemoveMessage(true, 2));
         }
     }
+
+    // Test WriteTemplateList Backend Method
+    public static void TestWriteTemplateList(boolean printAllMessages, Context context) {
+
+        // Locals
+        DatabaseManager dbm = new DatabaseManager(context);
+        DrinkTemplateManager testManager;
+        DrinkTemplate testTemplate;
+
+        // Non-exception cases
+        //  -Case 1, store to app root directory
+        testManager = new DrinkTemplateManager();
+        testTemplate = new DrinkTemplate();
+        testManager.PutTemplate(testTemplate);
+        try{
+            testManager.WriteTemplateList(dbm.GetAppRootDirectory(),"testDrinkTemplateFile");
+            if (printAllMessages)
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateWriteTemplateListMessage(false, 1)
+                );
+        }
+        catch (IOException | ParserConfigurationException | TransformerException e){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateManagerMessages.TemplateWriteTemplateListMessage(false, 1)
+            );
+        }
+
+        // Exception cases
+
+    }
+
+    public static void TestReadTemplateList(boolean printAllMessages, Context context){
+        
+    }
+
 }

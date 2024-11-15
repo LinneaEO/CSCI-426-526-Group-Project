@@ -16,7 +16,8 @@ public class DrinkTemplate {
     private short servings; // Number of servings ( 0 >= )
     private float aPV; // Alcohol Per volume ( 0.0 >= )
     private float price; // Price ( 0.0 >= , dollars USD)
-    private String imagefilePath; // File path to image within internal system.
+    private float calories; // Calories (0.0 >=, kcal)
+    private String imageFilePath; // File path to image within internal system.
 
     ///
     /// Constructors
@@ -28,7 +29,7 @@ public class DrinkTemplate {
         this.servings = 0;
         this.aPV = 0;
         this.price = 0;
-        this.imagefilePath = Universals.General.EmptyString();
+        this.imageFilePath = Universals.General.EmptyString();
     }
 
     ///
@@ -62,9 +63,15 @@ public class DrinkTemplate {
         if (newPrice < 0) this.price = 0;
         else this.price = newPrice;
     }
+    // Calories
+    public float GetCalories(){return this.calories;}
+    public void SetCalories(float newCalories){
+        if (newCalories < 0) this.calories = 0;
+        else this.calories = newCalories;
+    }
     // Image
-    public String GetImageFilePath(){return this.imagefilePath;}
-    public void SetImageFilePath(String newFilePath){ this.imagefilePath = newFilePath;}
+    public String GetImageFilePath(){return this.imageFilePath;}
+    public void SetImageFilePath(String newFilePath){ this.imageFilePath = newFilePath;}
 
     ///
     /// Methods
@@ -80,7 +87,6 @@ public class DrinkTemplate {
         newDrink.SetMinuteOfConsumption(minute);
         return newDrink;
     }
-
 
 
     ///
@@ -121,6 +127,7 @@ public class DrinkTemplate {
         temp.SetPrice((float)1.1);
         temp.SetType((short)1);
         temp.SetServings((short)1);
+        temp.SetCalories((float)1.1);
         if (temp.ProduceDrink("test string", (short)1, (short)1) != null){
             if (printAllMessages) Log.d(
                     Universals.TestMessages.TestMessageTag,
@@ -138,6 +145,7 @@ public class DrinkTemplate {
         temp.SetPrice((float)-1);
         temp.SetType((short)-1);
         temp.SetServings((short)-1);
+        temp.SetCalories((float)-1.1);
         temp.SetImageFilePath("test");
         tempDrink = temp.ProduceDrink("test string", (short)-1, (short)-1);
         if (tempDrink.GetAPV() == 0
@@ -149,6 +157,7 @@ public class DrinkTemplate {
                 && tempDrink.GetServings() == 0
                 && tempDrink.GetHourOfConsumption() == 0
                 && tempDrink.GetMinuteOfConsumption() == 0
+                && tempDrink.GetCalories() == 0
                 && tempDrink.GetImagefilePath().equals("test")
         ){
             if (printAllMessages) Log.d(
@@ -167,16 +176,17 @@ public class DrinkTemplate {
         temp.SetPrice((float)1);
         temp.SetType((short)1);
         temp.SetServings((short)1);
+        temp.SetCalories((float)1.1);
         tempDrink = temp.ProduceDrink("test string", (short)1, (short)1);
-        if (    tempDrink.GetAPV() == 1
+        if (    tempDrink.GetAPV() == 1.0
                 && tempDrink.GetName().equals("test")
-                && tempDrink.GetPrice() == 1
+                && tempDrink.GetPrice() == 1.0
                 && tempDrink.GetOccasion().equals("test string")
-                && tempDrink.GetAPV() == 1
                 && tempDrink.GetType().Get().equals(DrinkType.DrinkTypeFromShort((short)1))
                 && tempDrink.GetServings() == 1
                 && tempDrink.GetHourOfConsumption() == 1
                 && tempDrink.GetMinuteOfConsumption() == 1
+                && tempDrink.GetCalories() == (float)1.1
         ){
             if (printAllMessages) Log.d(
                     Universals.TestMessages.TestMessageTag,

@@ -26,8 +26,9 @@ public class DrinkType {
     public String Get(){
        return DrinkTypeFromShort(this.value);
     }
+    public short GetValue(){return this.value;}
     /// <summary>
-    ///  Setters
+    ///  Setter
     /// </summary>
     public void Set(short value){
         if (value < 0) this.value = 0;

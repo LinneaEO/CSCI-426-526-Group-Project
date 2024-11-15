@@ -8,6 +8,7 @@ package com.example.alcoholconsumptiontracker.system;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 
@@ -46,7 +47,7 @@ public class DatabaseManager {
     ///     If initialized, returns directory
     ///     Returns null otherwise.
     /// </summary>
-    public File getAppRootDirectory() {
+    public File GetAppRootDirectory() {
         if (initialized)
             return appRootDirectory;
         else
@@ -57,7 +58,7 @@ public class DatabaseManager {
     ///     If initialized, returns directory
     ///     Returns null otherwise.
     /// </summary>
-    public File getImageDirectory(){
+    public File GetImageDirectory(){
         if (initialized)
             return imageDirectory;
         else
@@ -79,27 +80,120 @@ public class DatabaseManager {
 
         try{
             File rootDir = context.getFilesDir();
+
+            // Verify app directory's existence or create it.
             File appDir = new File(rootDir.getAbsolutePath() + "/" + appRootDirectoryName);
-
-            // If an app directory is successfully created, initialize all other sub-directories
-            //  within it as this implies this is the first time the directory is being created.
-            if (appDir.mkdir()){
-
-                // Initialize image directory
-                File imgDir = new File(appDir.getAbsolutePath() + "/" + imageDirectoryName);
+            if (appDir.exists()){
+                if (appDir.isDirectory()){
+                    this.appRootDirectory = appDir;
+                }
+                else{
+                    if (appDir.mkdir()){
+                        this.appRootDirectory = appDir;
+                    }
+                    else{
+                        Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DatabaseManagerErrorMessages.InitializeDatabaseSecurityError);
+                        this.initialized = false;
+                        return false;
+                    }
+                }
+            }
+            else{
+                if (appDir.mkdir()){
+                    this.appRootDirectory = appDir;
+                }
+                else{
+                    Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DatabaseManagerErrorMessages.InitializeDatabaseSecurityError);
+                    this.initialized = false;
+                    return false;
+                }
             }
 
-            // After directory is created or is found within the internal storage, set the database
-            //  manager's main directory. Then return.
-            this.appRootDirectory = appDir;
+            // Verify image directory's existence or create it
+            File imgDir = new File(appDir.getAbsolutePath() + "/" + imageDirectoryName);
+            if (imgDir.exists()){
+                if (imgDir.isDirectory()){
+                    this.imageDirectory = imgDir;
+                }
+                else{
+                    if (imgDir.mkdir()){
+                        this.imageDirectory = imgDir;
+                    }
+                    else{
+                        Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DatabaseManagerErrorMessages.InitializeDatabaseSecurityError);
+                        this.initialized = false;
+                        return false;
+                    }
+                }
+            }
+            else{
+                if (imgDir.mkdir()){
+                    this.imageDirectory = imgDir;
+                }
+                else{
+                    Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DatabaseManagerErrorMessages.InitializeDatabaseSecurityError);
+                    this.initialized = false;
+                    return false;
+                }
+            }
 
-            // Set initialized to true
+            // Set initialized to true once complete
             this.initialized = true;
-        } catch (Exception e) {
+
+        } catch (SecurityException e) {
             // If an error was encountered, set initialized to false
+            Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DatabaseManagerErrorMessages.InitializeDatabaseSecurityError);
             this.initialized = false;
+            return false;
         }
 
-        return this.initialized;
+        return true;
+    }
+
+    ///
+    /// Test Methods
+    ///
+    /// <summary>
+    ///  Each test method is self contained and runs different scenarios based on the
+    ///     method associated with that method. Results of tests are printed to LogCat using
+    ///     Log.d method
+    ///     Cases are split into two categories: Test non-exception and test exception
+    ///         Test non-exception tests normal use of methods
+    ///         Test exception test methods throwing exceptions when they should be
+    ///     Additionally, tests can be set to only print failure messages or all messages.
+    /// </summary>
+    ///
+    // Test Initialize Database Method
+    public static void TestInitializeDatabase(boolean printAllMessages, Context testContext){
+
+        // Locals
+
+        // Non-exception case
+        //  Case 1, Initialize and expect success. Check for initialized Variable
+        DatabaseManager testManager = new DatabaseManager(testContext);
+        if (!testManager.initialized){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DatabaseManagerMessages.DatabaseInitializeMessage(false, 1));
+        }
+        else if (printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DatabaseManagerMessages.DatabaseInitializeMessage(true, 1));
+        }
+
+        //  Case 2, Initialize and expect success. Check for initialized files.
+        testManager = new DatabaseManager(testContext);
+        if (!testManager.GetAppRootDirectory().exists() || !testManager.GetImageDirectory().exists()){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DatabaseManagerMessages.DatabaseInitializeMessage(false, 2));
+        }
+        else if (printAllMessages){
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DatabaseManagerMessages.DatabaseInitializeMessage(true, 1));
+        }
+
     }
 }

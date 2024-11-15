@@ -1,5 +1,6 @@
 package com.example.alcoholconsumptiontracker.system;
 
+import android.content.Context;
 import android.util.Log;
 
 ///
@@ -11,11 +12,20 @@ public class Test {
     ///  Tests all methods present from all classes.
     ///     Always prints failure cases
     ///     Optionally prints success cases
+    ///  printAllMessages:
+    ///     If true, enables printing of all test messages for when a method passes or fails
+    ///     If false, only method failure messages print.
+    ///  testContext:
+    ///     The context for which backend functions are tested.
     ///
-    public static void TestAll(boolean printAllMessages){
+    public static void TestAll(boolean printAllMessages, Context testContext){
 
         // Notify begin testing
         Log.d(Universals.TestMessages.TestMessageTag, "-------Begin Testing-------");
+
+        // ---- Backend
+        // Database Manager Methods
+        DatabaseManager.TestInitializeDatabase(printAllMessages, testContext);
 
         // ---- Alcohol Logging
         // DrinkTemplate Methods
@@ -28,6 +38,7 @@ public class Test {
         DrinkTemplateManager.TestPutTemplate(printAllMessages);
         DrinkTemplateManager.TestModifyTemplate(printAllMessages);
         DrinkTemplateManager.TestRemoveTemplate(printAllMessages);
+        DrinkTemplateManager.TestWriteTemplateList(printAllMessages, testContext);
 
         // ----
         // Notify end testing

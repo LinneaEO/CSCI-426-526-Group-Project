@@ -23,10 +23,11 @@ public class Drink {
     private short servings; // Number of servings ( 0 >= )
     private float aPV; // Alcohol Per volume ( 0.0 >= )
     private float price; // Price ( 0.0 >= , dollars USD)
+    private float calories; // Calories (0.0 >=, kcal)
     private String imageFilePath; // Image from gallery. Path to image, but not the image itself.
     // End corresponding locals
 
-    private String occassion; // Occasion for drinking
+    private String occasion; // Occasion for drinking
     private short hourOfConsumption; // Time drink was drunk in the form hour, minute. Military time
     private short minuteOfConsumption;
     //
@@ -42,8 +43,9 @@ public class Drink {
         this.servings = 0;
         this.aPV = 0;
         this.price = 0;
+        this.calories = 0;
         this.imageFilePath = Universals.General.EmptyString();
-        this.occassion = Universals.General.EmptyString();
+        this.occasion = Universals.General.EmptyString();
         this.hourOfConsumption = 0;
         this.minuteOfConsumption = 0;
     }
@@ -54,6 +56,7 @@ public class Drink {
         this.servings = template.GetServings();
         this.aPV = template.GetAPV();
         this.price = template.GetPrice();
+        this.calories = template.GetCalories();
         this.imageFilePath = template.GetImageFilePath();
     }
 
@@ -72,14 +75,16 @@ public class Drink {
     public float GetAPV(){return this.aPV;}
     // Price
     public float GetPrice(){return this.price;}
+    // Calories
+    public float GetCalories(){return this.calories;}
     // Image
     public String GetImagefilePath(){return this.imageFilePath;}
     // Occasion
     public String GetOccasion(){
-        return this.occassion;
+        return this.occasion;
     }
     public void SetOccasion(String newOccasion){
-        this.occassion = newOccasion;
+        this.occasion = newOccasion;
     }
     // Hour of Consumption
     public short GetHourOfConsumption(){
