@@ -38,15 +38,15 @@ public class Universals {
         public static class DrinkTemplateMessages{
 
             ///
-            public static String DrinkTemplateErrorMessageTitle = FailureMessageTitle + "DrinkTemplate: ";
+            public static String DrinkTemplateFailureMessageTitle = FailureMessageTitle + "DrinkTemplate: ";
             public static String DrinkTemplatePassMessageTitle = PassMessageTitle + "DrinkTemplate: ";
 
             public static String ProduceDrinkMessage(boolean pass, int testCase){
                 if (pass){
-                    return "Produce Drink Method Success. Test Case <" + testCase + ">";
+                    return DrinkTemplatePassMessageTitle + "Produce Drink Method Success. Test Case <" + testCase + ">";
                 }
                 else
-                    return "Produce Drink Method Failure. Test Case <" + testCase + ">";
+                    return DrinkTemplateFailureMessageTitle + "Produce Drink Method Failure. Test Case <" + testCase + ">";
             }
 
 
@@ -98,7 +98,7 @@ public class Universals {
                 else
                     return DrinkTemplateManagerFailureMessageTitle + "Template Remove Failure. Test Case <" + testCase + ">";
             }
-            public static String TemplateWriteTemplateListMessage(boolean pass, int testCase){
+            public static String TemplateReadWriteTemplateListMessage(boolean pass, int testCase){
                 if (pass){
                     return DrinkTemplateManagerPassMessageTitle + "Write Template List Pass. Test Case <" + testCase + ">";
                 }

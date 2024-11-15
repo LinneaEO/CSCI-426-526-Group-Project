@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -150,9 +151,6 @@ public class DrinkTemplateManager {
     ///
     /// - Backend
     ///
-    public boolean ReadTemplateList(File targetDirectory){
-        return false;
-    }
 
     /// <summary>
     ///     Writes the contents of the DrinkTemplateManager to a directory.
@@ -348,6 +346,8 @@ public class DrinkTemplateManager {
         Node tempDrinkTemplateRaw;
         NodeList tempDrinkTemplateRawFields;
         Node rawField;
+        Element rawFieldAsElement;
+        boolean invalidTemplate = false;
         ArrayList<DrinkTemplate> holderList = new ArrayList<DrinkTemplate>();
 
         // Verify file's existence
@@ -437,6 +437,8 @@ public class DrinkTemplateManager {
         catch (IOException ignored){
         }
 
+
+
         // Convert document content into DrinkTemplates to store in DrinkTemplateManager.
         // Verify DrinkTemplateManager Header as root
         root = d.getDocumentElement();
@@ -458,40 +460,89 @@ public class DrinkTemplateManager {
             tempDrinkTemplateRaw = templatesRaw.item(i);
             tempDrinkTemplateRawFields = tempDrinkTemplateRaw.getChildNodes();
 
-            for (int j = 0; j < tempDrinkTemplateRawFields.getLength(); j++){
+            // Represents whether the template is valid or not. If a value parses incorrectly, this
+            //  is set to false. If at the end of parsing if invalidTemplate is false, the template
+            //  isn't invalid and is added to the holding list. Otherwise it is ignored.
+            invalidTemplate = false;
+
+            for (int j = 0; j < tempDrinkTemplateRawFields.getLength() && !invalidTemplate; j++){
 
                 rawField = tempDrinkTemplateRawFields.item(j);
+
                 // Name
                 if (rawField.getNodeName().equals(Universals.XMLTags.DrinkTemplateTags.Name)){
-                    tempDrinkTemplate.SetName(rawField.getNodeValue());
+                    tempDrinkTemplate.SetName(rawField.getTextContent());
                 }
                 // Servings
                 else if (rawField.getNodeName().equals(Universals.XMLTags.DrinkTemplateTags.Servings)){
                     try{
-                        tempDrinkTemplate.SetServings(Short.parseShort(rawField.getNodeValue()));
+                        tempDrinkTemplate.SetServings(Short.parseShort(rawField.getTextContent()));
                     }
                     catch (NumberFormatException ignored){
+                        invalidTemplate = true;
                     }
                 }
+                // Type
+                else if (rawField.getNodeName().equals(Universals.XMLTags.DrinkTemplateTags.Type)){
+                    try{
+                        tempDrinkTemplate.SetType(Short.parseShort(rawField.getTextContent()));
+                    }
+                    catch (NumberFormatException ignored){
+                        invalidTemplate = true;
+                    }
+                }
+                // APV
+                else if (rawField.getNodeName().equals(Universals.XMLTags.DrinkTemplateTags.APV)){
+                    try{
+                        tempDrinkTemplate.SetAPV(Float.parseFloat(rawField.getTextContent()));
+                    }
+                    catch (NumberFormatException ignored){
+                        invalidTemplate = true;
+                    }
+                }
+                // Calories
+                else if (rawField.getNodeName().equals(Universals.XMLTags.DrinkTemplateTags.Calories)){
+                    try{
+                        tempDrinkTemplate.SetCalories(Float.parseFloat(rawField.getTextContent()));
+                    }
+                    catch (NumberFormatException ignored){
+                        invalidTemplate = true;
+                    }
+                }
+                // Price
+                else if (rawField.getNodeName().equals(Universals.XMLTags.DrinkTemplateTags.Price)){
+                    try{
+                        tempDrinkTemplate.SetPrice(Float.parseFloat(rawField.getTextContent()));
+                    }
+                    catch (NumberFormatException ignored){
+                        invalidTemplate = true;
+                    }
+                }
+                // ImageFilePath
+                else if (rawField.getNodeName().equals(Universals.XMLTags.DrinkTemplateTags.ImageFilePath)){
+                    tempDrinkTemplate.SetImageFilePath(rawField.getTextContent());
+                }
+                // Invalid tag encountered in else statement. Set invalid template to true
+                else{
+                    invalidTemplate = true;
+                }
+            }
+
+            // If the template is valid, add it to the holding list
+            if (!invalidTemplate){
+                holderList.add(tempDrinkTemplate);
             }
         }
 
         // If append is set to false, empty contents of DrinkTemplate HashMap
+        //  Then add the contents of the holding list to the DrinkTemplateManager
         if (!append){
             this.templateHashMap.clear();
         }
-
-
-
-        // Read template with following format:
-        //  -Name
-        //  -Servings
-        //  -Type
-        //  -APV
-        //  -Calories
-        //  -Price
-        //  -ImageFilePath
-        //
+        // Add contents of the holder list to the DrinkTemplateManager
+        for (int i = 0; i < holderList.size(); i++){
+            this.PutTemplate(holderList.get(i));
+        }
 
         // Return true when finished
         return true;
@@ -665,36 +716,146 @@ public class DrinkTemplateManager {
     }
 
     // Test WriteTemplateList Backend Method
-    public static void TestWriteTemplateList(boolean printAllMessages, Context context) {
+    public static void TestReadWriteTemplateList(boolean printAllMessages, Context context) {
 
         // Locals
         DatabaseManager dbm = new DatabaseManager(context);
         DrinkTemplateManager testManager;
         DrinkTemplate testTemplate;
+        int case3TemplatesGenerated = 100;
+        int i;
 
         // Non-exception cases
-        //  -Case 1, store to app root directory
+        //  -Case 1, Write. store to app root directory. No read verification
         testManager = new DrinkTemplateManager();
         testTemplate = new DrinkTemplate();
+        testTemplate.SetName("testName");
         testManager.PutTemplate(testTemplate);
-        if (testManager.WriteTemplateList(dbm.GetAppRootDirectory(),"testDrinkTemplateFile"))
+        if (testManager.WriteTemplateList(dbm.GetAppRootDirectory(),"testDrinkTemplateFile")) {
             if (printAllMessages)
                 Log.d(
                         Universals.TestMessages.TestMessageTag,
-                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateWriteTemplateListMessage(true, 1)
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateReadWriteTemplateListMessage(true, 1)
                 );
-        else
-        {
+        }
+        else {
                 Log.d(
                         Universals.TestMessages.TestMessageTag,
-                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateWriteTemplateListMessage(false, 1)
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateReadWriteTemplateListMessage(false, 1)
+                );
+        }
+        //  -Case 2, Read Write. Store to app root directory. Read verification without append of written content (small)
+        testManager = new DrinkTemplateManager();
+        testTemplate = new DrinkTemplate();
+        testTemplate.SetName("testName");
+        testManager.PutTemplate(testTemplate);
+        if (testManager.WriteTemplateList(dbm.GetAppRootDirectory(),"testDrinkTemplateFile2")) {
+            testManager.ReadTemplateList(dbm.GetAppRootDirectory(), "testDrinkTemplateFile2", false);
+            if (testManager.GetTemplate("testName") != null) {
+                if (printAllMessages)
+                    Log.d(
+                            Universals.TestMessages.TestMessageTag,
+                            Universals.TestMessages.DrinkTemplateManagerMessages.TemplateReadWriteTemplateListMessage(true, 2)
+                    );
+            } else {
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateReadWriteTemplateListMessage(false, 2)
                 );
             }
+        }
+        else {
+            Log.d(
+                    Universals.TestMessages.TestMessageTag,
+                    Universals.TestMessages.DrinkTemplateManagerMessages.TemplateReadWriteTemplateListMessage(false, 2)
+            );
+        }
+
+        //  -Case 3. Read Write. Store to app root directory. Read verification without append of written content (large)
+        testManager = new DrinkTemplateManager();
+        testTemplate = new DrinkTemplate();
+        testTemplate.SetName("testName");
+        testTemplate.SetPrice((float)1.1);
+        testTemplate.SetAPV((float)1.1);
+        testTemplate.SetCalories((float)1.1);
+        testTemplate.SetServings((short)1);
+        testTemplate.SetImageFilePath("testPath");
+        testTemplate.SetType((short)1);
+        for ( i = 0; i < case3TemplatesGenerated; i++){
+            testTemplate.SetName("testName " + String.valueOf(i));
+            testManager.PutTemplate(testTemplate);
+        }
+        if (testManager.WriteTemplateList(dbm.GetAppRootDirectory(),"testDrinkTemplateFile3")){
+            testManager.ReadTemplateList(dbm.GetAppRootDirectory(), "testDrinkTemplateFile3", false);
+            for ( i = 0; i < case3TemplatesGenerated; i++){
+                testTemplate = testManager.GetTemplate("testName " + String.valueOf(i));
+                if (testTemplate == null){
+                    i = case3TemplatesGenerated + 1;
+                }
+                else{
+                    if (
+                            !(testTemplate.GetName().equals("testName " + String.valueOf(i)) &&
+                            testTemplate.GetServings() == 1 &&
+                            testTemplate.GetAPV() == 1.1 &&
+                            testTemplate.GetCalories() == 1.1 &&
+                            testTemplate.GetType().GetValue() == (short)1 &&
+                            testTemplate.GetPrice() == 1.1 &&
+                            testTemplate.GetImageFilePath().equals("testPath")      )
+                    ) i = case3TemplatesGenerated + 1;
+                }
+            }
+            if (i == case3TemplatesGenerated && printAllMessages){
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateReadWriteTemplateListMessage(true, 3)
+                );
+            }
+            else if (i == case3TemplatesGenerated + 1){
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateReadWriteTemplateListMessage(false, 3)
+                );
+            }
+        }
+
+        //  -Case 4. Read Write. Store to app root directory. Read verification with append of written content (large)
+        testManager = new DrinkTemplateManager();
+        testTemplate = new DrinkTemplate();
+        testTemplate.SetName("testName");
+        testTemplate.SetPrice((float)1.1);
+        testTemplate.SetAPV((float)1.1);
+        testTemplate.SetCalories((float)1.1);
+        testTemplate.SetServings((short)1);
+        testTemplate.SetImageFilePath("testPath");
+        testTemplate.SetType((short)1);
+        for ( i = 0; i < case3TemplatesGenerated; i++){
+            testTemplate.SetName("testName " + String.valueOf(i));
+            testManager.PutTemplate(testTemplate);
+        }
+        if (testManager.WriteTemplateList(dbm.GetAppRootDirectory(),"testDrinkTemplateFile4")){
+            testManager.ReadTemplateList(dbm.GetAppRootDirectory(), "testDrinkTemplateFile4", true);
+            for ( i = 0; i < case3TemplatesGenerated; i++){
+                testTemplate = testManager.GetTemplate("testName " + String.valueOf(i));
+                if (testTemplate != null){
+                    i = case3TemplatesGenerated + 1;
+                }
+            }
+            if (i == case3TemplatesGenerated && printAllMessages){
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateReadWriteTemplateListMessage(true, 4)
+                );
+            }
+            else if (i == case3TemplatesGenerated + 1){
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateReadWriteTemplateListMessage(false, 4)
+                );
+            }
+        }
+
+
         // Exception cases
-
-    }
-
-    public static void TestReadTemplateList(boolean printAllMessages, Context context){
 
     }
 

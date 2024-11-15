@@ -38,7 +38,7 @@ public class Test {
         DrinkTemplateManager.TestPutTemplate(printAllMessages);
         DrinkTemplateManager.TestModifyTemplate(printAllMessages);
         DrinkTemplateManager.TestRemoveTemplate(printAllMessages);
-        DrinkTemplateManager.TestWriteTemplateList(printAllMessages, testContext);
+        DrinkTemplateManager.TestReadWriteTemplateList(printAllMessages, testContext);
 
         // ----
         // Notify end testing
