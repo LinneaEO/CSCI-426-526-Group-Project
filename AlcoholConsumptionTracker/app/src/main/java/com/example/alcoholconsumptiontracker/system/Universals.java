@@ -147,6 +147,16 @@ public class Universals {
             public static String WriteTemplatesErrorFailedToCreateFile = MessageTitle + "IO Error. Failed to create new XML file.";
             public static String WriteTemplatesErrorFailedToCreateDocument = MessageTitle + "XML DOM Error. Failed to create XML document object.";
             public static String WriteTemplatesErrorTransformerError = MessageTitle + "XML transformer error. Failed to convert DOM Document to XML file.";
+            public static String ReadTemplatesErrorDirectoryNotFound = MessageTitle + "Failed to find inputted directory.";
+            public static String ReadTemplatesErrorFileNotFound = MessageTitle + "Failed to find inputted file within inputted directory.";
+            public static String ReadTemplatesErrorFailedToCreateDocument = MessageTitle + "XML DOM Error. Failed to create XML document object.";
+            public static String ReadTemplatesErrorFileIOError = MessageTitle + "Failed to open target XML file for parsing.";
+            public static String ReadTemplatesErrorInvalidXMLFile = MessageTitle + "Found file contained content not in an XML format and couldn't be parsed.";
+
+            public static String ReadTemplatesErrorFileParseError = MessageTitle + "XML file found parsed incorrectly. Wasn't found to be a DrinkTemplateManager XML format file.";
+
+
+
         }
 
     }
@@ -161,37 +171,37 @@ public class Universals {
         ///  Tags for Drink
         ///
         public static class DrinkTags{
-            public static String Header(){return "drink";}
-            public static String Name(){ return "name";}
-            public static String Type(){ return "type";}
-            public static String Servings(){ return "servings";}
-            public static String APV(){ return "apv";}
-            public static String Calories(){ return "calories";}
-            public static String Price(){ return "price";}
-            public static String ImageFilePath(){ return "imgFilePath";}
-            public static String Occasion(){ return "occasion";}
-            public static String HourOfConsumption(){ return "hour";}
-            public static String MinuteOfConsumption(){ return "minute";}
+            public static String Header = "drink";
+            public static String Name = "name";
+            public static String Type = "type";
+            public static String Servings = "servings";
+            public static String APV = "apv";
+            public static String Calories = "calories";
+            public static String Price = "price";
+            public static String ImageFilePath = "imgFilePath";
+            public static String Occasion = "occasion";
+            public static String HourOfConsumption = "hour";
+            public static String MinuteOfConsumption = "minute";
         }
         ///
         ///  Tags for DrinkTemplate
         ///
         public static class DrinkTemplateTags{
-            public static String Header(){return "drinkTemplate";}
-            public static String Name(){ return "name";}
-            public static String Type(){ return "type";}
-            public static String Servings(){ return "servings";}
-            public static String APV(){ return "apv";}
-            public static String Calories(){ return "calories";}
-            public static String Price(){ return "price";}
-            public static String ImageFilePath(){ return "imgFilePath";}
+            public static String Header =  "drinkTemplate";
+            public static String Name = "name";
+            public static String Type = "type";
+            public static String Servings = "servings";
+            public static String APV = "apv";
+            public static String Calories = "calories";
+            public static String Price = "price";
+            public static String ImageFilePath = "imgFilePath";
         }
         ///
         ///  Tags for DrinkTemplateManager
         ///     -Manager stores templates as a list within its header
         ///
         public static class DrinkTemplateManagerTags{
-            public static String Header(){return "drinkTemplateManager";}
+            public static String Header = "drinkTemplateManager";
         }
 
     }

@@ -12,14 +12,21 @@ import android.util.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -160,7 +167,7 @@ public class DrinkTemplateManager {
     ///     Returns true if successful in both steps.
     ///     Returns false otherwise.
     /// </summary>
-    public boolean WriteTemplateList(File targetDirectory, String fileName) throws IOException, ParserConfigurationException, TransformerException {
+    public boolean WriteTemplateList(File targetDirectory, String fileName)  {
 
         // Locals
         StreamResult targetStream;
@@ -212,12 +219,16 @@ public class DrinkTemplateManager {
         } catch (ParserConfigurationException e) {
             // If error encountered, close output stream an return false.
             Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.WriteTemplatesErrorFailedToCreateDocument);
-            targetStream.getOutputStream().close();
+            try{
+                targetStream.getOutputStream().close();
+            } catch (IOException ex) {
+                return false;
+            }
             return false;
         }
 
         // Write header as root
-        root = d.createElement(Universals.XMLTags.DrinkTemplateManagerTags.Header());
+        root = d.createElement(Universals.XMLTags.DrinkTemplateManagerTags.Header);
         d.appendChild(root);
 
         // For each template member, write its contents
@@ -237,40 +248,40 @@ public class DrinkTemplateManager {
             //
 
             // Header
-            tempElement = d.createElement(Universals.XMLTags.DrinkTemplateTags.Header());
+            tempElement = d.createElement(Universals.XMLTags.DrinkTemplateTags.Header);
 
             // Name
-            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Name());
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Name);
             tempElement2.appendChild(d.createTextNode(tempTemplate.GetName()));
             tempElement.appendChild(tempElement2);
 
             // Servings
-            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Servings());
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Servings);
             tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetServings())));
             tempElement.appendChild(tempElement2);
 
             // Type
-            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Type());
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Type);
             tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetType().GetValue())));
             tempElement.appendChild(tempElement2);
 
             // APV
-            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.APV());
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.APV);
             tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetAPV())));
             tempElement.appendChild(tempElement2);
 
             // Calories
-            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Calories());
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Calories);
             tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetCalories())));
             tempElement.appendChild(tempElement2);
 
             // Price
-            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Price());
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Price);
             tempElement2.appendChild(d.createTextNode(String.valueOf(tempTemplate.GetPrice())));
             tempElement.appendChild(tempElement2);
 
             // Image File Path
-            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.Name());
+            tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.ImageFilePath);
             tempElement2.appendChild(d.createTextNode(tempTemplate.GetName()));
             tempElement.appendChild(tempElement2);
 
@@ -288,7 +299,11 @@ public class DrinkTemplateManager {
         } catch (TransformerFactoryConfigurationError | TransformerException e) {
             // If error encountered, close output stream an return false.
             Log.d(Universals.ErrorMessages.ErrorMessageTag,Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.WriteTemplatesErrorTransformerError);
-            targetStream.getOutputStream().close();
+            try{
+                targetStream.getOutputStream().close();
+            } catch (IOException ex) {
+                return false;
+            }
             return false;
         }
 
@@ -297,6 +312,190 @@ public class DrinkTemplateManager {
         return false;
     }
 
+    /// <summary>
+    ///     Reads the contents of the DrinkTemplateManager from a file within a directory.
+    ///     targetDirectory: directory to read xml file from
+    ///     targetFileName: name of file to be read from.
+    ///         name of file expected to NOT contain ".xml"
+    ///     append: Determines whether the contents found in the file will override the
+    ///         current contents of the DrinkTemplateManager or will append onto existing
+    ///         dictionary members. If a Template is found with a new name, it is added
+    ///         to the dictionary. If a Template is found with an existing name, it doesn't
+    ///         modify the existing template and doesn't add its contents.
+    ///     Given an inputted directory file and file name,
+    ///     this method:
+    ///         - Verifies the file's existence within the inputted directory
+    ///         - Attempts to read the contents of the XML file as if it were
+    ///             formatted as a DrinkTemplateManager object.
+    ///     Returns true if successful in both steps.
+    ///     Returns false otherwise.
+    ///
+    ///     *Note if while parsing for templates an invalid template is found,
+    ///     expected behavior is to not add that template to the manager. An invalid
+    ///     template is a template with at least 1 field that could not be parsed.
+    /// </summary>
+    public boolean ReadTemplateList(File targetDirectory, String targetFileName, boolean append){
+
+        // Locals
+        DocumentBuilderFactory f;
+        DocumentBuilder b;
+        Document d;
+        FileInputStream inputFileStream;
+        File inputFile;
+        Element root;
+        NodeList templatesRaw;
+        DrinkTemplate tempDrinkTemplate;
+        Node tempDrinkTemplateRaw;
+        NodeList tempDrinkTemplateRawFields;
+        Node rawField;
+        ArrayList<DrinkTemplate> holderList = new ArrayList<DrinkTemplate>();
+
+        // Verify file's existence
+        //  -Verify directory's existence
+        if (!targetDirectory.exists()){
+            Log.d(
+              Universals.ErrorMessages.ErrorMessageTag,
+              Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.ReadTemplatesErrorDirectoryNotFound
+            );
+            return false;
+        }
+        else if(!targetDirectory.isDirectory()){
+            Log.d(
+                    Universals.ErrorMessages.ErrorMessageTag,
+                    Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.ReadTemplatesErrorDirectoryNotFound
+            );
+            return false;
+        }
+        //  -Verify file's existence
+        inputFile = new File(targetDirectory + "/" + targetFileName + ".xml");
+        if (!inputFile.exists()){
+            Log.d(
+                    Universals.ErrorMessages.ErrorMessageTag,
+                    Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.ReadTemplatesErrorFileNotFound
+            );
+            return false;
+        }
+        else if (!inputFile.isFile()){
+            Log.d(
+                    Universals.ErrorMessages.ErrorMessageTag,
+                    Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.ReadTemplatesErrorFileNotFound
+            );
+            return false;
+        }
+
+        try{
+            inputFileStream = new FileInputStream(inputFile.getAbsolutePath());
+        } catch (FileNotFoundException e) {
+            Log.d(
+                    Universals.ErrorMessages.ErrorMessageTag,
+                    Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.ReadTemplatesErrorFileNotFound
+            );
+            return false;
+        }
+
+        // Set up DOM Document parser
+        f = DocumentBuilderFactory.newInstance();
+        try{
+            b = f.newDocumentBuilder();
+        }
+        catch (ParserConfigurationException e){
+            Log.d(
+                    Universals.ErrorMessages.ErrorMessageTag,
+                    Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.ReadTemplatesErrorFailedToCreateDocument
+            );
+            return false;
+        }
+        // Read file's contents into the document
+        try{
+            d = b.parse(new InputSource(inputFileStream));
+        }
+        catch (IOException e){
+            Log.d(
+                    Universals.ErrorMessages.ErrorMessageTag,
+                    Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.ReadTemplatesErrorFileIOError
+            );
+            return false;
+        }
+        catch (SAXException e) {
+            Log.d(
+                    Universals.ErrorMessages.ErrorMessageTag,
+                    Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.ReadTemplatesErrorFileParseError
+            );
+            try{
+                inputFileStream.close();
+            }
+            catch (IOException ex){
+                return false;
+            }
+            return false;
+        }
+
+        // Attempt to close the input stream as it is no longer needed.
+        try{
+            inputFileStream.close();
+        }
+        catch (IOException ignored){
+        }
+
+        // Convert document content into DrinkTemplates to store in DrinkTemplateManager.
+        // Verify DrinkTemplateManager Header as root
+        root = d.getDocumentElement();
+        root.normalize();
+        if (!root.getTagName().equals(Universals.XMLTags.DrinkTemplateManagerTags.Header)){
+            Log.d(
+                    Universals.ErrorMessages.ErrorMessageTag,
+                    Universals.ErrorMessages.DrinkTemplateManagerErrorMessages.ReadTemplatesErrorInvalidXMLFile
+            );
+            return false;
+        }
+
+        // Parse contents of root. Add to a temporary list for holding.
+        templatesRaw = root.getElementsByTagName(Universals.XMLTags.DrinkTemplateTags.Header);
+        for (int i = 0; i < templatesRaw.getLength(); i++){
+
+            // Construct a DrinkTemplate from elements within the current raw template
+            tempDrinkTemplate = new DrinkTemplate();
+            tempDrinkTemplateRaw = templatesRaw.item(i);
+            tempDrinkTemplateRawFields = tempDrinkTemplateRaw.getChildNodes();
+
+            for (int j = 0; j < tempDrinkTemplateRawFields.getLength(); j++){
+
+                rawField = tempDrinkTemplateRawFields.item(j);
+                // Name
+                if (rawField.getNodeName().equals(Universals.XMLTags.DrinkTemplateTags.Name)){
+                    tempDrinkTemplate.SetName(rawField.getNodeValue());
+                }
+                // Servings
+                else if (rawField.getNodeName().equals(Universals.XMLTags.DrinkTemplateTags.Servings)){
+                    try{
+                        tempDrinkTemplate.SetServings(Short.parseShort(rawField.getNodeValue()));
+                    }
+                    catch (NumberFormatException ignored){
+                    }
+                }
+            }
+        }
+
+        // If append is set to false, empty contents of DrinkTemplate HashMap
+        if (!append){
+            this.templateHashMap.clear();
+        }
+
+
+
+        // Read template with following format:
+        //  -Name
+        //  -Servings
+        //  -Type
+        //  -APV
+        //  -Calories
+        //  -Price
+        //  -ImageFilePath
+        //
+
+        // Return true when finished
+        return true;
+    }
 
     ///
     /// Test Methods
@@ -478,27 +677,25 @@ public class DrinkTemplateManager {
         testManager = new DrinkTemplateManager();
         testTemplate = new DrinkTemplate();
         testManager.PutTemplate(testTemplate);
-        try{
-            testManager.WriteTemplateList(dbm.GetAppRootDirectory(),"testDrinkTemplateFile");
+        if (testManager.WriteTemplateList(dbm.GetAppRootDirectory(),"testDrinkTemplateFile"))
             if (printAllMessages)
+                Log.d(
+                        Universals.TestMessages.TestMessageTag,
+                        Universals.TestMessages.DrinkTemplateManagerMessages.TemplateWriteTemplateListMessage(true, 1)
+                );
+        else
+        {
                 Log.d(
                         Universals.TestMessages.TestMessageTag,
                         Universals.TestMessages.DrinkTemplateManagerMessages.TemplateWriteTemplateListMessage(false, 1)
                 );
-        }
-        catch (IOException | ParserConfigurationException | TransformerException e){
-            Log.d(
-                    Universals.TestMessages.TestMessageTag,
-                    Universals.TestMessages.DrinkTemplateManagerMessages.TemplateWriteTemplateListMessage(false, 1)
-            );
-        }
-
+            }
         // Exception cases
 
     }
 
     public static void TestReadTemplateList(boolean printAllMessages, Context context){
-        
+
     }
 
 }
