@@ -1,6 +1,8 @@
 package com.example.alcoholconsumptiontracker.system;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 ///
@@ -44,5 +46,9 @@ public class Test {
         // Notify end testing
         Log.d(Universals.TestMessages.TestMessageTag, "-------End Testing-------");
 
+    }
+
+    public static void ForceActivityChange(Context currentContext, Activity newActivity){
+        // Intent intent = new Intent(currentContext, newActivity);
     }
 }

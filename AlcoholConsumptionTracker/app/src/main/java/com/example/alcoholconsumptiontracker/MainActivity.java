@@ -19,11 +19,10 @@ import com.example.alcoholconsumptiontracker.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Test Methods in System
-        Test.TestAll(true, this.getApplicationContext());
 
         super.onCreate(savedInstanceState);
 
