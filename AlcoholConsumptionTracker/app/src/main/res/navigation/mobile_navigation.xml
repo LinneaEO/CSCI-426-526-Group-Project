@@ -62,4 +62,9 @@
         android:name="com.example.alcoholconsumptiontracker.Alc_Select"
         android:label="fragment_alc__select"
         tools:layout="@layout/fragment_alc__select" />
+    <fragment
+        android:id="@+id/initialPersonalInformation"
+        android:name="com.example.alcoholconsumptiontracker.InitialPersonalInformation"
+        android:label="fragment_initial_personal_information"
+        tools:layout="@layout/fragment_initial_personal_information" />
 </navigation>
