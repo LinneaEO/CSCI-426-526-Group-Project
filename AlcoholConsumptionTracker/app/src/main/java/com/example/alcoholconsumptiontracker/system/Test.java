@@ -1,3 +1,8 @@
+/// <summary>
+///     File: Test.java
+///         Description: Contains the methods used for testing different classes
+///             and systems within the app.
+/// </summary>
 package com.example.alcoholconsumptiontracker.system;
 
 import android.app.Activity;
@@ -46,9 +51,5 @@ public class Test {
         // Notify end testing
         Log.d(Universals.TestMessages.TestMessageTag, "-------End Testing-------");
 
-    }
-
-    public static void ForceActivityChange(Context currentContext, Activity newActivity){
-        // Intent intent = new Intent(currentContext, newActivity);
     }
 }
