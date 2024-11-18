@@ -21,6 +21,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
@@ -82,13 +83,12 @@ public class Daily_View extends Fragment {
         LineData lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
 
-        // Customize the X and Y axes
+        // Customize the X-axis for weekdays
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setGranularity(1f); // one unit interval
+        xAxis.setGranularity(1f); // One label per unit
         xAxis.setGranularityEnabled(true);
-
-        YAxis leftAxis = lineChart.getAxisLeft();
+        xAxis.setValueFormatter(new Daily_View.dayValueFormatter()); // custom formatter
         YAxis rightAxis = lineChart.getAxisRight();
         rightAxis.setEnabled(false);
 
@@ -143,6 +143,7 @@ public class Daily_View extends Fragment {
         values.add(new Entry(10, 150));
         values.add(new Entry(11, 0));
         values.add(new Entry(12, 150));
+        values.add(new Entry(13, 0));
         return values;
     }
 
@@ -160,6 +161,7 @@ public class Daily_View extends Fragment {
         values.add(new Entry(10, 1.5F));
         values.add(new Entry(11, 0));
         values.add(new Entry(12, 1));
+        values.add(new Entry(13, 0));
         return values;
     }
 
@@ -177,6 +179,7 @@ public class Daily_View extends Fragment {
         values.add(new Entry(10, 0.08F));
         values.add(new Entry(11, 0));
         values.add(new Entry(12, 0.12F));
+        values.add(new Entry(13, 0));
         return values;
     }
 
@@ -194,7 +197,26 @@ public class Daily_View extends Fragment {
         values.add(new Entry(10, 0));
         values.add(new Entry(11, 23.99F));
         values.add(new Entry(12, 0));
+        values.add(new Entry(13, 0));
         return values;
+    }
+
+    // Custom label values for x-axis
+    private static class dayValueFormatter extends ValueFormatter {
+        private final String[] weekdays = {"3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm", "12am", "1am", "2am", "3am"};
+
+        @Override
+        public String getFormattedValue(float value) {
+            int index = (int) value - 1; // Convert value to index
+            if (index >= 0 && index < weekdays.length) {
+                return weekdays[index];
+            }
+
+            // Edge case
+            else {
+                return "";
+            }
+        }
     }
 
     private float calculateTotal(ArrayList<Entry> values) {
