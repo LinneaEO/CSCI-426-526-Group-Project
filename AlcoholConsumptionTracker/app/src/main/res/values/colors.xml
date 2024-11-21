@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color_blind_dark_blue">#6E8AE6</color>
     <color name="color_blind_light_blue">#9AAEF7</color>
+    <color name="active_button">#3A018A</color>
+    <color name="default_button">#FF6200EE</color>
 
 </resources>

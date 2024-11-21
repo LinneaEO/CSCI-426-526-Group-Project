@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Weekly_View">
 
-    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/button_calories_w"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="600dp"
+        android:backgroundTint="#3A018A"
+        android:text="Calories"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/button_units_w"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="600dp"
+        android:text="Units"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/button_bac_w"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="210dp"
+        android:layout_marginTop="600dp"
+        android:text="BAC"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/button_money_w"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="600dp"
+        android:text="Money"
+        android:textSize="10sp" />
+
+    <EditText
+        android:id="@+id/editTextWeekRange"
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
+        android:clickable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="none"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        tools:text="11/10 - 11/16" />
+
     <TextView
+        android:id="@+id/total_value_w"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="60dp"
+        android:text="Total Value: xxx" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="515dp"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/line_chart_w"
+            android:layout_width="match_parent"
+            android:layout_height="492dp"
+            android:layout_margin="16dp" />
+    </LinearLayout>
 
 </FrameLayout>
