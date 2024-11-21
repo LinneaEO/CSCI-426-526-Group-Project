@@ -1,28 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
+    android:id="@+id/alc_Select"
     tools:context=".Alc_Select" >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/sendToAlcoholProgramming"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="40dp"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="parent"
+    <Button
+        android:id="@+id/alcSelectToAlcLogging"
+        android:layout_width="170dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="20dp"
+        android:text="Confirm Choice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/alcSelectSendToAlcProgramming"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:text="Drink Mixer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/drinkSelectTextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Drink Select"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ListView
+            android:layout_width="400dp"
+            android:layout_height="500dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/alcSelectToAlcLogging"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+            app:layout_constraintTop_toBottomOf="@+id/drinkSelectTextTitle"
+            android:id="@+id/alc_select_list">
+        </ListView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,7 @@
 package com.example.alcoholconsumptiontracker;
 
+import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
+import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,50 +24,99 @@ import android.view.ViewGroup;
  */
 public class Alc_Select extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    ///
+    ///  Locals
+    ///
+    // List to be populated with drinks and button that adds more drinks
+    private ListView alcSelectListView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public Alc_Select() {
-        // Required empty public constructor
-    }
+        super(R.layout.fragment_alc__select);
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Alc_Select.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Alc_Select newInstance(String param1, String param2) {
+        }
+
+
+    public static Alc_Select newInstance() {
         Alc_Select fragment = new Alc_Select();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alc__select, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View root =  inflater.inflate(R.layout.fragment_alc__select, container, false);
+
+        // Initialize alcSelect list
+        this.alcSelectListView = root.findViewById(R.id.alc_select_list);
+        this.alcSelectListView.setAdapter(new alcSelectListAdapter(getContext()));
+
+        return root;
+
+    }
+    public class alcSelectListAdapter extends BaseAdapter {
+
+        Context listContext;
+        LayoutInflater inflater;
+        DrinkTemplate[] templateList;
+
+        public alcSelectListAdapter(Context context) {
+            this.templateList = MainActivity.GetDrinkTemplateManager().GetTemplateList().values().toArray(new DrinkTemplate[0]);
+            this.listContext = context;
+        }
+
+        public alcSelectListAdapter(Context context, DrinkTemplate[] templateList) {
+            this.templateList = templateList;
+            this.listContext = context;
+        }
+
+        public int getCount() {
+            return this.templateList.length;
+        }
+
+        public Object getItem(int arg0) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            inflater = (LayoutInflater) this.listContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row;
+            row = inflater.inflate(R.layout.alc_select_list_item, parent, false);
+            TextView drinkName;
+            TextView drinkType;
+            TextView drinkServings;
+            TextView drinkCalories;
+            TextView drinkPrice;
+            ImageView drinkImage;
+
+            /*
+            drinkName = (TextView) row.findViewById(R.id.alcoholSelectDrinkNameList);
+            drinkName.setText(this.templateList[position].GetName());
+            drinkType = (TextView) row.findViewById(R.id.alcoholSelectDrinkTypeList);
+            drinkType.setText(this.templateList[position].GetType().Get());
+            drinkServings = (TextView) row.findViewById(R.id.alcoholSelectDrinkServingsList);
+            drinkServings.setText(this.templateList[position].GetServings());
+            drinkCalories = (TextView) row.findViewById(R.id.alcoholSelectDrinkCaloriesList);
+            drinkCalories.setText(Float.toString(this.templateList[position].GetCalories()));
+            drinkPrice = (TextView) row.findViewById(R.id.alcoholSelectDrinkPriceList);
+            drinkPrice.setText(Float.toString(this.templateList[position].GetCalories()));
+            drinkImage = (ImageView) row.findViewById(R.id.alcoholSelectImageList);
+            */
+
+            return (row);
+        }
     }
 }

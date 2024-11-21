@@ -8,19 +8,19 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.alcoholconsumptiontracker.ui.home.HomeFragment"
-        android:label="home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_logging"
         android:name="com.example.alcoholconsumptiontracker.ui.dashboard.DashboardFragment"
-        android:label="logging"
+        android:label="Drink Logging"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/nav_reporting"
         android:name="com.example.alcoholconsumptiontracker.ui.notifications.NotificationsFragment"
-        android:label="reporting"
+        android:label="Report"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/daily_View"
