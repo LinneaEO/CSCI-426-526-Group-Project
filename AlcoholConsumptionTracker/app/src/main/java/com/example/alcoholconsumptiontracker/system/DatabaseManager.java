@@ -64,6 +64,9 @@ public class DatabaseManager {
         else
             return null;
     }
+    public boolean Initialized(){
+        return this.initialized;
+    }
 
     ///
     /// Methods
