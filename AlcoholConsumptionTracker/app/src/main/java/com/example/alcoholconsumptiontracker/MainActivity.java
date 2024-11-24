@@ -143,6 +143,42 @@ public class MainActivity extends AppCompatActivity {
         DrinkTemplate testTemplate = new DrinkTemplate();
         testTemplate.SetName("test name");
         drinkTemplateManager.PutTemplate(testTemplate);
+        testTemplate.SetName("a gin n rum matie");
+        testTemplate.SetType((short)2);
+        testTemplate.SetServings((short)1);
+        testTemplate.SetCalories((float)400);
+        testTemplate.SetPrice((float)1000000.98);
+
+        drinkTemplateManager.PutTemplate(testTemplate);
+        testTemplate = new DrinkTemplate();
+
+        testTemplate.SetName("test name 3");
+
+        drinkTemplateManager.PutTemplate(testTemplate);
+        testTemplate = new DrinkTemplate();
+
+        testTemplate.SetName("test name 4");
+
+        drinkTemplateManager.PutTemplate(testTemplate);
+        testTemplate = new DrinkTemplate();
+
+        testTemplate.SetName("test name 5");
+
+        drinkTemplateManager.PutTemplate(testTemplate);
+        testTemplate = new DrinkTemplate();
+
+        testTemplate.SetName("test name 6");
+
+        drinkTemplateManager.PutTemplate(testTemplate);
+        testTemplate = new DrinkTemplate();
+
+        testTemplate.SetName("test name 7");
+
+        drinkTemplateManager.PutTemplate(testTemplate);
+        testTemplate = new DrinkTemplate();
+
+        testTemplate.SetName("test name 8");
+        drinkTemplateManager.PutTemplate(testTemplate);
 
         MainActivity.initialized = true;
 
@@ -168,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentDictionary.put(R.id.alc_Edit, null);
         fragmentDictionary.put(R.id.alc_Select, null);
         fragmentDictionary.put(R.id.alc_Create, null);
+        fragmentDictionary.put(R.id.alc_Logging, null);
         fragmentDictionary.put(R.id.alc_Programming, null);
         fragmentDictionary.put(R.id.daily_View, null);
         fragmentDictionary.put(R.id.monthly_View, null);
@@ -212,6 +249,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (targetID == R.id.alc_Programming){
                     MainActivity.fragmentDictionary.put(targetID, Alc_Programming.newInstance(null, null));
+                }
+                else if (targetID == R.id.alc_Logging){
+                    MainActivity.fragmentDictionary.put(targetID, Alc_Logging.newInstance());
                 }
                 else if (targetID == R.id.daily_View){
                     MainActivity.fragmentDictionary.put(targetID, Daily_View.newInstance(null, null));
@@ -275,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
     ///     True if successful
     ///     False otherwise
     /// </summary>
-    private static boolean ChangeActiveFragment(int fragmentID){
+    public static boolean ChangeActiveFragment(int fragmentID){
 
         // If the fragment dictionary isn't initialized, if the dictionary doesn't contain the
         //  target fragment, or if the fragment is set to null, return false.

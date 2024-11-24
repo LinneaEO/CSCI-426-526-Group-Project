@@ -208,4 +208,22 @@ public class Universals {
 
     }
 
+    ///
+    ///  Contains tags used in DrinkLogging frontend objects.
+    ///     Text the user sees on UI elements originates from here.
+    ///
+    public static class DrinkLoggingUI{
+
+        ///
+        /// Drink Tags
+        ///
+        public static class DrinkTemplateTags{
+            public static String price = "Price ($): ";
+            public static String servings = "Servings: ";
+            public static String name = "Drink Name: ";
+            public static String calories = "Calories (kcal): ";
+            public static String type = "Drink Type: ";
+        }
+    }
+
 }

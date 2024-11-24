@@ -9,5 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color_blind_dark_blue">#6E8AE6</color>
     <color name="color_blind_light_blue">#9AAEF7</color>
+    <color name="drink_template_button_selected">#ffcf8c</color>
+    <color name="drink_template_button_unselected">#FF000000</color>
+    <color name="drink_template_selected">#fff9d1</color>
+    <color name="drink_template_unselected">#ebebeb</color>
 
 </resources>

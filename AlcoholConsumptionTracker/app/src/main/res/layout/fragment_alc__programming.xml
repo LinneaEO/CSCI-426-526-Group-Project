@@ -7,10 +7,5 @@
     tools:context=".Alc_Programming">
 
 
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date" />
+
 </FrameLayout>
