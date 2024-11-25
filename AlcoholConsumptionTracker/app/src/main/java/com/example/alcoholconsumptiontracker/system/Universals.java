@@ -224,6 +224,13 @@ public class Universals {
             public static String calories = "Calories (kcal): ";
             public static String type = "Drink Type: ";
         }
+
+        ///
+        /// Drink Logging UI
+        ///
+        public static class UITags{
+            public static String OccasionDefaultText = "(Optional)";
+        }
     }
 
 }

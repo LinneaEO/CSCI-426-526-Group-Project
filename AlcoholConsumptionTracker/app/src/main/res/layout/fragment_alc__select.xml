@@ -28,21 +28,21 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/color_blind_light_blue"
-        app:layout_constraintBottom_toBottomOf="@+id/alc_select_list"
+        app:layout_constraintBottom_toBottomOf="@+id/alc_logging_selected_template"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/alc_select_list" />
+        app:layout_constraintTop_toTopOf="@+id/alc_logging_selected_template" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/alc_select_list"
-        app:layout_constraintEnd_toEndOf="@+id/alc_select_list"
-        app:layout_constraintStart_toEndOf="@+id/alc_select_list"
-        app:layout_constraintStart_toStartOf="@+id/alc_select_list"
-        app:layout_constraintTop_toTopOf="@+id/alc_select_list" />
+        app:layout_constraintBottom_toBottomOf="@+id/alc_logging_selected_template"
+        app:layout_constraintEnd_toEndOf="@+id/alc_logging_selected_template"
+        app:layout_constraintStart_toEndOf="@+id/alc_logging_selected_template"
+        app:layout_constraintStart_toStartOf="@+id/alc_logging_selected_template"
+        app:layout_constraintTop_toTopOf="@+id/alc_logging_selected_template" />
 
     <TextView
         android:id="@+id/textView3"
@@ -85,18 +85,18 @@
         android:id="@+id/drinkSelectTextTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="Drink Select"
         android:textColor="@color/white"
         android:textSize="34sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <ListView
-        android:id="@+id/alc_select_list"
+        android:id="@+id/alc_logging_selected_template"
         android:layout_width="400dp"
         android:layout_height="500dp"
         android:layout_marginTop="60dp"

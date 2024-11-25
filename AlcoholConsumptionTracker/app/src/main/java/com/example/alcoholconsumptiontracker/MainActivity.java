@@ -10,11 +10,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.alcoholconsumptiontracker.system.DatabaseManager;
+import com.example.alcoholconsumptiontracker.system.Drink;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
 import com.example.alcoholconsumptiontracker.system.Test;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,13 +29,18 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.alcoholconsumptiontracker.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import kotlinx.coroutines.MainCoroutineDispatcher;
 
 /// WARNING: Don't create more than one instance of MainActivity
 public class MainActivity extends AppCompatActivity {
-
 
     ///
     /// Locals
@@ -69,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
     ///  Global DrinkTemplateManager
     private static DrinkTemplateManager drinkTemplateManager;
 
+    /// Global Temporary DrinkList (later to be given to date system)
+    private static List<Drink> drinkList;
+
+
     ///  Global DatabaseManager
     private static DatabaseManager databaseManager;
 
@@ -104,6 +116,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize global DrinkTemplateManager
         this.CreateHelperInitializeDrinkTemplateManager();
+
+        // Initialize global DrinkList (temporary)
+        MainActivity.drinkList = new ArrayList<Drink>();
+
 
         // Initialize the bottom navigation menu. Set the home screen as daily_View
         //  Initialize bottom navigation menu listeners.
@@ -303,6 +319,45 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException("Drink Template Manager uninitialized.");
         }
         else return MainActivity.drinkTemplateManager;
+    }
+
+    // Gets the global drink list
+    public static List<Drink> GetDrinkList(){
+        return MainActivity.drinkList;
+    }
+    /// <summary>
+    ///     Puts a drink in the global drink list.
+    ///     Returns:
+    ///         True if successful
+    ///         False otherwise
+    /// </summary>
+    public static boolean PutDrinkInDrinkList(Drink newDrink){
+        try{
+            MainActivity.drinkList.add(newDrink);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
+    /// <summary>
+    ///     Removes a drink from the global drink list by index.
+    ///     Returns:
+    ///         True if successful
+    ///         False otherwise
+    /// </summary>
+    public static boolean RemoveDrinkFromDrinkList(int index){
+        // Check for out of range
+        if (index >= MainActivity.drinkList.size() || index < 0){
+            return false;
+        }
+        try{
+            MainActivity.drinkList.remove(index);
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     ///

@@ -3,13 +3,11 @@ package com.example.alcoholconsumptiontracker;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +19,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
-import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
 import com.example.alcoholconsumptiontracker.system.Universals;
 
 /**
@@ -76,7 +72,7 @@ public class Alc_Select extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Instantiate fragment contents from fragment_alc__select to the parent container
-        View root =  inflater.inflate(R.layout.fragment_alc__select, container, false);
+        View root = inflater.inflate(R.layout.fragment_alc__select, container, false);
 
         // Set the drinkTemplate selected to null
         Alc_Select.alcSelectListView = null;
@@ -95,7 +91,7 @@ public class Alc_Select extends Fragment {
 
 
         // Initialize alcSelect list
-        Alc_Select.alcSelectListView = root.findViewById(R.id.alc_select_list);
+        Alc_Select.alcSelectListView = root.findViewById(R.id.alc_logging_selected_template);
         Alc_Select.alcSelectListView.setAdapter(new alcSelectListAdapter(getContext()));
         Alc_Select.alcSelectListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
@@ -153,7 +149,7 @@ public class Alc_Select extends Fragment {
 
 
     ///
-    /// Setters and Getters
+    /// Colors
     ///
     public static int RowSelectedColor(){
         return Color.parseColor("#fff9d1");
@@ -168,6 +164,10 @@ public class Alc_Select extends Fragment {
         return Color.parseColor("#FF000000");
     }
 
+    ///
+    /// Setters and Getters
+    ///
+
     /// Sets the selected template of alc Select
     private static void SetSelectedTemplate(DrinkTemplate newSelectedTemplate){
         Alc_Select.selectedTemplate = newSelectedTemplate;
@@ -175,6 +175,7 @@ public class Alc_Select extends Fragment {
             Alc_Select.confirmChoiceButton.setEnabled(true);
         }
     }
+
     /// Gets the selected template from alc Select if there is one.
     public static DrinkTemplate GetSelectedTemplate(){
         return Alc_Select.selectedTemplate;
