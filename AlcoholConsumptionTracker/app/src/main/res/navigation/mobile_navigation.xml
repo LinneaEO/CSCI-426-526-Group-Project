@@ -20,18 +20,42 @@
     <fragment
         android:id="@+id/nav_reporting"
         android:name="com.example.alcoholconsumptiontracker.ui.notifications.NotificationsFragment"
+<<<<<<< HEAD
         android:label="Report"
         tools:layout="@layout/fragment_notifications" />
+=======
+        android:label="reporting"
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/action_nav_reporting_to_daily_view"
+            app:destination="@id/daily_View" />
+        <action
+            android:id="@+id/action_nav_reporting_to_weekly_View"
+            app:destination="@id/weekly_View" />
+        <action
+            android:id="@+id/action_nav_reporting_to_monthly_View"
+            app:destination="@id/monthly_View" />
+    </fragment>
+>>>>>>> e57f1641fa7028d4f01637296e9aeb298859512b
     <fragment
         android:id="@+id/daily_View"
         android:name="com.example.alcoholconsumptiontracker.Daily_View"
         android:label="fragment_daily__view"
-        tools:layout="@layout/fragment_daily__view" />
+        tools:layout="@layout/fragment_daily__view" >
+
+        <action
+            android:id="@+id/action_daily_View_to_nav_reporting"
+            app:destination="@id/nav_reporting" />
+    </fragment>
     <fragment
         android:id="@+id/weekly_View"
         android:name="com.example.alcoholconsumptiontracker.Weekly_View"
         android:label="fragment_weekly__view"
-        tools:layout="@layout/fragment_weekly__view" />
+        tools:layout="@layout/fragment_weekly__view" >
+        <action
+            android:id="@+id/action_weekly_View_to_nav_reporting"
+            app:destination="@id/nav_reporting" />
+    </fragment>
     <fragment
         android:id="@+id/monthly_View"
         android:name="com.example.alcoholconsumptiontracker.Monthly_View"
@@ -62,4 +86,9 @@
         android:name="com.example.alcoholconsumptiontracker.Alc_Select"
         android:label="fragment_alc__select"
         tools:layout="@layout/fragment_alc__select" />
+    <fragment
+        android:id="@+id/initialPersonalInformation"
+        android:name="com.example.alcoholconsumptiontracker.InitialPersonalInformation"
+        android:label="fragment_initial_personal_information"
+        tools:layout="@layout/fragment_initial_personal_information" />
 </navigation>

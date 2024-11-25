@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navigationController);
         */
 
+<<<<<<< HEAD
         DrinkTemplate testTemplate = new DrinkTemplate();
         testTemplate.SetName("test name");
         drinkTemplateManager.PutTemplate(testTemplate);
@@ -230,6 +231,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentDictionary.put(R.id.personal_Goals, null);
         fragmentDictionary.put(R.id.personal_Info, null);
         fragmentDictionary.put(R.id.weekly_View, null);
+=======
+
+        Intent intent = new Intent(this, Alc_Select.class);
+        this.startActivity(intent);
+>>>>>>> e57f1641fa7028d4f01637296e9aeb298859512b
     }
 
     /// <summary>
