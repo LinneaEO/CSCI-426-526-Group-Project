@@ -5,11 +5,7 @@
     android:id="@+id/daily_View"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Daily_View">
-
-<<<<<<< HEAD
-=======
 
     <EditText
         android:id="@+id/editTextDate2"
@@ -22,7 +18,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         tools:text="11/13/2024" />
 
->>>>>>> e57f1641fa7028d4f01637296e9aeb298859512b
     <TextView
         android:id="@+id/total_value"
         android:layout_width="wrap_content"

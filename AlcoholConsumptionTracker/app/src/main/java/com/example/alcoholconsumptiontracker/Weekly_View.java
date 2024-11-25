@@ -34,6 +34,10 @@ public class Weekly_View extends Fragment {
     private TextView totalTextView;
     private Button buttonCalories, buttonUnits, buttonBAC, buttonMoney;
 
+    public Weekly_View() {
+        // Required empty public constructor
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

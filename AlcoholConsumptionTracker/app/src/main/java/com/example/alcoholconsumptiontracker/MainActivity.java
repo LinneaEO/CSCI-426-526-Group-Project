@@ -148,18 +148,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        /*
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.alc_Select, R.id.daily_View, R.id.weekly_View)
-                .build();
-        NavController navigationController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navigationController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navigationController);
-        */
 
-<<<<<<< HEAD
+        // testing
         DrinkTemplate testTemplate = new DrinkTemplate();
         testTemplate.SetName("test name");
         drinkTemplateManager.PutTemplate(testTemplate);
@@ -231,11 +221,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentDictionary.put(R.id.personal_Goals, null);
         fragmentDictionary.put(R.id.personal_Info, null);
         fragmentDictionary.put(R.id.weekly_View, null);
-=======
 
-        Intent intent = new Intent(this, Alc_Select.class);
-        this.startActivity(intent);
->>>>>>> e57f1641fa7028d4f01637296e9aeb298859512b
     }
 
     /// <summary>
@@ -291,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.fragmentDictionary.put(targetID, Personal_Info.newInstance(null, null));
                 }
                 else if (targetID == R.id.weekly_View){
-                    MainActivity.fragmentDictionary.put(targetID, Weekly_View.newInstance(null, null));
+                    MainActivity.fragmentDictionary.put(targetID, new Weekly_View());
                 }
             }
             return MainActivity.fragmentDictionary.get(targetID);

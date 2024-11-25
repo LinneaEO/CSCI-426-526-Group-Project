@@ -29,7 +29,6 @@ import java.util.ArrayList;
 
 public class Daily_View extends Fragment {
 
-<<<<<<< HEAD
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,11 +58,9 @@ public class Daily_View extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-=======
     private LineChart lineChart;
     private TextView totalTextView;
     private Button buttonCalories, buttonUnits, buttonBAC, buttonMoney;
->>>>>>> e57f1641fa7028d4f01637296e9aeb298859512b
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
