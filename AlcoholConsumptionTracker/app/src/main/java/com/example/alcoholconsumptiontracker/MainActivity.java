@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
 
-        Intent intent = new Intent(this, Alc_Select.class);
-        this.startActivity(intent);
+        //Intent intent = new Intent(this, Alc_Select.class);
+        //this.startActivity(intent);
     }
 
 }
