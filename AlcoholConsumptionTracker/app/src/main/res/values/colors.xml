@@ -13,5 +13,7 @@
     <color name="drink_template_button_unselected">#FF000000</color>
     <color name="drink_template_selected">#fff9d1</color>
     <color name="drink_template_unselected">#ebebeb</color>
+    <color name="active_button">#3A018A</color>
+    <color name="default_button">#FF6200EE</color>
 
 </resources>
