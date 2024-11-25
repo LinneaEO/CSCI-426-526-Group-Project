@@ -54,11 +54,19 @@ public class Alc_Logging extends Fragment {
     // Represents the button that triggers a time dialog to set the time of drink consumption
     private static Button drinkTimeOfDrinkDialogButton;
 
+    // Represents the textview that contains the time of consumption
+    private static TextView drinkTimeOfDrinkText;
+
     // Represents the button that adds logs a drink based on the selected template, time chosen, and occasion
     private static Button addOneDrink;
 
-    // Represents the textview that contains the time of consumption
-    private static TextView drinkTimeOfDrinkText;
+    // Represents the button that sends from alc_logging to the home page (finish)
+    private static Button finishedLoggingDrinks;
+
+    // Represents the back button that sends from alc_logging to alc_select
+    private static Button backButton;
+
+
     private static int drinkMinute;
     private static int drinkHour;
 
@@ -199,6 +207,32 @@ public class Alc_Logging extends Fragment {
                                 (short)Alc_Logging.drinkMinute
                         );
                         MainActivity.PutDrinkInDrinkList(loggedDrink);
+                    }
+
+                }
+        );
+
+        // Set up the finished logging drinks button
+        Alc_Logging.finishedLoggingDrinks = root.findViewById(R.id.alcLoggingFinishLoggingButton);
+        Alc_Logging.finishedLoggingDrinks.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MainActivity.ChangeActiveFragment(R.id.daily_View);
+                    }
+
+                }
+        );
+
+        // Set up the back button
+        Alc_Logging.backButton = root.findViewById(R.id.alcLoggingBackButton);
+        Alc_Logging.backButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // When the back button is pressed, set the nav view to home
+                        //  In MainActivity, this is set to also change the active fragment
+                        MainActivity.GetNavView().setSelectedItemId(R.id.navigation_home);
                     }
 
                 }

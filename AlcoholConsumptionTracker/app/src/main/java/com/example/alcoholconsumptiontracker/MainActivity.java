@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
     // Represents the content view
     private static View contentView;
 
+    // Represents the bottomNavigation bar
+    private static BottomNavigationView navView;
+
     /// Represents the fragment manager, an object used to
     /// switch between app scenes.
     private static FragmentManager fragmentManager;
@@ -123,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize the bottom navigation menu. Set the home screen as daily_View
         //  Initialize bottom navigation menu listeners.
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setSelectedItemId(R.id.navigation_home);
-        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        MainActivity.navView = findViewById(R.id.nav_view);
+        MainActivity.navView.setSelectedItemId(R.id.navigation_home);
+        MainActivity.navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
 
@@ -308,6 +311,10 @@ public class MainActivity extends AppCompatActivity {
     public static View GetContentView(){
         if (MainActivity.contentView == null) throw new RuntimeException("Content view uninitialized");
         else return MainActivity.contentView;
+    }
+    public static BottomNavigationView GetNavView(){
+        if (MainActivity.navView == null) throw new RuntimeException("NavView uninitialized");
+        else return MainActivity.navView;
     }
     public static DatabaseManager GetDatabaseManager(){
         if (!MainActivity.databaseManager.Initialized() || !MainActivity.initialized)

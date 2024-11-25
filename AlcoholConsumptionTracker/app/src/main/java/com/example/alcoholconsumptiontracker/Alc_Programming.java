@@ -42,6 +42,12 @@ public class Alc_Programming extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alc__programming, container, false);
+        View root =  inflater.inflate(R.layout.fragment_alc__programming, container, false);
+
+
+
+
+        // Return root when finished
+        return root;
     }
 }
