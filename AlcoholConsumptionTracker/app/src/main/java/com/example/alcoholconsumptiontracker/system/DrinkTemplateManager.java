@@ -148,6 +148,17 @@ public class DrinkTemplateManager {
         return false;
     }
 
+    /// <summary>
+    ///  Given a key representing a template name, this function
+    ///     returns whether the template manager has a template
+    ///     with that key or not.
+    ///     Returns
+    ///     True if it contains a template with that key
+    ///     False otherwise
+    /// </summary>
+    public boolean ContainsTemplate(String templateKey){
+        return this.templateHashMap.containsKey(templateKey);
+    }
     ///
     /// - Backend
     ///

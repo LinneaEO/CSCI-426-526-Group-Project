@@ -1,0 +1,161 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/alcSelectItemSelectButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:visibility="invisible"
+        tools:visibility="invisible"
+        android:clickable="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/alcSelectListSpacer1"
+                android:layout_width="wrap_content"
+                android:layout_height="5dp"
+                android:clickable="false"
+                android:text="@string/defaultText"
+                android:visibility="invisible"
+                android:focusableInTouchMode="false"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:clickable="false"
+                android:focusableInTouchMode="false"
+                >
+
+                <RadioButton
+                    android:id="@+id/alcSelectListViewRadioButton"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:foregroundGravity="center_vertical" />
+
+                <ImageView
+                    android:id="@+id/alcoholSelectImageList"
+                    android:layout_width="90dp"
+                    android:clickable="false"
+                    android:layout_height="90dp"
+                    android:contentDescription="@string/defaultText"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_default_drink_image"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold"
+                    android:focusableInTouchMode="false"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:clickable="false"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:focusableInTouchMode="false">
+
+                    <TextView
+                        android:id="@+id/alcoholSelectDrinkNameList"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:clickable="false"
+                        android:focusableInTouchMode="false"
+                        android:text="@string/defaultText"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:orientation="horizontal"
+                        android:focusableInTouchMode="false">
+
+                        <LinearLayout
+                            android:layout_width="145dp"
+                            android:layout_height="match_parent"
+                            android:clickable="false"
+                            android:focusableInTouchMode="false"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/alcoholSelectDrinkTypeList"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:clickable="false"
+                                android:focusableInTouchMode="false"
+                                android:text="@string/defaultText"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/alcoholSelectDrinkServingsList"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:clickable="false"
+                                android:focusableInTouchMode="false"
+                                android:text="@string/defaultText"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="145dp"
+                            android:layout_height="match_parent"
+                            android:clickable="false"
+                            android:focusableInTouchMode="false"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/alcoholSelectDrinkPriceList"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:clickable="false"
+                                android:focusableInTouchMode="false"
+                                android:text="@string/defaultText"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:id="@+id/alcoholSelectDrinkCaloriesList"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:clickable="false"
+                                android:focusableInTouchMode="false"
+                                android:text="@string/defaultText"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/alcSelectListSpacer2"
+                android:layout_width="wrap_content"
+                android:layout_height="5dp"
+                android:clickable="false"
+                android:focusableInTouchMode="false"
+                android:text="@string/defaultText"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

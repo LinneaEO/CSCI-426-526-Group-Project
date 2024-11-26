@@ -1,14 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/alc_Edit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Alc_Edit">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/color_blind_dark_blue"
+        tools:layout_editor_absoluteX="-31dp"
+        tools:layout_editor_absoluteY="16dp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/alcEditTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/color_blind_light_blue"
+        android:text="Drink Edit"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/alcEditImageTable"
+        android:layout_width="390dp"
+        android:layout_height="312dp"
+        android:layout_marginBottom="150dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/alc_create_edit_table"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/alcEditBackButton"
+        android:layout_width="95dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/color_blind_dark_blue"
+        android:scaleType="fitXY"
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        android:src="@mipmap/arrow_button_not_clicked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/alcEditFinishButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alc_programming_selected_template" />
+
+    <ImageButton
+        android:id="@+id/alcEditFinishButton"
+        android:layout_width="272dp"
+        android:layout_height="66dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/color_blind_dark_blue"
+        android:scaleType="fitXY"
+        android:src="@mipmap/finish_button_not_clicked"
+        app:layout_constraintBottom_toBottomOf="@+id/textView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alcEditBackButton" />
+
+    <EditText
+        android:id="@+id/alcEditName"
+        android:layout_width="174dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="17dp"
+        android:gravity="center|left"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@+id/alcEditServings"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/alcEditServings"
+        android:layout_width="174dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center|left"
+        android:inputType="number"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@+id/alcEditTypeInputLayout"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/alcEditPrice"
+        android:layout_width="174dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center|left"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@+id/alcEditCalories"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/alcEditTypeInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="177dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/alcEditPrice"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/alcEditTypeInputTextbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:inputType="none"
+            android:maxLines="1"
+            android:text=""
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/alcEditCalories"
+        android:layout_width="173dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="82dp"
+        android:ems="10"
+        android:gravity="center|left"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@+id/alcEditFinishButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/alcEditUploadImageBaseImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="75dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/upload_image_picture"
+        app:layout_constraintBottom_toTopOf="@+id/alcEditImageTable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/alcEditImage"
+        android:layout_width="156dp"
+        android:layout_height="157dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="22dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_default_drink_image"
+        app:layout_constraintBottom_toBottomOf="@+id/alcEditUploadImageBaseImage"
+        app:layout_constraintStart_toStartOf="@+id/alcEditUploadImageBaseImage" />
+
+    <ImageButton
+        android:id="@+id/alcEditUploadImageButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_blind_dark_blue"
+        android:scaleType="fitXY"
+        android:src="@mipmap/upload_image_picture"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/alcEditImage"
+        app:layout_constraintEnd_toEndOf="@+id/alcEditImage"
+        app:layout_constraintStart_toStartOf="@+id/alcEditImage"
+        app:layout_constraintTop_toTopOf="@+id/alcEditImage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@
 /// </summary>
 package com.example.alcoholconsumptiontracker.system;
 
+
 public class Universals {
 
     ///
@@ -205,6 +206,31 @@ public class Universals {
             public static String Header = "drinkTemplateManager";
         }
 
+    }
+
+    ///
+    ///  Contains tags used in DrinkLogging frontend objects.
+    ///     Text the user sees on UI elements originates from here.
+    ///
+    public static class DrinkLoggingUI{
+
+        ///
+        /// Drink Tags
+        ///
+        public static class DrinkTemplateTags{
+            public static String price = "Price ($): ";
+            public static String servings = "Servings: ";
+            public static String name = "Drink Name: ";
+            public static String calories = "Calories (kcal): ";
+            public static String type = "Drink Type: ";
+        }
+
+        ///
+        /// Drink Logging UI
+        ///
+        public static class UITags{
+            public static String OccasionDefaultText = "(Optional)";
+        }
     }
 
 }
