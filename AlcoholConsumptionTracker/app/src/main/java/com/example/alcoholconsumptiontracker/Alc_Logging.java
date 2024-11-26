@@ -218,7 +218,9 @@ public class Alc_Logging extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.ChangeActiveFragment(R.id.daily_View);
+                        // When the back button is pressed, set the nav view to home
+                        //  In MainActivity, this is set to also change the active fragment
+                        MainActivity.GetNavView().setSelectedItemId(R.id.navigation_home);
                     }
 
                 }
@@ -230,9 +232,7 @@ public class Alc_Logging extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // When the back button is pressed, set the nav view to home
-                        //  In MainActivity, this is set to also change the active fragment
-                        MainActivity.GetNavView().setSelectedItemId(R.id.navigation_home);
+                        MainActivity.ChangeActiveFragment(R.id.alc_Select);
                     }
 
                 }

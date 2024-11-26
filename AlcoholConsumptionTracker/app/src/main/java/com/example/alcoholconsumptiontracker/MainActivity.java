@@ -380,9 +380,24 @@ public class MainActivity extends AppCompatActivity {
         //  if statements.
         MainActivity.fragmentManager.
                 beginTransaction().
-                replace(R.id.mainActivityFragment, MainActivity.GetFragmentByID(fragmentID)).
+                replace(MainActivity.hostFragmentID, MainActivity.GetFragmentByID(fragmentID)).
                 commitNow();
         MainActivity.currentFragmentID = fragmentID;
+        return true;
+    }
+
+    ///
+    public static boolean ReloadActiveFragment(){
+        // If the fragment dictionary isn't initialized, return false.
+        if (MainActivity.fragmentDictionary == null) return false;
+
+        // Reload the active fragment
+        MainActivity.fragmentManager.beginTransaction()
+        .detach(MainActivity.GetFragmentByID(MainActivity.currentFragmentID))
+                .commit();
+        MainActivity.fragmentManager.beginTransaction()
+                .attach(MainActivity.GetFragmentByID(MainActivity.currentFragmentID))
+                .commit();
         return true;
     }
 }
