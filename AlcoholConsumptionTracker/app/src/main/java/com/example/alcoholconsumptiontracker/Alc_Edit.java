@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -58,7 +59,7 @@ public class Alc_Edit extends Fragment {
     private static ImageButton alcEditFinishEditingButton;
 
     // Represents the cancel button
-    private static ImageButton alEditCancelEditButton;
+    private static ImageButton alcEditCancelEditButton;
 
 
     public Alc_Edit() {
@@ -94,7 +95,7 @@ public class Alc_Edit extends Fragment {
         Alc_Edit.templateCaloriesTextbox = null;
         Alc_Edit.templatePriceTextbox = null;
         Alc_Edit.alcEditFinishEditingButton = null;
-        Alc_Edit.alEditCancelEditButton = null;
+        Alc_Edit.alcEditCancelEditButton = null;
 
         // Set up drink template (pull from alc programming)
         Alc_Edit.templateEditing = Alc_Programming.GetSelectedTemplate();
@@ -109,161 +110,196 @@ public class Alc_Edit extends Fragment {
         // Set up template name textbox
         Alc_Edit.templateNameTextbox = root.findViewById(R.id.alcEditName);
         Alc_Edit.templateNameTextbox.setText(String.valueOf(Alc_Edit.GetEditingTemplate().GetName()));
-        Alc_Edit.templateNameTextbox.setOnFocusChangeListener(
-                new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus){
-                            EditText nameNextBox = (EditText) v;
-                            String newName = String.valueOf(nameNextBox.getText());
-                            // If there is no change in name, return
-                            if (newName.equals(Alc_Edit.GetEditingTemplate().GetName())){
-                                return;
-                            }
-                            // If the name is contained within another template, return and reset the template name
-                            //  to what it was previously.
-                            if (MainActivity.GetDrinkTemplateManager().ContainsTemplate(newName)){
-                                Toast.makeText(
-                                        MainActivity.GetContentView().getContext(),
-                                        "Template name already exists",
-                                        Toast.LENGTH_LONG
-                                ).show();
-                                nameNextBox.setText(Alc_Edit.OriginalEditingTemplateName());
-                                return;
-                            }
-
-                            // If the name isn't contained and not a repeat name, change the name
-                            //  of the template.
-                            DrinkTemplate newTemplate = Alc_Edit.GetEditingTemplate();
-                            newTemplate.SetName(newName);
-                            Alc_Edit.SetEditingTemplate(newTemplate);
-                        }
-                    }
-                }
-        );
 
         // Set up template servings textbox
         Alc_Edit.templateServingsTextbox = root.findViewById(R.id.alcEditServings);
         Alc_Edit.templateServingsTextbox.setText(String.valueOf(Alc_Edit.GetEditingTemplate().GetServings()));
-        Alc_Edit.templateServingsTextbox.setOnFocusChangeListener(
-                new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus){
-                            EditText nameNextBox = (EditText) v;
-                            short newServings = 1;
-                            try{
-                                newServings = Short.parseShort(String.valueOf(nameNextBox.getText()));
-                                if (newServings < 1){
-                                    Toast.makeText(
-                                            MainActivity.GetContentView().getContext(),
-                                            "Minimum of 1 serving(s)",
-                                            Toast.LENGTH_LONG
-                                    ).show();
-                                    newServings = 1;
-                                }
-                            } catch (NumberFormatException e) {
-                                newServings = 1;
-                            }
-
-                            // Set the servings of the template
-                            DrinkTemplate newTemplate = Alc_Edit.GetEditingTemplate();
-                            newTemplate.SetServings(newServings);
-                            Alc_Edit.SetEditingTemplate(newTemplate);
-                        }
-                    }
-                }
-        );
 
         // Set up template calories textbox
         Alc_Edit.templateCaloriesTextbox = root.findViewById(R.id.alcEditCalories);
         Alc_Edit.templateCaloriesTextbox.setText(String.valueOf(Alc_Edit.GetEditingTemplate().GetCalories()));
-        Alc_Edit.templateCaloriesTextbox.setOnFocusChangeListener(
-                new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus){
-                            EditText nameNextBox = (EditText) v;
-                            float newCalories = 0;
-                            try{
-                                newCalories = Short.parseShort(String.valueOf(nameNextBox.getText()));
-                                if (newCalories < 0){
-                                    Toast.makeText(
-                                            MainActivity.GetContentView().getContext(),
-                                            "Minimum of 0 calories",
-                                            Toast.LENGTH_LONG
-                                    ).show();
-                                    newCalories = 0;
-                                }
-                            } catch (NumberFormatException e) {
-                                newCalories = 0;
-                            }
-
-                            // Set the servings of the template
-                            DrinkTemplate newTemplate = Alc_Edit.GetEditingTemplate();
-                            newTemplate.SetCalories(newCalories);
-                            Alc_Edit.SetEditingTemplate(newTemplate);
-                        }
-                    }
-                }
-        );
 
         // Set up template price textbox
         Alc_Edit.templatePriceTextbox = root.findViewById(R.id.alcEditPrice);
         Alc_Edit.templatePriceTextbox.setText(String.valueOf(Alc_Edit.GetEditingTemplate().GetPrice()));
-        Alc_Edit.templatePriceTextbox.setOnFocusChangeListener(
-                new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus){
-                            EditText nameNextBox = (EditText) v;
-                            float newPrice = 0;
-                            try{
-                                newPrice = Short.parseShort(String.valueOf(nameNextBox.getText()));
-                                if (newPrice < 0){
-                                    Toast.makeText(
-                                            MainActivity.GetContentView().getContext(),
-                                            "Minimum of 0 dollars",
-                                            Toast.LENGTH_LONG
-                                    ).show();
-                                    newPrice = 0;
-                                }
-                            } catch (NumberFormatException e) {
-                                newPrice = 0;
-                            }
-
-                            // Set the servings of the template
-                            DrinkTemplate newTemplate = Alc_Edit.GetEditingTemplate();
-                            newTemplate.SetPrice(newPrice);
-                            Alc_Edit.SetEditingTemplate(newTemplate);
-                        }
-                    }
-                }
-        );
 
         // Set up template type box
         Alc_Edit.templateTypeAutoTextbox = root.findViewById(R.id.alcEditTypeInputTextbox);
+        Alc_Edit.templateTypeAutoTextbox.setText(Alc_Edit.templateEditing.GetType().Get());
         String[] drinkTypes = DrinkType.DrinkTypeNames();
         ArrayAdapter adapter = new ArrayAdapter(
                 MainActivity.GetContentView().getContext(),
                 R.layout.alc_edit_create_dropdown_type,
                 drinkTypes);
         Alc_Edit.templateTypeAutoTextbox.setAdapter(adapter);
-        Alc_Edit.templateTypeAutoTextbox.setOnFocusChangeListener(
-                new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus){
-                            AutoCompleteTextView typeTextBox = (AutoCompleteTextView) v;
-                            String newType = String.valueOf(typeTextBox.getText());
 
-                            // Set the servings of the template
-                            DrinkTemplate newTemplate = Alc_Edit.GetEditingTemplate();
-                            newTemplate.SetType(DrinkType.DrinkTypeFromString(newType));
-                            Alc_Edit.SetEditingTemplate(newTemplate);
-                        }
+
+        // Set up back button
+        Alc_Edit.alcEditCancelEditButton = root.findViewById(R.id.alcEditBackButton);
+        Alc_Edit.alcEditCancelEditButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Go to previous fragment without saving changes
+                        MainActivity.ChangeActiveFragment(R.id.alc_Programming);
                     }
                 }
+        );
+
+        // Set up finish button
+        Alc_Edit.alcEditFinishEditingButton = root.findViewById(R.id.alcEditFinishButton);
+        Alc_Edit.alcEditFinishEditingButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // Locals
+                        DrinkTemplate newTemplate = Alc_Edit.GetEditingTemplate();
+                        float newPrice = 0;
+                        String newName = "";
+                        float newCalories = 0;
+                        String newType = "";
+                        short newServings = 0;
+
+                        // Check to make sure template values are valid. If not, return. If so, proceed
+                        //  Name
+                        EditText nameNextBox = (EditText) Alc_Edit.GetTemplateNameTextbox();
+                        newName = String.valueOf(nameNextBox.getText());
+
+                        // If the name is blank, notify that the name cannot be blank.
+                        if(newName.isEmpty()){
+                            Toast.makeText(
+                                    MainActivity.GetContentView().getContext(),
+                                    "Template name cannot be blank",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                            nameNextBox.setBackgroundColor(getResources().getColor(R.color.drink_template_selected) );
+                            return;
+                        }
+
+                        // If the name is contained within another template and isn't the same name as before editing, return and notify
+                        //  templates cannot repeat names
+                        if (MainActivity.GetDrinkTemplateManager().ContainsTemplate(newName) && !newName.equals(Alc_Edit.OriginalEditingTemplateName())){
+                            Toast.makeText(
+                                    MainActivity.GetContentView().getContext(),
+                                    "Template name already exists",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                            nameNextBox.setBackgroundColor(getResources().getColor(R.color.drink_template_selected) );
+                            return;
+                        }
+
+
+                        // If the name isn't contained and not a repeat name, change the name
+                        //  of the template.
+                        newTemplate.SetName(newName);
+                        nameNextBox.setBackgroundColor(getResources().getColor(R.color.white) );
+
+
+                        //  Servings
+                        EditText servingsTextbox = (EditText) Alc_Edit.GetTemplateServingsTextbox();
+                        try{
+                            newServings = Short.parseShort(String.valueOf(servingsTextbox.getText()));
+                            if (newServings < 1){
+                                Toast.makeText(
+                                        MainActivity.GetContentView().getContext(),
+                                        "Minimum of 1 servings required",
+                                        Toast.LENGTH_LONG
+                                ).show();
+                                servingsTextbox.setBackgroundColor(getResources().getColor(R.color.drink_template_selected) );
+                                return;
+                            }
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            Toast.makeText(
+                                    MainActivity.GetContentView().getContext(),
+                                    "Invalid servings entered. Try entering a whole number.",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                            servingsTextbox.setBackgroundColor(getResources().getColor(R.color.drink_template_selected) );
+                            return;                        }
+                        //  -Set the servings of the template
+                        newTemplate.SetServings(newServings);
+                        servingsTextbox.setBackgroundColor(getResources().getColor(R.color.white) );
+
+
+                        //  Price
+                        EditText priceTextBox = (EditText) Alc_Edit.GetTemplatePriceTextbox();
+                        try{
+                            newPrice = Float.parseFloat(String.valueOf(priceTextBox.getText()));
+                            if (newPrice < 0){
+                                Toast.makeText(
+                                        MainActivity.GetContentView().getContext(),
+                                        "Minimum of 0 dollars required",
+                                        Toast.LENGTH_LONG
+                                ).show();
+                                priceTextBox.setBackgroundColor(getResources().getColor(R.color.drink_template_selected) );
+                                return;
+                            }
+                        } catch (NumberFormatException e)
+                        {
+                            Toast.makeText(
+                                    MainActivity.GetContentView().getContext(),
+                                    "Invalid price entered. Try entering a decimal number.",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                            priceTextBox.setBackgroundColor(getResources().getColor(R.color.drink_template_selected) );
+                            return;                        }
+                        //  -Set the servings of the template
+                        newTemplate.SetPrice(newPrice);
+                        priceTextBox.setBackgroundColor(getResources().getColor(R.color.white) );
+
+
+
+                        //  Calories
+                        EditText caloriesTextbox = (EditText) Alc_Edit.GetTemplateCaloriesTextbox();
+                        try{
+                            newCalories = Float.parseFloat(String.valueOf(caloriesTextbox.getText()));
+                            if (newCalories < 0){
+                                Toast.makeText(
+                                        MainActivity.GetContentView().getContext(),
+                                        "Minimum of 0 calories",
+                                        Toast.LENGTH_LONG
+                                ).show();
+                                caloriesTextbox.setBackgroundColor(getResources().getColor(R.color.drink_template_selected) );
+                                return;
+                            }
+                        } catch (NumberFormatException e)
+                        {
+                            Toast.makeText(
+                                    MainActivity.GetContentView().getContext(),
+                                    "Invalid calories entered. Try entering a decimal number.",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                            caloriesTextbox.setBackgroundColor(getResources().getColor(R.color.drink_template_selected) );
+                            return;
+                        }
+                        // Set the calories of the template
+                        newTemplate.SetCalories(newCalories);
+                        caloriesTextbox.setBackgroundColor(getResources().getColor(R.color.white) );
+
+                        // Type
+                        AutoCompleteTextView typeText = (AutoCompleteTextView) Alc_Edit.GetTemplateTypeAutoTextView();
+                        newType = String.valueOf(typeText.getText());
+                        newTemplate.SetType(DrinkType.DrinkTypeFromString(newType));
+
+
+                        // Save changes to template
+                        MainActivity.GetDrinkTemplateManager().ModifyTemplate(Alc_Edit.GetEditingTemplate());
+
+                        // Notify saved changes
+                        Toast.makeText(
+                                MainActivity.GetContentView().getContext(),
+                                "Saved changes to template",
+                                Toast.LENGTH_LONG
+                        ).show();
+
+                        // Go to alc programming
+                        MainActivity.ChangeActiveFragment(R.id.alc_Programming);
+                    }
+                }
+
         );
 
         return root;
@@ -287,6 +323,24 @@ public class Alc_Edit extends Fragment {
         return Alc_Edit.templateEditing;
     }
     public static void SetEditingTemplate(DrinkTemplate newTemplate){
-        Alc_Edit.templateEditing = newTemplate;
+        Alc_Edit.templateEditing = newTemplate;}
+
+    /// <summary>
+    ///     Getters for textbox components of alc_edit
+    /// </summary>
+    public static EditText GetTemplateNameTextbox(){
+        return Alc_Edit.templateNameTextbox;
+    }
+    public static EditText GetTemplateServingsTextbox(){
+        return Alc_Edit.templateServingsTextbox;
+    }
+    public static AutoCompleteTextView GetTemplateTypeAutoTextView(){
+        return Alc_Edit.templateTypeAutoTextbox;
+    }
+    public static EditText GetTemplatePriceTextbox(){
+        return Alc_Edit.templatePriceTextbox;
+    }
+    public static EditText GetTemplateCaloriesTextbox(){
+        return Alc_Edit.templateCaloriesTextbox;
     }
 }
