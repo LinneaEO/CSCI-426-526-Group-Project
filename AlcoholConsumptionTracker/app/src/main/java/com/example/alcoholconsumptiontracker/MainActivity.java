@@ -214,19 +214,19 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.fragmentDictionary.put(targetID, Alc_Programming.newInstance(null, null));
                 }
                 else if (targetID == R.id.daily_View){
-                    MainActivity.fragmentDictionary.put(targetID, Daily_View.newInstance(null, null));
+                    MainActivity.fragmentDictionary.put(targetID, new Daily_View());
                 }
                 else if (targetID == R.id.monthly_View){
                     MainActivity.fragmentDictionary.put(targetID, Monthly_View.newInstance(null, null));
                 }
                 else if (targetID == R.id.personal_Goals){
-                    MainActivity.fragmentDictionary.put(targetID, Personal_Goals.newInstance(null, null));
+                    MainActivity.fragmentDictionary.put(targetID, new Personal_Goals());
                 }
                 else if (targetID == R.id.personal_Info){
-                    MainActivity.fragmentDictionary.put(targetID, Personal_Info.newInstance(null, null));
+                    MainActivity.fragmentDictionary.put(targetID, new Personal_Info());
                 }
                 else if (targetID == R.id.weekly_View){
-                    MainActivity.fragmentDictionary.put(targetID, Weekly_View.newInstance(null, null));
+                    MainActivity.fragmentDictionary.put(targetID, new Weekly_View());
                 }
             }
             return MainActivity.fragmentDictionary.get(targetID);
