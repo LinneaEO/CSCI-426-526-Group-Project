@@ -1,8 +1,11 @@
 package com.example.alcoholconsumptiontracker;
 
 import android.content.Context;
+
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.media.Image;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -23,12 +27,22 @@ import android.widget.TextView;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.Universals;
 
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
+import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
+
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Alc_Select#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class Alc_Select extends Fragment {
+
 
 
     ///
@@ -50,11 +64,17 @@ public class Alc_Select extends Fragment {
     private static DrinkTemplate selectedTemplate;
 
 
+    ///
+    ///  Locals
+    ///
+    // List to be populated with drinks and button that adds more drinks
+    private ListView alcSelectListView;
+
+
     public Alc_Select() {
         super(R.layout.fragment_alc__select);
 
         }
-
 
     @NonNull
     public static Alc_Select newInstance() {
@@ -70,6 +90,7 @@ public class Alc_Select extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         // Instantiate fragment contents from fragment_alc__select to the parent container
         View root = inflater.inflate(R.layout.fragment_alc__select, container, false);
@@ -210,7 +231,7 @@ public class Alc_Select extends Fragment {
     }
 
 
-    private class alcSelectListAdapter extends BaseAdapter {
+    public class alcSelectListAdapter extends BaseAdapter {
 
         Context listContext;
         LayoutInflater inflater;
@@ -243,6 +264,7 @@ public class Alc_Select extends Fragment {
         ///
         ///  Gets a row from the list as its different objects. Returns the result as a view
         ///
+
         public View getView(int position, View convertView, ViewGroup parent) {
 
             inflater = (LayoutInflater) this.listContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

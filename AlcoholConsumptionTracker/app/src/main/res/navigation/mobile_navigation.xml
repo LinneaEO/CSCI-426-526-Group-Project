@@ -21,6 +21,7 @@
         android:id="@+id/nav_reporting"
         android:name="com.example.alcoholconsumptiontracker.ui.notifications.NotificationsFragment"
         android:label="Report"
+              
         tools:layout="@layout/fragment_notifications">
         <action
             android:id="@+id/action_nav_reporting_to_daily_view"
@@ -32,6 +33,7 @@
             android:id="@+id/action_nav_reporting_to_monthly_View"
             app:destination="@id/monthly_View" />
     </fragment>
+
     <fragment
         android:id="@+id/daily_View"
         android:name="com.example.alcoholconsumptiontracker.Daily_View"

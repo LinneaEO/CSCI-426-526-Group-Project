@@ -1,13 +1,16 @@
 package com.example.alcoholconsumptiontracker;
 
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -43,8 +46,6 @@ public class Alc_Programming extends Fragment {
     // Represents the selected drink template
     private static DrinkTemplate selectedTemplate;
 
-
-
     public Alc_Programming() {
         super(R.layout.fragment_alc__programming);
     }
@@ -53,6 +54,7 @@ public class Alc_Programming extends Fragment {
     public static Alc_Programming newInstance(String param1, String param2) {
         Alc_Programming fragment = new Alc_Programming();
         Bundle args = new Bundle();
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,12 +62,14 @@ public class Alc_Programming extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View root =  inflater.inflate(R.layout.fragment_alc__programming, container, false);
 
         // Reset globals to null
@@ -327,5 +331,4 @@ public class Alc_Programming extends Fragment {
             return (row);
         }
     }
-
 }

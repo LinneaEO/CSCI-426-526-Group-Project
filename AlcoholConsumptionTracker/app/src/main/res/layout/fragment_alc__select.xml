@@ -53,7 +53,7 @@
         app:layout_constraintEnd_toEndOf="@+id/drinkSelectTextTitle"
         app:layout_constraintStart_toStartOf="@+id/drinkSelectTextTitle"
         app:layout_constraintTop_toTopOf="@+id/drinkSelectTextTitle" />
-
+  
     <Button
         android:id="@+id/alcSelectToAlcLogging"
         android:layout_width="170dp"
@@ -93,7 +93,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <ListView
         android:id="@+id/alc_logging_selected_template"

@@ -37,6 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+
 import kotlinx.coroutines.MainCoroutineDispatcher;
 
 /// WARNING: Don't create more than one instance of MainActivity
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Represents the bottomNavigation bar
     private static BottomNavigationView navView;
-
+  
     /// Represents the fragment manager, an object used to
     /// switch between app scenes.
     private static FragmentManager fragmentManager;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     ///  Global DrinkTemplateManager
     private static DrinkTemplateManager drinkTemplateManager;
+
 
     /// Global Temporary DrinkList (later to be given to date system)
     private static List<Drink> drinkList;
@@ -236,6 +238,49 @@ public class MainActivity extends AppCompatActivity {
     /// </summary>
     private void CreateHelperInitializeDrinkTemplateManager(){
         MainActivity.drinkTemplateManager = new DrinkTemplateManager();
+
+    }
+    ///
+    /// Constructor helpers
+    ///
+    /// <summary>
+    ///  Initializes fragment IDs, fragment dictionary, and fragment manager
+    /// </summary>
+    private void CreateHelperInitializeFragmentObjects(){
+        // Initialize the support fragment manager
+        MainActivity.fragmentManager = getSupportFragmentManager();
+
+        // Initialize host fragment ID
+        hostFragmentID = R.id.mainActivityFragment;
+        currentFragmentID = hostFragmentID;
+
+        // Initialize dictionary
+        // Initialize non-host fragment IDs in Dictionary
+        //
+        MainActivity.fragmentDictionary = new HashMap<>(20);
+        fragmentDictionary.put(R.id.alc_Edit, null);
+        fragmentDictionary.put(R.id.alc_Select, null);
+        fragmentDictionary.put(R.id.alc_Create, null);
+        fragmentDictionary.put(R.id.alc_Programming, null);
+        fragmentDictionary.put(R.id.daily_View, null);
+        fragmentDictionary.put(R.id.monthly_View, null);
+        fragmentDictionary.put(R.id.personal_Goals, null);
+        fragmentDictionary.put(R.id.personal_Info, null);
+        fragmentDictionary.put(R.id.weekly_View, null);
+    }
+
+    /// <summary>
+    ///    Initializes the global database manager
+    /// </summary>
+    private void CreateHelperInitializeDatabaseManager(){
+        MainActivity.databaseManager = new DatabaseManager(this.getApplicationContext());
+    }
+
+    /// <summary>
+    ///     Initializes the global drink template manager
+    /// </summary>
+    private void CreateHelperInitializeDrinkTemplateManager(){
+        MainActivity.drinkTemplateManager = new DrinkTemplateManager();
     }
 
     ///
@@ -264,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
                 else if (targetID == R.id.alc_Logging){
                     MainActivity.fragmentDictionary.put(targetID, Alc_Logging.newInstance());
                 }
+
                 else if (targetID == R.id.daily_View){
                     MainActivity.fragmentDictionary.put(targetID, Daily_View.newInstance(null, null));
                 }
@@ -320,6 +366,7 @@ public class MainActivity extends AppCompatActivity {
         else return MainActivity.drinkTemplateManager;
     }
 
+
     // Gets the global drink list
     public static List<Drink> GetDrinkList(){
         return MainActivity.drinkList;
@@ -369,7 +416,9 @@ public class MainActivity extends AppCompatActivity {
     ///     True if successful
     ///     False otherwise
     /// </summary>
+
     public static boolean ChangeActiveFragment(int fragmentID){
+
 
         // If the fragment dictionary isn't initialized, if the dictionary doesn't contain the
         //  target fragment, or if the fragment is set to null, return false.
@@ -385,7 +434,6 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.currentFragmentID = fragmentID;
         return true;
     }
-
     ///
     public static boolean ReloadActiveFragment(){
         // If the fragment dictionary isn't initialized, return false.
