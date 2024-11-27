@@ -181,7 +181,12 @@ public class MainActivity extends AppCompatActivity {
 
         testTemplate.SetName("test name 8");
         drinkTemplateManager.PutTemplate(testTemplate);
+        /////// end testing
 
+        // Set the first scene to daily view
+        MainActivity.ChangeActiveFragment(R.id.daily_View);
+
+        // Set initialized to true
         MainActivity.initialized = true;
 
     }
@@ -254,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 else if (targetID == R.id.personal_Goals)
                     return Personal_Goals.newInstance(null, null);
                 else if (targetID == R.id.personal_Info)
-                    return Personal_Info.newInstance(null, null);
+                    return new Personal_Info();
                 else if (targetID == R.id.weekly_View)
                     return new Weekly_View();
                 else
