@@ -75,7 +75,7 @@
         android:id="@+id/alc_Edit"
         android:name="com.example.alcoholconsumptiontracker.Alc_Edit"
         android:label="fragment_alc__edit"
-        tools:layout="@layout/fragment_alc__edit" />
+        tools:layout="@layout/fragment_alc__create_edit" />
     <fragment
         android:id="@+id/alc_Select"
         android:name="com.example.alcoholconsumptiontracker.Alc_Select"

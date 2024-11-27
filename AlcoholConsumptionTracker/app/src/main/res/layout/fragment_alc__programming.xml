@@ -72,6 +72,7 @@
         android:layout_width="400dp"
         android:layout_height="500dp"
         android:layout_marginTop="70dp"
+        android:background="@color/color_blind_dark_blue"
         android:choiceMode="singleChoice"
         android:divider="@color/black"
         android:dividerHeight="2dp"
