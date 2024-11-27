@@ -59,6 +59,12 @@ public class Personal_Goals extends Fragment {
         }
     }
 
+    public static Personal_Goals newInstance(String param1, String param2) {
+        Personal_Goals fragment = new Personal_Goals();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

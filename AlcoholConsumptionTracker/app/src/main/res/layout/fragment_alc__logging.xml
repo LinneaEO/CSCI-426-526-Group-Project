@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/alc_Logging"
+    tools:context=".Alc_Logging">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/alcEditCreateDropdownItem"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="-150dp"
+            android:layout_marginBottom="-150dp"
+            android:background="@color/color_blind_dark_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="-10dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="-10dp"
+            android:layout_marginBottom="-10dp"
+            android:background="@color/color_blind_light_blue"
+            app:layout_constraintBottom_toBottomOf="@+id/drinkLoggingImage"
+            app:layout_constraintEnd_toEndOf="@+id/drinkLoggingImage"
+            app:layout_constraintStart_toStartOf="@+id/drinkLoggingImage"
+            app:layout_constraintTop_toTopOf="@+id/drinkLoggingImage" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="232dp"
+            android:layout_height="140dp"
+            android:layout_marginStart="-10dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="-10dp"
+            android:layout_marginBottom="-10dp"
+            android:background="@color/color_blind_light_blue"
+            app:layout_constraintBottom_toBottomOf="@+id/drinkLoggingOccassionInput"
+            app:layout_constraintEnd_toEndOf="@+id/drinkLoggingOccassionInput"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/drinkLoggingOccassionInput"
+            app:layout_constraintTop_toTopOf="@+id/drinkLoggingOccassionEntryTitle"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="-10dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="-10dp"
+            android:layout_marginBottom="-10dp"
+            android:background="@color/color_blind_light_blue"
+            app:layout_constraintBottom_toBottomOf="@+id/alcLoggingDrinkTime"
+            app:layout_constraintEnd_toEndOf="@+id/alcLoggingDrinkTime"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/alcLoggingDrinkTime"
+            app:layout_constraintTop_toTopOf="@+id/drinkLoggingOccassionEntryTitle2"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/drinkLoggingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_blind_light_blue"
+            android:text="Drink Logging"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/drinkLoggingImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="260dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_default_drink_image" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="392dp"
+            android:layout_height="168dp"
+            android:layout_marginStart="-10dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="-10dp"
+            android:layout_marginBottom="-10dp"
+            android:background="@color/color_blind_light_blue"
+            app:layout_constraintBottom_toBottomOf="@+id/drinkLoggingDrinkInformation"
+            app:layout_constraintEnd_toEndOf="@+id/drinkLoggingDrinkInformation"
+            app:layout_constraintStart_toStartOf="@+id/drinkLoggingDrinkInformation"
+            app:layout_constraintTop_toTopOf="@+id/drinkLoggingDrinkInformation" />
+
+        <ListView
+            android:id="@+id/drinkLoggingDrinkInformation"
+            android:layout_width="380dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="80dp"
+            android:background="@color/white"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/drinkLoggingOccassionInput"
+            android:layout_width="215dp"
+            android:layout_height="93dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:gravity="top|left"
+            android:inputType="text"
+            android:text="Name"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/drinkLoggingOccassionEntryTitle" />
+
+        <TextView
+            android:id="@+id/alcLoggingDrinkTime"
+            android:layout_width="133dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="450dp"
+            android:layout_marginEnd="56dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:gravity="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/alcLoggingAddOneDrink"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/alcLoggingAddOneDrink"
+            android:layout_width="133dp"
+            android:layout_height="73dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="408dp"
+            android:text="Tap to log one drink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/drinkLoggingOccassionEntryTitle"
+            android:layout_width="215dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="260dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="What's the Occassion?"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/drinkLoggingImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/drinkLoggingOccassionEntryTitle2"
+            android:layout_width="133dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="408dp"
+            android:layout_marginEnd="58dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="Time of Drink"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/alcLoggingDrinkTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/alcLoggingTimeSelectorButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0"
+            android:enabled="true"
+            android:text=""
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/alcLoggingDrinkTime"
+            app:layout_constraintEnd_toEndOf="@+id/alcLoggingDrinkTime"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/alcLoggingDrinkTime"
+            app:layout_constraintTop_toTopOf="@+id/drinkLoggingOccassionEntryTitle2"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/alcLoggingFinishLoggingButton"
+            android:layout_width="234dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/alcLoggingBackButton"
+            android:layout_width="107dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

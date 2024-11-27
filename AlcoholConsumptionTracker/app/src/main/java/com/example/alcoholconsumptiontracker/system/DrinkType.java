@@ -9,9 +9,19 @@
 package com.example.alcoholconsumptiontracker.system;
 
 
+import android.widget.ArrayAdapter;
+
 public class DrinkType {
 
     private short value;
+
+    /// Represents static values corresponding to drink value
+    //  DrinkType as a short when value isn't in drinkTypeValues
+    private static short unknownDrinkValue = -1;
+    //  DrinkType as a String
+    private static String[] drinkTypeValueNames = new String[]{"Beer", "Wine", "Cocktail", "Liquor"};
+    //  DrinkType as a String when value isn't in drinkTypeValueNames
+    private static String unknownDrinkValueName = "n/a";
 
     /// <summary>
     ///  Default constructor
@@ -46,13 +56,10 @@ public class DrinkType {
     ///     "n/a" is returned instead.
     /// </summary>
     public static String DrinkTypeFromShort(short value){
-        switch(value){
-            case 0: return "Beer";
-            case 1: return "Wine";
-            case 2: return "Liquor";
-            case 3: return "Cocktail";
-            default: return "n/a";
+        if (value < DrinkType.drinkTypeValueNames.length){
+            return DrinkType.drinkTypeValueNames[value];
         }
+        else return DrinkType.unknownDrinkValueName;
     }
 
     /// <summary>
@@ -61,12 +68,18 @@ public class DrinkType {
     ///     -1 is returned instead.
     /// </summary>
     public static short DrinkTypeFromString(String value){
-        switch(value){
-            case "Beer": return 0;
-            case "Wine": return 1;
-            case "Liquor": return 2;
-            case "Cocktail": return 3;
-            default: return -1;
+        for (int i = 0; i < DrinkType.drinkTypeValueNames.length; i++){
+            if (DrinkType.drinkTypeValueNames[i].equals(value)){
+                return (short)i;
+            }
         }
+        return DrinkType.unknownDrinkValue;
+    }
+
+    /// <summary>
+    ///     Returns the array of all possible drink types as names
+    /// </summary>
+    public static String[] DrinkTypeNames(){
+        return DrinkType.drinkTypeValueNames;
     }
 }

@@ -6,6 +6,7 @@
     android:id="@+id/personal_Info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/personal_Info"
     tools:context=".Personal_Info">
 
 
