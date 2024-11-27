@@ -1,43 +1,24 @@
 package com.example.alcoholconsumptiontracker;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 
 import com.example.alcoholconsumptiontracker.system.DatabaseManager;
 import com.example.alcoholconsumptiontracker.system.Drink;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
-import com.example.alcoholconsumptiontracker.system.Test;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.alcoholconsumptiontracker.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-
-import kotlinx.coroutines.MainCoroutineDispatcher;
 
 /// WARNING: Don't create more than one instance of MainActivity
 public class MainActivity extends AppCompatActivity {
@@ -75,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     /// Non-host fragments and their IDs
     ///     Fragments accessed from MainActivity displayed within the
     ///     host fragment of main activity.
-    private static HashMap<Integer, Fragment> fragmentDictionary;
+    private static ArrayList<Integer> fragmentIds;
 
     ///  Global DrinkTemplateManager
     private static DrinkTemplateManager drinkTemplateManager;
@@ -153,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
         DrinkTemplate testTemplate = new DrinkTemplate();
         testTemplate.SetName("test name");
         drinkTemplateManager.PutTemplate(testTemplate);
+        testTemplate = new DrinkTemplate();
+
         testTemplate.SetName("a gin n rum matie");
         testTemplate.SetType((short)2);
         testTemplate.SetServings((short)1);
@@ -210,17 +193,17 @@ public class MainActivity extends AppCompatActivity {
         // Initialize dictionary
         // Initialize non-host fragment IDs in Dictionary
         //
-        MainActivity.fragmentDictionary = new HashMap<>(20);
-        fragmentDictionary.put(R.id.alc_Edit, null);
-        fragmentDictionary.put(R.id.alc_Select, null);
-        fragmentDictionary.put(R.id.alc_Create, null);
-        fragmentDictionary.put(R.id.alc_Logging, null);
-        fragmentDictionary.put(R.id.alc_Programming, null);
-        fragmentDictionary.put(R.id.daily_View, null);
-        fragmentDictionary.put(R.id.monthly_View, null);
-        fragmentDictionary.put(R.id.personal_Goals, null);
-        fragmentDictionary.put(R.id.personal_Info, null);
-        fragmentDictionary.put(R.id.weekly_View, null);
+        MainActivity.fragmentIds = new ArrayList<>(20);
+        fragmentIds.add(R.id.alc_Create_Edit);
+        fragmentIds.add(R.id.alc_Select);
+        fragmentIds.add(R.id.alc_Logging);
+        fragmentIds.add(R.id.alc_Programming);
+        fragmentIds.add(R.id.daily_View);
+        fragmentIds.add(R.id.monthly_View);
+        fragmentIds.add(R.id.personal_Goals);
+        fragmentIds.add(R.id.personal_Info);
+        fragmentIds.add(R.id.weekly_View);
+        fragmentIds.add(R.id.blank_fragment);
 
     }
 
@@ -242,59 +225,34 @@ public class MainActivity extends AppCompatActivity {
     /// Getters and Setters
     ///
     public static Fragment GetFragmentByID(int targetID){
-        if (MainActivity.fragmentDictionary == null){
-            throw new RuntimeException("Fragment Dictionary Uninitialized.");
+        if (MainActivity.fragmentIds == null){
+            throw new RuntimeException("Fragment IDs Uninitialized.");
         }
-        if (MainActivity.fragmentDictionary.containsKey(targetID)){
-
-            // If the fragment is uninitialized, initialize it before returning
-            if (MainActivity.fragmentDictionary.get(targetID) == null){
-                if (targetID == R.id.alc_Create){
-                    MainActivity.fragmentDictionary.put(targetID, Alc_Create.newInstance(null, null));
-                }
-                else if (targetID == R.id.alc_Edit){
-                    MainActivity.fragmentDictionary.put(targetID, Alc_Edit.newInstance(null, null));
-                }
-                else if (targetID == R.id.alc_Select){
-                    MainActivity.fragmentDictionary.put(targetID, Alc_Select.newInstance());
-                }
-                else if (targetID == R.id.alc_Programming){
-                    MainActivity.fragmentDictionary.put(targetID, Alc_Programming.newInstance(null, null));
-                }
-                else if (targetID == R.id.alc_Logging){
-                    MainActivity.fragmentDictionary.put(targetID, Alc_Logging.newInstance());
-                }
-                else if (targetID == R.id.daily_View){
-                    MainActivity.fragmentDictionary.put(targetID, Daily_View.newInstance(null, null));
-                }
-                else if (targetID == R.id.monthly_View){
-                    MainActivity.fragmentDictionary.put(targetID, Monthly_View.newInstance(null, null));
-                }
-                else if (targetID == R.id.personal_Goals){
-                    MainActivity.fragmentDictionary.put(targetID, Personal_Goals.newInstance(null, null));
-                }
-                else if (targetID == R.id.personal_Info){
-                    MainActivity.fragmentDictionary.put(targetID, Personal_Info.newInstance(null, null));
-                }
-                else if (targetID == R.id.weekly_View){
-                    MainActivity.fragmentDictionary.put(targetID, new Weekly_View());
-                }
-            }
-            return MainActivity.fragmentDictionary.get(targetID);
+        if (MainActivity.fragmentIds.contains(targetID)){
+            // Return new instance of the fragment based on id
+                if (targetID == R.id.alc_Create_Edit)
+                    return Alc_Create_Edit.newInstance(null, null);
+                else if (targetID == R.id.alc_Select)
+                    return Alc_Select.newInstance();
+                else if (targetID == R.id.alc_Programming)
+                    return Alc_Programming.newInstance(null, null);
+                else if (targetID == R.id.alc_Logging)
+                    return Alc_Logging.newInstance();
+                else if (targetID == R.id.daily_View)
+                    return Daily_View.newInstance(null, null);
+                else if (targetID == R.id.monthly_View)
+                    return Monthly_View.newInstance(null, null);
+                else if (targetID == R.id.personal_Goals)
+                    return Personal_Goals.newInstance(null, null);
+                else if (targetID == R.id.personal_Info)
+                    return Personal_Info.newInstance(null, null);
+                else if (targetID == R.id.weekly_View)
+                    return new Weekly_View();
+                else
+                    return new BlankFragment();
         }
         else{
             throw new RuntimeException("Index not found");
-        }
-    }
-    public static void SetFragmentByID(int targetID, Fragment newValue){
-        if (MainActivity.fragmentDictionary == null){
-            throw new RuntimeException("Fragment Dictionary Uninitialized.");
-        }
-        if (MainActivity.fragmentDictionary.containsKey(targetID)){
-            MainActivity.fragmentDictionary.replace(targetID, newValue);
-        }
-        else{
-            MainActivity.fragmentDictionary.put(targetID, newValue);
         }
     }
     public static boolean Initialized(){
@@ -373,31 +331,32 @@ public class MainActivity extends AppCompatActivity {
 
         // If the fragment dictionary isn't initialized, if the dictionary doesn't contain the
         //  target fragment, or if the fragment is set to null, return false.
-        if (MainActivity.fragmentDictionary == null) return false;
-        if (!MainActivity.fragmentDictionary.containsKey(fragmentID)) return false;
+        if (MainActivity.fragmentIds == null) return false;
+        if (!MainActivity.fragmentIds.contains(fragmentID)) return false;
 
         // Null warning found, but cannot be null at this point due to the previous
         //  if statements.
         MainActivity.fragmentManager.
                 beginTransaction().
                 replace(MainActivity.hostFragmentID, MainActivity.GetFragmentByID(fragmentID)).
-                commitNow();
+                commitNowAllowingStateLoss();
         MainActivity.currentFragmentID = fragmentID;
         return true;
     }
 
-    ///
+    /// <summary>
+    ///     Reloads the active fragment, resetting all data within it.
+    /// </summary>
     public static boolean ReloadActiveFragment(){
         // If the fragment dictionary isn't initialized, return false.
-        if (MainActivity.fragmentDictionary == null) return false;
+        if (MainActivity.fragmentIds == null) return false;
 
         // Reload the active fragment
-        MainActivity.fragmentManager.beginTransaction()
-        .detach(MainActivity.GetFragmentByID(MainActivity.currentFragmentID))
-                .commit();
-        MainActivity.fragmentManager.beginTransaction()
-                .attach(MainActivity.GetFragmentByID(MainActivity.currentFragmentID))
-                .commit();
+        MainActivity.fragmentManager.
+                beginTransaction().
+                replace(MainActivity.hostFragmentID, MainActivity.GetFragmentByID(MainActivity.currentFragmentID)).
+                commitNowAllowingStateLoss();
+
         return true;
     }
 }

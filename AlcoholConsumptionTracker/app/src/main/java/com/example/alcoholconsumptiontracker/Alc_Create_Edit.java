@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -20,10 +19,10 @@ import com.example.alcoholconsumptiontracker.system.DrinkType;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Alc_Edit#newInstance} factory method to
+ * Use the {@link Alc_Create_Edit#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Alc_Edit extends Fragment {
+public class Alc_Create_Edit extends Fragment {
 
 
     ///
@@ -62,12 +61,12 @@ public class Alc_Edit extends Fragment {
     private static ImageButton alcEditCancelEditButton;
 
 
-    public Alc_Edit() {
+    public Alc_Create_Edit() {
         // Required empty public constructor
     }
 
-    public static Alc_Edit newInstance(String param1, String param2) {
-        Alc_Edit fragment = new Alc_Edit();
+    public static Alc_Create_Edit newInstance(String param1, String param2) {
+        Alc_Create_Edit fragment = new Alc_Create_Edit();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -82,61 +81,78 @@ public class Alc_Edit extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_alc__edit, container, false);
-
+        View root = inflater.inflate(R.layout.fragment_alc__create_edit, container, false);
 
         // Reset globals to null
-        Alc_Edit.templateEditing = null;
-        Alc_Edit.templateImage = null;
-        Alc_Edit.templateChangeImageButton = null;
-        Alc_Edit.templateNameTextbox = null;
-        Alc_Edit.templateServingsTextbox = null;
-        Alc_Edit.templateTypeAutoTextbox = null;
-        Alc_Edit.templateCaloriesTextbox = null;
-        Alc_Edit.templatePriceTextbox = null;
-        Alc_Edit.alcEditFinishEditingButton = null;
-        Alc_Edit.alcEditCancelEditButton = null;
+        Alc_Create_Edit.templateEditing = null;
+        Alc_Create_Edit.templateImage = null;
+        Alc_Create_Edit.templateChangeImageButton = null;
+        Alc_Create_Edit.templateNameTextbox = null;
+        Alc_Create_Edit.templateServingsTextbox = null;
+        Alc_Create_Edit.templateTypeAutoTextbox = null;
+        Alc_Create_Edit.templateCaloriesTextbox = null;
+        Alc_Create_Edit.templatePriceTextbox = null;
+        Alc_Create_Edit.alcEditFinishEditingButton = null;
+        Alc_Create_Edit.alcEditCancelEditButton = null;
 
         // Set up drink template (pull from alc programming)
-        Alc_Edit.templateEditing = Alc_Programming.GetSelectedTemplate();
-        //  -Fail case. If no template was found, create a blank new one.
-        if (Alc_Edit.templateEditing == null){
-            Alc_Edit.templateEditing = new DrinkTemplate();
-            Alc_Edit.templateEditing.SetName("Default Name");
-            Alc_Edit.templateEditing.SetServings((short)1);
+        //      -If editing an existing template, load that template
+        if (Alc_Programming.GetProgrammingMode() == Alc_Programming.ProgrammingMode.EDITING){
+
+
+            Alc_Create_Edit.templateEditing = Alc_Programming.GetSelectedTemplate();
+
         }
-        Alc_Edit.originalTemplateName = Alc_Edit.templateEditing.GetName();
+        //      -If creating a new template, create a new template to populate the fragment with
+        else if (Alc_Programming.GetProgrammingMode() == Alc_Programming.ProgrammingMode.CREATING){
+
+            DrinkTemplate newTemplate = new DrinkTemplate();
+            // Set the name such that it isn't repeating
+            //  Name in format as "drink template X" where X is an integer greater than 0
+            String newTemplateName = "drink template";
+            int i;
+            for (i = 1; MainActivity.GetDrinkTemplateManager().ContainsTemplate(newTemplateName+ " " + String.valueOf(i)); i++);
+            newTemplate.SetName(newTemplateName);
+            newTemplate.SetServings((short)1);
+            Alc_Create_Edit.templateEditing = newTemplate;
+        }
+        // Save the original name of the template;
+        // If no mode is selected, return to alcohol programming
+        else{
+            MainActivity.ChangeActiveFragment(R.id.alc_Programming);
+        }
+        Alc_Create_Edit.originalTemplateName = Alc_Create_Edit.templateEditing.GetName();
 
         // Set up template name textbox
-        Alc_Edit.templateNameTextbox = root.findViewById(R.id.alcEditName);
-        Alc_Edit.templateNameTextbox.setText(String.valueOf(Alc_Edit.GetEditingTemplate().GetName()));
+        Alc_Create_Edit.templateNameTextbox = root.findViewById(R.id.alcEditName);
+        Alc_Create_Edit.templateNameTextbox.setText(String.valueOf(Alc_Create_Edit.GetEditingTemplate().GetName()));
 
         // Set up template servings textbox
-        Alc_Edit.templateServingsTextbox = root.findViewById(R.id.alcEditServings);
-        Alc_Edit.templateServingsTextbox.setText(String.valueOf(Alc_Edit.GetEditingTemplate().GetServings()));
+        Alc_Create_Edit.templateServingsTextbox = root.findViewById(R.id.alcEditServings);
+        Alc_Create_Edit.templateServingsTextbox.setText(String.valueOf(Alc_Create_Edit.GetEditingTemplate().GetServings()));
 
         // Set up template calories textbox
-        Alc_Edit.templateCaloriesTextbox = root.findViewById(R.id.alcEditCalories);
-        Alc_Edit.templateCaloriesTextbox.setText(String.valueOf(Alc_Edit.GetEditingTemplate().GetCalories()));
+        Alc_Create_Edit.templateCaloriesTextbox = root.findViewById(R.id.alcEditCalories);
+        Alc_Create_Edit.templateCaloriesTextbox.setText(String.valueOf(Alc_Create_Edit.GetEditingTemplate().GetCalories()));
 
         // Set up template price textbox
-        Alc_Edit.templatePriceTextbox = root.findViewById(R.id.alcEditPrice);
-        Alc_Edit.templatePriceTextbox.setText(String.valueOf(Alc_Edit.GetEditingTemplate().GetPrice()));
+        Alc_Create_Edit.templatePriceTextbox = root.findViewById(R.id.alcEditPrice);
+        Alc_Create_Edit.templatePriceTextbox.setText(String.valueOf(Alc_Create_Edit.GetEditingTemplate().GetPrice()));
 
         // Set up template type box
-        Alc_Edit.templateTypeAutoTextbox = root.findViewById(R.id.alcEditTypeInputTextbox);
-        Alc_Edit.templateTypeAutoTextbox.setText(Alc_Edit.templateEditing.GetType().Get());
+        Alc_Create_Edit.templateTypeAutoTextbox = root.findViewById(R.id.alcEditTypeInputTextbox);
+        Alc_Create_Edit.templateTypeAutoTextbox.setText(Alc_Create_Edit.templateEditing.GetType().Get());
         String[] drinkTypes = DrinkType.DrinkTypeNames();
         ArrayAdapter adapter = new ArrayAdapter(
                 MainActivity.GetContentView().getContext(),
                 R.layout.alc_edit_create_dropdown_type,
                 drinkTypes);
-        Alc_Edit.templateTypeAutoTextbox.setAdapter(adapter);
+        Alc_Create_Edit.templateTypeAutoTextbox.setAdapter(adapter);
 
 
         // Set up back button
-        Alc_Edit.alcEditCancelEditButton = root.findViewById(R.id.alcEditBackButton);
-        Alc_Edit.alcEditCancelEditButton.setOnClickListener(
+        Alc_Create_Edit.alcEditCancelEditButton = root.findViewById(R.id.alcEditBackButton);
+        Alc_Create_Edit.alcEditCancelEditButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -147,14 +163,14 @@ public class Alc_Edit extends Fragment {
         );
 
         // Set up finish button
-        Alc_Edit.alcEditFinishEditingButton = root.findViewById(R.id.alcEditFinishButton);
-        Alc_Edit.alcEditFinishEditingButton.setOnClickListener(
+        Alc_Create_Edit.alcEditFinishEditingButton = root.findViewById(R.id.alcEditFinishButton);
+        Alc_Create_Edit.alcEditFinishEditingButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         // Locals
-                        DrinkTemplate newTemplate = Alc_Edit.GetEditingTemplate();
+                        DrinkTemplate newTemplate = Alc_Create_Edit.GetEditingTemplate();
                         float newPrice = 0;
                         String newName = "";
                         float newCalories = 0;
@@ -163,7 +179,7 @@ public class Alc_Edit extends Fragment {
 
                         // Check to make sure template values are valid. If not, return. If so, proceed
                         //  Name
-                        EditText nameNextBox = (EditText) Alc_Edit.GetTemplateNameTextbox();
+                        EditText nameNextBox = (EditText) Alc_Create_Edit.GetTemplateNameTextbox();
                         newName = String.valueOf(nameNextBox.getText());
 
                         // If the name is blank, notify that the name cannot be blank.
@@ -179,7 +195,7 @@ public class Alc_Edit extends Fragment {
 
                         // If the name is contained within another template and isn't the same name as before editing, return and notify
                         //  templates cannot repeat names
-                        if (MainActivity.GetDrinkTemplateManager().ContainsTemplate(newName) && !newName.equals(Alc_Edit.OriginalEditingTemplateName())){
+                        if (MainActivity.GetDrinkTemplateManager().ContainsTemplate(newName) && !newName.equals(Alc_Create_Edit.OriginalEditingTemplateName())){
                             Toast.makeText(
                                     MainActivity.GetContentView().getContext(),
                                     "Template name already exists",
@@ -197,7 +213,7 @@ public class Alc_Edit extends Fragment {
 
 
                         //  Servings
-                        EditText servingsTextbox = (EditText) Alc_Edit.GetTemplateServingsTextbox();
+                        EditText servingsTextbox = (EditText) Alc_Create_Edit.GetTemplateServingsTextbox();
                         try{
                             newServings = Short.parseShort(String.valueOf(servingsTextbox.getText()));
                             if (newServings < 1){
@@ -225,7 +241,7 @@ public class Alc_Edit extends Fragment {
 
 
                         //  Price
-                        EditText priceTextBox = (EditText) Alc_Edit.GetTemplatePriceTextbox();
+                        EditText priceTextBox = (EditText) Alc_Create_Edit.GetTemplatePriceTextbox();
                         try{
                             newPrice = Float.parseFloat(String.valueOf(priceTextBox.getText()));
                             if (newPrice < 0){
@@ -253,7 +269,7 @@ public class Alc_Edit extends Fragment {
 
 
                         //  Calories
-                        EditText caloriesTextbox = (EditText) Alc_Edit.GetTemplateCaloriesTextbox();
+                        EditText caloriesTextbox = (EditText) Alc_Create_Edit.GetTemplateCaloriesTextbox();
                         try{
                             newCalories = Float.parseFloat(String.valueOf(caloriesTextbox.getText()));
                             if (newCalories < 0){
@@ -280,13 +296,18 @@ public class Alc_Edit extends Fragment {
                         caloriesTextbox.setBackgroundColor(getResources().getColor(R.color.white) );
 
                         // Type
-                        AutoCompleteTextView typeText = (AutoCompleteTextView) Alc_Edit.GetTemplateTypeAutoTextView();
+                        AutoCompleteTextView typeText = (AutoCompleteTextView) Alc_Create_Edit.GetTemplateTypeAutoTextView();
                         newType = String.valueOf(typeText.getText());
                         newTemplate.SetType(DrinkType.DrinkTypeFromString(newType));
 
 
                         // Save changes to template
-                        MainActivity.GetDrinkTemplateManager().ModifyTemplate(Alc_Edit.GetEditingTemplate());
+                        //  -If exist in the template manager, remove it.
+                        if (MainActivity.GetDrinkTemplateManager().ContainsTemplate(newTemplate.GetName()))
+                            MainActivity.GetDrinkTemplateManager().RemoveTemplate(newTemplate.GetName());
+                        //  Add the new template
+                        MainActivity.GetDrinkTemplateManager().PutTemplate(newTemplate);
+
 
                         // Notify saved changes
                         Toast.makeText(
@@ -299,7 +320,6 @@ public class Alc_Edit extends Fragment {
                         MainActivity.ChangeActiveFragment(R.id.alc_Programming);
                     }
                 }
-
         );
 
         return root;
@@ -313,34 +333,34 @@ public class Alc_Edit extends Fragment {
     ///     before editing began.
     /// </summary>
     public static String OriginalEditingTemplateName(){
-        return Alc_Edit.originalTemplateName;
+        return Alc_Create_Edit.originalTemplateName;
     }
 
     /// <summary>
     ///     Represents the template being edited
     /// </summary>
     public static DrinkTemplate GetEditingTemplate(){
-        return Alc_Edit.templateEditing;
+        return Alc_Create_Edit.templateEditing;
     }
     public static void SetEditingTemplate(DrinkTemplate newTemplate){
-        Alc_Edit.templateEditing = newTemplate;}
+        Alc_Create_Edit.templateEditing = newTemplate;}
 
     /// <summary>
-    ///     Getters for textbox components of alc_edit
+    ///     Getters for textbox components of Alc_Create_Edit
     /// </summary>
     public static EditText GetTemplateNameTextbox(){
-        return Alc_Edit.templateNameTextbox;
+        return Alc_Create_Edit.templateNameTextbox;
     }
     public static EditText GetTemplateServingsTextbox(){
-        return Alc_Edit.templateServingsTextbox;
+        return Alc_Create_Edit.templateServingsTextbox;
     }
     public static AutoCompleteTextView GetTemplateTypeAutoTextView(){
-        return Alc_Edit.templateTypeAutoTextbox;
+        return Alc_Create_Edit.templateTypeAutoTextbox;
     }
     public static EditText GetTemplatePriceTextbox(){
-        return Alc_Edit.templatePriceTextbox;
+        return Alc_Create_Edit.templatePriceTextbox;
     }
     public static EditText GetTemplateCaloriesTextbox(){
-        return Alc_Edit.templateCaloriesTextbox;
+        return Alc_Create_Edit.templateCaloriesTextbox;
     }
 }

@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/alc_Edit"
+    android:id="@+id/alc_Create_Edit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Alc_Edit">
+    tools:context=".Alc_Create_Edit">
 
     <TextView
         android:id="@+id/textView7"
@@ -56,7 +56,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alc_programming_selected_template" />
+         />
 
     <ImageButton
         android:id="@+id/alcEditFinishButton"

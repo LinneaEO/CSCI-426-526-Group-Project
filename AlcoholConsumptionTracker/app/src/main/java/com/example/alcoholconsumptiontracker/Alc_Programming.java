@@ -40,6 +40,15 @@ public class Alc_Programming extends Fragment {
     // Represents the selected drink template's row
     private static View selectedTemplateRow;
 
+    // Represents whether the app is programming a template by creating a new one or editing an existing one
+    public enum ProgrammingMode {
+        NONE,
+        CREATING,
+        EDITING
+    }
+    private static ProgrammingMode programmingMode;
+
+
     // Represents the selected drink template
     private static DrinkTemplate selectedTemplate;
 
@@ -68,13 +77,13 @@ public class Alc_Programming extends Fragment {
         // Inflate the layout for this fragment
         View root =  inflater.inflate(R.layout.fragment_alc__programming, container, false);
 
-        // Reset globals to null
+        // Reset globals to nul
         Alc_Programming.selectedTemplate = null;
         Alc_Programming.selectedTemplateRow = null;
         Alc_Programming.alcProgrammingListView = null;
         Alc_Programming.alcProgrammingSendToAlcCreate = null;
         Alc_Programming.alcProgrammingSendToAlcSelect = null;
-
+        Alc_Programming.programmingMode = ProgrammingMode.NONE;
 
         // Initialize alc programming list view
         Alc_Programming.alcProgrammingListView = root.findViewById(R.id.alc_programming_selected_template);
@@ -86,7 +95,8 @@ public class Alc_Programming extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.ChangeActiveFragment(R.id.alc_Create);
+                        Alc_Programming.SetProgrammingMode(ProgrammingMode.CREATING);
+                        MainActivity.ChangeActiveFragment(R.id.alc_Create_Edit);
                     }
                 }
         );
@@ -138,6 +148,13 @@ public class Alc_Programming extends Fragment {
         return Alc_Programming.selectedTemplate;
     }
 
+    /// Gets or Sets the programming mode
+    public static ProgrammingMode GetProgrammingMode(){
+        return Alc_Programming.programmingMode;
+    }
+    public static void SetProgrammingMode(ProgrammingMode newMode){
+        Alc_Programming.programmingMode = newMode;
+    }
 
 
     ///
@@ -167,6 +184,8 @@ public class Alc_Programming extends Fragment {
         selectButton.setButtonTintList(ColorStateList.valueOf(Alc_Select.ButtonUnselectedColor()));
         targetRow.setBackgroundColor(Alc_Select.RowUnselectedColor());
     }
+
+
 
 
     private class alcProgrammingListAdapter extends BaseAdapter {
@@ -266,8 +285,9 @@ public class Alc_Programming extends Fragment {
                             Alc_Programming.SetSelectedTemplate(
                                     MainActivity.GetDrinkTemplateManager().GetTemplate(templateName)
                             );
+                            Alc_Programming.SetProgrammingMode(ProgrammingMode.EDITING);
                             // Change to alcohol edit
-                            MainActivity.ChangeActiveFragment(R.id.alc_Edit);
+                            MainActivity.ChangeActiveFragment(R.id.alc_Create_Edit);
                         }
                     }
             );
