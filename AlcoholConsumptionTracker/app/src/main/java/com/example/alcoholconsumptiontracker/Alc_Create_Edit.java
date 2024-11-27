@@ -309,12 +309,22 @@ public class Alc_Create_Edit extends Fragment {
                         MainActivity.GetDrinkTemplateManager().PutTemplate(newTemplate);
 
 
-                        // Notify saved changes
-                        Toast.makeText(
-                                MainActivity.GetContentView().getContext(),
-                                "Saved changes to template",
-                                Toast.LENGTH_LONG
-                        ).show();
+                        // Notify saved changes or created template based on programming mode
+                        if (Alc_Programming.GetProgrammingMode() == Alc_Programming.ProgrammingMode.EDITING){
+                            Toast.makeText(
+                                    MainActivity.GetContentView().getContext(),
+                                    "Saved changes to template",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+                        else if (Alc_Programming.GetProgrammingMode() == Alc_Programming.ProgrammingMode.CREATING){
+                            Toast.makeText(
+                                    MainActivity.GetContentView().getContext(),
+                                    "Created new template",
+                                    Toast.LENGTH_LONG
+                            ).show();
+                        }
+
 
                         // Go to alc programming
                         MainActivity.ChangeActiveFragment(R.id.alc_Programming);

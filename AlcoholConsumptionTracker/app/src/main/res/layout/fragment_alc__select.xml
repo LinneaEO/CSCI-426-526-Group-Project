@@ -93,6 +93,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/alcSelectBackButton"
+        android:layout_width="95dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:scaleType="fitXY"
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        android:src="@mipmap/arrow_button_not_clicked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/alcProgrammingCreateDrink"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ListView
         android:id="@+id/alc_logging_selected_template"
         android:layout_width="400dp"

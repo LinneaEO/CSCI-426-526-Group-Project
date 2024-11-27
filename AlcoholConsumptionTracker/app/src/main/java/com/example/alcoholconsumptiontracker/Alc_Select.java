@@ -110,7 +110,7 @@ public class Alc_Select extends Fragment {
 
 
                         // Set the new selected row
-                        TextView incomingView = (TextView)view.findViewById(R.id.alcoholSelectDrinkNameList);
+                        TextView incomingView = (TextView)view.findViewById(R.id.alcSelectTemplateName);
                         Alc_Select.SetSelectedTemplate(MainActivity.GetDrinkTemplateManager().GetTemplate(
                                 (String)incomingView.getText().subSequence(
                                         Universals.DrinkLoggingUI.DrinkTemplateTags.name.length(),
@@ -195,7 +195,6 @@ public class Alc_Select extends Fragment {
         RadioButton selectButton = targetRow.findViewById(R.id.alcSelectListViewRadioButton);
         selectButton.setChecked(true);
         selectButton.setButtonTintList(ColorStateList.valueOf(Alc_Select.ButtonSelectedColor()));
-        targetRow.setBackgroundColor(Alc_Select.RowSelectedColor());
     }
     /// <summary>
     ///  Assumes a row object of type shown in alc_select_list_item.xml
@@ -207,7 +206,6 @@ public class Alc_Select extends Fragment {
         RadioButton selectButton = targetRow.findViewById(R.id.alcSelectListViewRadioButton);
         selectButton.setChecked(false);
         selectButton.setButtonTintList(ColorStateList.valueOf(Alc_Select.ButtonUnselectedColor()));
-        targetRow.setBackgroundColor(Alc_Select.RowUnselectedColor());
     }
 
 
@@ -259,44 +257,39 @@ public class Alc_Select extends Fragment {
             ImageView drinkImage;
 
             // Name
-            drinkName = (TextView) row.findViewById(R.id.alcoholSelectDrinkNameList);
+            drinkName = (TextView) row.findViewById(R.id.alcSelectTemplateName);
             drinkName.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.name +
                     this.templateList[position].GetName()
             );
 
             // Type
-            drinkType = (TextView) row.findViewById(R.id.alcoholSelectDrinkTypeList);
+            drinkType = (TextView) row.findViewById(R.id.alcSelectTemplateType);
             drinkType.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.type +
                     this.templateList[position].GetType().Get()
             );
 
             // Servings
-            drinkServings = (TextView) row.findViewById(R.id.alcoholSelectDrinkServingsList);
+            drinkServings = (TextView) row.findViewById(R.id.alcSelectTemplateServings);
             drinkServings.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.servings +
                     Short.toString(this.templateList[position].GetServings())
             );
 
             // Calories
-            drinkCalories = (TextView) row.findViewById(R.id.alcoholSelectDrinkCaloriesList);
+            drinkCalories = (TextView) row.findViewById(R.id.alcSelectTemplateCalories);
             drinkCalories.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.calories +
                     Double.toString(
                             Math.round(this.templateList[position].GetCalories() * 100.0) / 100.0
                     )
             );
 
             // Price
-            drinkPrice = (TextView) row.findViewById(R.id.alcoholSelectDrinkPriceList);
+            drinkPrice = (TextView) row.findViewById(R.id.alcSelectTemplatePrice);
             drinkPrice.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.price +
                     Double.toString(
                             Math.round(this.templateList[position].GetPrice() * 100.0) / 100.0
                             )
             );
-            drinkImage = (ImageView) row.findViewById(R.id.alcoholSelectImageList);
+            drinkImage = (ImageView) row.findViewById(R.id.alcSelectTemplateImage);
 
             // Set the row as unselected
             row.setBackgroundColor(Alc_Select.RowUnselectedColor());

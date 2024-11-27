@@ -32,10 +32,10 @@
         android:id="@+id/alcEditImageTable"
         android:layout_width="390dp"
         android:layout_height="312dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="100dp"
         android:scaleType="fitXY"
         android:src="@mipmap/alc_create_edit_table"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -75,53 +75,53 @@
         android:id="@+id/alcEditName"
         android:layout_width="174dp"
         android:layout_height="42dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="17dp"
-        android:gravity="center|left"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="start|center_vertical"
         android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/alcEditServings"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/alcEditImageTable" />
 
     <EditText
         android:id="@+id/alcEditServings"
         android:layout_width="174dp"
         android:layout_height="42dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center|left"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="9dp"
+        android:gravity="start|center_vertical"
         android:inputType="number"
         android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/alcEditTypeInputLayout"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/alcEditImageTable" />
 
     <EditText
         android:id="@+id/alcEditPrice"
         android:layout_width="174dp"
         android:layout_height="42dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="15dp"
-        android:gravity="center|left"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="14dp"
+        android:gravity="start|center_vertical"
         android:inputType="numberDecimal"
         android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/alcEditCalories"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/alcEditImageTable" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/alcEditTypeInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="177dp"
         android:layout_height="57dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="26dp"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toTopOf="@+id/alcEditPrice"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="@+id/alcEditImageTable">
 
         <AutoCompleteTextView
             android:id="@+id/alcEditTypeInputTextbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center|left"
+            android:gravity="start|center_vertical"
             android:inputType="none"
             android:maxLines="1"
             android:text=""
@@ -133,26 +133,24 @@
         android:id="@+id/alcEditCalories"
         android:layout_width="173dp"
         android:layout_height="42dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="82dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
-        android:gravity="center|left"
+        android:gravity="start|fill_vertical"
         android:inputType="numberDecimal"
         android:maxLines="1"
-        app:layout_constraintBottom_toTopOf="@+id/alcEditFinishButton"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/alcEditImageTable"
+        app:layout_constraintEnd_toEndOf="@+id/alcEditImageTable" />
 
     <ImageView
         android:id="@+id/alcEditUploadImageBaseImage"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="75dp"
         android:scaleType="fitXY"
         android:src="@mipmap/upload_image_picture"
         app:layout_constraintBottom_toTopOf="@+id/alcEditImageTable"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/alcEditImage"
