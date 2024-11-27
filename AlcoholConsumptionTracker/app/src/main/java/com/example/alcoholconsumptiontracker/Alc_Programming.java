@@ -1,5 +1,6 @@
 package com.example.alcoholconsumptiontracker;
 
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
@@ -51,7 +52,6 @@ public class Alc_Programming extends Fragment {
 
     // Represents the selected drink template
     private static DrinkTemplate selectedTemplate;
-
 
 
     public Alc_Programming() {
@@ -347,5 +347,4 @@ public class Alc_Programming extends Fragment {
             return (row);
         }
     }
-
 }

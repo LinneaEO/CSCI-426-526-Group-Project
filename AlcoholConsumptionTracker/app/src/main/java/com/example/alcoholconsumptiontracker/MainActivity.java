@@ -3,6 +3,9 @@ package com.example.alcoholconsumptiontracker;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import com.example.alcoholconsumptiontracker.system.DatabaseManager;
 import com.example.alcoholconsumptiontracker.system.Drink;
@@ -13,11 +16,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.alcoholconsumptiontracker.databinding.ActivityMainBinding;
-
-import java.util.ArrayList;
 import java.util.HashMap;
+import kotlinx.coroutines.MainCoroutineDispatcher;
+import java.util.ArrayList;
 import java.util.List;
 
 /// WARNING: Don't create more than one instance of MainActivity
@@ -97,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize global DatabaseManager
         this.CreateHelperInitializeDatabaseManager();
+
 
         // Initialize global DrinkTemplateManager
         this.CreateHelperInitializeDrinkTemplateManager();
@@ -316,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
-
+    
     ///
     ///  Methods
     ///

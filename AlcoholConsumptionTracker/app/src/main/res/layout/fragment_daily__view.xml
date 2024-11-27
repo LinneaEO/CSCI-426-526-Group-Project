@@ -18,6 +18,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         tools:text="11/13/2024" />
 
+
     <TextView
         android:id="@+id/total_value"
         android:layout_width="wrap_content"

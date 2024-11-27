@@ -1,6 +1,7 @@
 package com.example.alcoholconsumptiontracker;
 
 import android.content.Context;
+import android.media.Image;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -49,7 +50,6 @@ public class Alc_Select extends Fragment {
     // Represents the drink template selected during alcohol select
     private static DrinkTemplate selectedTemplate;
 
-
     public Alc_Select() {
         super(R.layout.fragment_alc__select);
 
@@ -70,6 +70,7 @@ public class Alc_Select extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         // Instantiate fragment contents from fragment_alc__select to the parent container
         View root = inflater.inflate(R.layout.fragment_alc__select, container, false);
@@ -239,6 +240,7 @@ public class Alc_Select extends Fragment {
             // TODO Auto-generated method stub
             return position;
         }
+
 
         ///
         ///  Gets a row from the list as its different objects. Returns the result as a view

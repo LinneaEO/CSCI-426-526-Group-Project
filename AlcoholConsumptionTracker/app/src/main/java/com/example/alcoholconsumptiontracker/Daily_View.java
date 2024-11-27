@@ -147,6 +147,7 @@ public class Daily_View extends Fragment {
 
     }
 
+
     private void highlightActiveButton(Button highlightButton){
         // Set all buttons back to default color
         buttonCalories.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.default_button));

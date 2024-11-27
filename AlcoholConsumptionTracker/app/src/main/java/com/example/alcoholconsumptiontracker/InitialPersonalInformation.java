@@ -23,7 +23,7 @@ public class InitialPersonalInformation extends Fragment {
             this.userName = userName;
             this.weight = weight;
             this.height = height;
-            this.sex = sex; //oh yeah
+            this.sex = sex;
             this.age = age;
         }
 
@@ -47,7 +47,25 @@ public class InitialPersonalInformation extends Fragment {
         }
 
         // Setters - when u wanna change
+        public void setUserName(String newUserName) {
+            this.userName = newUserName;
+        }
 
+        public void setWeight(int newWeight) {
+            this.weight = newWeight;
+        }
+
+        public void setHeight(int newHeight) {
+            this.height = newHeight;
+        }
+
+        public void setSex(char newSex) {
+            this.sex = newSex;
+        }
+
+        public void setAge(int newAge) {
+            this.age = newAge;
+        }
 
     }
 
