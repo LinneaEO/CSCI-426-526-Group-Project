@@ -5,10 +5,59 @@
     android:layout_height="match_parent"
     tools:context=".Monthly_View">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
+        android:id="@+id/button_calories_m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="600dp"
+        android:backgroundTint="#3A018A"
+        android:text="Calories"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/button_units_m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="600dp"
+        android:text="Units"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/button_bac_m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="210dp"
+        android:layout_marginTop="600dp"
+        android:text="BAC"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/button_money_m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="600dp"
+        android:text="Money"
+        android:textSize="10sp" />
+
+    <GridLayout
+        android:id="@+id/gridLayoutCalendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:columnCount="7"
+        android:rowCount="6"
+        android:padding="4dp"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/textViewMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="October"
+        android:textSize="25sp"
+        android:layout_margin="16dp"
+        android:layout_gravity="center_horizontal" />
 
 </FrameLayout>
