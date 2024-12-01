@@ -145,7 +145,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/drinkProgrammingTemplateDeleteButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/alcProgrammingTemplateBaseImage"
-                    app:srcCompat="@mipmap/gear_icon_not_clicked" />
+                    app:srcCompat="@mipmap/alc_programming_edit_not_clicked" />
 
                 <ImageButton
                     android:id="@+id/drinkProgrammingTemplateDeleteButton"
@@ -159,7 +159,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/alcProgrammingTemplateBaseImage"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/drinkProgrammingTemplateEditButton"
-                    app:srcCompat="@android:drawable/btn_dialog" />
+                    app:srcCompat="@mipmap/alc_programming_delete_not_clicked" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

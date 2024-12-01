@@ -2,18 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-
     <item
         android:id="@+id/nav_logging"
-        android:icon="@mipmap/ic_logging"
+        android:icon="@mipmap/log_icon"
         android:title="@string/title_logging" />
     <item
         android:id="@+id/navigation_home"
-        android:icon="@mipmap/ic_home"
+        android:icon="@mipmap/home_icon"
         android:title="@string/title_home" />
     <item
         android:id="@+id/nav_reporting"
-        android:icon="@mipmap/ic_reporting"
+        android:icon="@mipmap/report_icon"
         android:title="@string/title_reporting" />
 
 </menu>

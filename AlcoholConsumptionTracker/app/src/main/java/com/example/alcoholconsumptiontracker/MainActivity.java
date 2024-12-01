@@ -1,30 +1,36 @@
 package com.example.alcoholconsumptiontracker;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 
 import com.example.alcoholconsumptiontracker.system.DatabaseManager;
 import com.example.alcoholconsumptiontracker.system.Drink;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
+import com.example.alcoholconsumptiontracker.system.Universals;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.alcoholconsumptiontracker.databinding.ActivityMainBinding;
-import java.util.HashMap;
-import kotlinx.coroutines.MainCoroutineDispatcher;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
     /// Global Temporary DrinkList (later to be given to date system)
     private static List<Drink> drinkList;
 
+    /// Represents the current main activity. Used for invoking non-static methods as static methods
+    private static MainActivity currentMainActivity;
+
 
     ///  Global DatabaseManager
     private static DatabaseManager databaseManager;
@@ -82,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /// Initialize static main activity
+        MainActivity.currentMainActivity = this;
 
         ///
         /// Window Requests
@@ -106,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialize global DatabaseManager
         this.CreateHelperInitializeDatabaseManager();
 
-
         // Initialize global DrinkTemplateManager
         this.CreateHelperInitializeDrinkTemplateManager();
 
@@ -124,13 +135,13 @@ public class MainActivity extends AppCompatActivity {
 
                 int itemID = item.getItemId();
                 if (itemID == R.id.nav_logging){
-                    return MainActivity.ChangeActiveFragment(R.id.alc_Select);
+                    return MainActivity.ChangeActiveFragment(R.id.logging_intermediary, FragmentAnimationType.FADE);
                 }
                 else if (itemID == R.id.navigation_home){
-                    return MainActivity.ChangeActiveFragment(R.id.daily_View);
+                    return MainActivity.ChangeActiveFragment(R.id.daily_View, FragmentAnimationType.FADE);
                 }
                 else if (itemID == R.id.nav_reporting){
-                    return MainActivity.ChangeActiveFragment(R.id.weekly_View);
+                    return MainActivity.ChangeActiveFragment(R.id.weekly_View, FragmentAnimationType.FADE);
                 }
                 else{
                     return false;
@@ -138,8 +149,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Load previously created templates into the template manager if they exist
+        File templateFile = new File(
+                MainActivity.GetDatabaseManager().GetAppRootDirectory(),
+                Universals.FileNames.TemplateListFile + ".xml"
+        );
+        if (templateFile.exists()){
+            MainActivity.drinkTemplateManager.ReadTemplateList(
+                    MainActivity.GetDatabaseManager().GetAppRootDirectory(),
+                    Universals.FileNames.TemplateListFile,
+                    false);
+        }
 
         // testing
+        /*
         DrinkTemplate testTemplate = new DrinkTemplate();
         testTemplate.SetName("test name");
         drinkTemplateManager.PutTemplate(testTemplate);
@@ -184,12 +207,38 @@ public class MainActivity extends AppCompatActivity {
         /////// end testing
 
         // Set the first scene to daily view
-        MainActivity.ChangeActiveFragment(R.id.daily_View);
+        */
+
+
+        MainActivity.ChangeActiveFragment(R.id.daily_View, FragmentAnimationType.FADE);
 
         // Set initialized to true
         MainActivity.initialized = true;
 
     }
+
+    /// <summary>
+    ///     Runs when the back button is pressed.
+    ///     Saves templates created in the app.
+    /// </summary>
+    @Override public void onBackPressed() {
+
+        MainActivity.SaveDrinkTemplates();
+
+        super.onBackPressed();
+    }
+
+    /// <summary>
+    ///     Runs when the app is killed.
+    ///     Saves templates created in the app.
+    /// </summary>
+    @Override public void onDestroy(){
+
+        MainActivity.SaveDrinkTemplates();
+
+        super.onDestroy();
+    }
+
     ///
     /// Constructor helpers
     ///
@@ -210,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.fragmentIds = new ArrayList<>(20);
         fragmentIds.add(R.id.alc_Create_Edit);
         fragmentIds.add(R.id.alc_Select);
-        fragmentIds.add(R.id.alc_Logging);
+        fragmentIds.add(R.id.alcLoggingBackButton);
         fragmentIds.add(R.id.alc_Programming);
         fragmentIds.add(R.id.daily_View);
         fragmentIds.add(R.id.monthly_View);
@@ -218,6 +267,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentIds.add(R.id.personal_Info);
         fragmentIds.add(R.id.weekly_View);
         fragmentIds.add(R.id.blank_fragment);
+        fragmentIds.add(R.id.alc_drink_tab);
+        fragmentIds.add(R.id.logging_intermediary);
 
     }
 
@@ -225,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
     ///    Initializes the global database manager
     /// </summary>
     private void CreateHelperInitializeDatabaseManager(){
-        MainActivity.databaseManager = new DatabaseManager(this.getApplicationContext());
+        MainActivity.databaseManager = new DatabaseManager(this.getBaseContext());
     }
 
     /// <summary>
@@ -250,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
                     return Alc_Select.newInstance();
                 else if (targetID == R.id.alc_Programming)
                     return Alc_Programming.newInstance(null, null);
-                else if (targetID == R.id.alc_Logging)
+                else if (targetID == R.id.alcLoggingBackButton)
                     return Alc_Logging.newInstance();
                 else if (targetID == R.id.daily_View)
                     return Daily_View.newInstance(null, null);
@@ -262,6 +313,10 @@ public class MainActivity extends AppCompatActivity {
                     return new Personal_Info();
                 else if (targetID == R.id.weekly_View)
                     return new Weekly_View();
+                else if (targetID == R.id.logging_intermediary)
+                    return new Logging_Intermediary();
+                else if (targetID == R.id.alc_drink_tab)
+                    return new Drink_Tab();
                 else
                     return new BlankFragment();
         }
@@ -281,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
         else return MainActivity.navView;
     }
     public static DatabaseManager GetDatabaseManager(){
-        if (!MainActivity.databaseManager.Initialized() || !MainActivity.initialized)
+        if (!MainActivity.databaseManager.Initialized())
             throw new RuntimeException("Database uninitialized.");
         else return MainActivity.databaseManager;
     }
@@ -341,19 +396,30 @@ public class MainActivity extends AppCompatActivity {
     ///     True if successful
     ///     False otherwise
     /// </summary>
-    public static boolean ChangeActiveFragment(int fragmentID){
+    public enum FragmentAnimationType{
+        NONE,
+        FADE
+    }
+    public static boolean ChangeActiveFragment(int fragmentID, FragmentAnimationType animationType){
 
         // If the fragment dictionary isn't initialized, if the dictionary doesn't contain the
         //  target fragment, or if the fragment is set to null, return false.
         if (MainActivity.fragmentIds == null) return false;
         if (!MainActivity.fragmentIds.contains(fragmentID)) return false;
 
-        // Null warning found, but cannot be null at this point due to the previous
-        //  if statements.
-        MainActivity.fragmentManager.
-                beginTransaction().
-                replace(MainActivity.hostFragmentID, MainActivity.GetFragmentByID(fragmentID)).
-                commitNowAllowingStateLoss();
+        // Transition between fragments based on animation type
+        FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+        switch (animationType){
+            case FADE:
+                transaction.setCustomAnimations(R.animator.fade_in, R.animator.fade_out);
+                break;
+            case NONE:
+            default:
+                break;
+        }
+        transaction.replace(MainActivity.hostFragmentID, MainActivity.GetFragmentByID(fragmentID));
+        transaction.commitNowAllowingStateLoss();
+
         MainActivity.currentFragmentID = fragmentID;
         return true;
     }
@@ -372,5 +438,73 @@ public class MainActivity extends AppCompatActivity {
                 commitNowAllowingStateLoss();
 
         return true;
+    }
+
+    /// <summary>
+    ///     Saves all the drink templates in the system to the
+    /// </summary>
+    private static void SaveDrinkTemplates(){
+        // If the drink template manager and database manager are initialized, save the
+        //  drink template manager templates
+        if (MainActivity.initialized){
+            if (MainActivity.drinkTemplateManager != null && MainActivity.databaseManager != null){
+                MainActivity.GetDrinkTemplateManager().WriteTemplateList(
+                        MainActivity.GetDatabaseManager().GetAppRootDirectory(),
+                        Universals.FileNames.TemplateListFile
+                );
+            }
+        }
+    }
+    public static MainActivity GetCurrentActivity(){
+        return MainActivity.currentMainActivity;
+    }
+
+    /// <summary>
+    /// Given hours and minutes, this method produces a string in the form:
+    ///     HH:MM A/P
+    /// where HH is hours (0-23)
+    /// where MM is minutes (0-59)
+    /// where A/P is AM or PM
+    /// </summary>
+    public static String FormatTimeString(int hours, int minutes){
+
+        String hoursToken = "";
+        String minutesToken = "";
+        String apToken = "";
+
+        // Hours token
+        if (hours < 0 || hours > 23){
+            hoursToken = "-1";
+        }
+        else if (hours > 11){
+            hours = hours - 12;
+            if (hours < 10){
+                hoursToken += "0";
+            }
+            hoursToken += Integer.toString(hours);
+            apToken = "PM";
+        }
+        else{
+            if (hours < 10){
+                hoursToken += "0";
+            }
+            hoursToken += Integer.toString(hours);
+            apToken = "AM";
+        }
+
+
+        // Minutes token
+        if (minutes < 0 || minutes > 59){
+            minutesToken = "-1";
+        }
+        else{
+            if (minutes < 10){
+                minutesToken += "0";
+            }
+            minutesToken += Integer.toString(minutes);
+        }
+
+        // Return formatted string
+        return hoursToken + ":" + minutesToken + " " + apToken;
     }
 }

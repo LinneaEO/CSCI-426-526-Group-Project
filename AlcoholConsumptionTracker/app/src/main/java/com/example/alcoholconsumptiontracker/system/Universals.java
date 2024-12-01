@@ -163,7 +163,16 @@ public class Universals {
 
     }
 
-
+    ///
+    /// Class of file names for the system
+    ///
+    public static class FileNames{
+        /// <summary>
+        ///     Represents the file name for the file containing created templates
+        ///         in the drink template manager.
+        /// </summary>
+        public static String TemplateListFile = "templates";
+    }
 
     ///
     /// Class of XML tags used in app backend

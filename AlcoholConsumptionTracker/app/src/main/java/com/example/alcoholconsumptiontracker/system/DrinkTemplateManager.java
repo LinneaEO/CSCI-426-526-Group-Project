@@ -291,7 +291,7 @@ public class DrinkTemplateManager {
 
             // Image File Path
             tempElement2 = d.createElement(Universals.XMLTags.DrinkTemplateTags.ImageFilePath);
-            tempElement2.appendChild(d.createTextNode(tempTemplate.GetName()));
+            tempElement2.appendChild(d.createTextNode(tempTemplate.GetImageFilePath()));
             tempElement.appendChild(tempElement2);
 
             // Append onto root

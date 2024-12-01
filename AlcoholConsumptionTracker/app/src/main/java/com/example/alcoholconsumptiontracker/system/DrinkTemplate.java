@@ -158,7 +158,7 @@ public class DrinkTemplate {
                 && tempDrink.GetHourOfConsumption() == 0
                 && tempDrink.GetMinuteOfConsumption() == 0
                 && tempDrink.GetCalories() == 0
-                && tempDrink.GetImagefilePath().equals("test")
+                && tempDrink.GetImageFilePath().equals("test")
         ){
             if (printAllMessages) Log.d(
                     Universals.TestMessages.TestMessageTag,

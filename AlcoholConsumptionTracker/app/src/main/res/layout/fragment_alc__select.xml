@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/alc_Select"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
-    android:id="@+id/alc_Select"
-    tools:context=".Alc_Select" >
+    tools:context=".Alc_Select">
+
 
     <TextView
         android:id="@+id/textView2"
@@ -20,108 +21,118 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="418dp"
-        android:layout_height="515dp"
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="266dp"
+        android:layout_height="70dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/color_blind_light_blue"
-        app:layout_constraintBottom_toBottomOf="@+id/alc_logging_selected_template"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/alc_logging_selected_template" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/title_bar" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/alc_logging_selected_template"
-        app:layout_constraintEnd_toEndOf="@+id/alc_logging_selected_template"
-        app:layout_constraintStart_toEndOf="@+id/alc_logging_selected_template"
-        app:layout_constraintStart_toStartOf="@+id/alc_logging_selected_template"
-        app:layout_constraintTop_toTopOf="@+id/alc_logging_selected_template" />
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a Drink"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+        app:layout_constraintEnd_toEndOf="@+id/imageView8"
+        app:layout_constraintStart_toStartOf="@+id/imageView8"
+        app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/color_blind_light_blue"
-        app:layout_constraintBottom_toBottomOf="@+id/drinkSelectTextTitle"
-        app:layout_constraintEnd_toEndOf="@+id/drinkSelectTextTitle"
-        app:layout_constraintStart_toStartOf="@+id/drinkSelectTextTitle"
-        app:layout_constraintTop_toTopOf="@+id/drinkSelectTextTitle" />
-
-    <Button
-        android:id="@+id/alcSelectToAlcLogging"
-        android:layout_width="170dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/color_blind_light_blue"
-        android:text="@string/confirm_choice"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="25dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/rounded_corner_square_ver_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/alcSelectSendToAlcProgramming"
-        android:layout_width="100dp"
-        android:layout_height="75dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="10dp"
-        android:text="Drink Mixer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/alc_logging_selected_template" />
 
     <TextView
-        android:id="@+id/drinkSelectTextTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Drink Select"
-        android:textColor="@color/white"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="-5dp"
+        android:layout_marginBottom="-10dp"
+        android:background="@drawable/rounded_corner_square_ver_1"
+        app:layout_constraintBottom_toBottomOf="@+id/alc_logging_selected_template"
+        app:layout_constraintEnd_toEndOf="@+id/alc_logging_selected_template"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/alcSelectBackButton"
         android:layout_width="95dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="15dp"
+        android:layout_height="74dp"
         android:layout_marginBottom="15dp"
         android:background="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
-        android:scaleX="1.1"
-        android:scaleY="1.1"
+        android:scaleX="1"
+        android:scaleY="1"
         android:src="@mipmap/arrow_button_not_clicked"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/alcProgrammingCreateDrink"
+        app:layout_constraintEnd_toStartOf="@+id/alcSelectToAlcLogging"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
         android:id="@+id/alc_logging_selected_template"
         android:layout_width="400dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="60dp"
+        android:layout_height="425dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/color_blind_dark_blue"
         android:choiceMode="singleChoice"
         android:divider="@color/black"
         android:dividerHeight="2dp"
         android:overScrollMode="never"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/alcSelectToAlcLogging"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drinkSelectTextTitle"></ListView>
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+    </ListView>
+    <ImageButton
+        android:id="@+id/alcSelectToAlcLogging"
+        android:layout_width="208dp"
+        android:layout_height="74dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:scaleType="centerInside"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:src="@mipmap/alc_select_confirm_choice_button"
+        app:layout_constraintBottom_toBottomOf="@+id/alcSelectBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/alcSelectBackButton" />
+
+    <ImageView
+        android:id="@+id/alcSelectHelpSquare"
+        android:layout_width="171dp"
+        android:layout_height="164dp"
+        android:layout_marginBottom="150dp"
+        android:src="@mipmap/generic_grey_square"
+        app:layout_constraintBottom_toTopOf="@+id/alcSelectToAlcLogging"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/alcSelectHelpTextbox"
+        android:layout_width="138dp"
+        android:layout_height="136dp"
+        android:text="Use templates to log drinks. Once you have created a template, it will appear here."
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/alcSelectHelpSquare"
+        app:layout_constraintEnd_toEndOf="@+id/alcSelectHelpSquare"
+        app:layout_constraintStart_toStartOf="@+id/alcSelectHelpSquare"
+        app:layout_constraintTop_toTopOf="@+id/alcSelectHelpSquare" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import com.example.alcoholconsumptiontracker.system.Universals;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
+import java.io.File;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,9 +48,6 @@ public class Alc_Logging extends Fragment {
     ///
     /// Globals
     ///
-    // Represents the list of fields of the selected template
-    private static ListView selectedTemplateFieldList;
-
     // Represents the textbox where drink occasion is entered
     private static EditText drinkOccasionTextbox;
 
@@ -58,13 +58,13 @@ public class Alc_Logging extends Fragment {
     private static TextView drinkTimeOfDrinkText;
 
     // Represents the button that adds logs a drink based on the selected template, time chosen, and occasion
-    private static Button addOneDrink;
+    private static ImageButton addOneDrink;
 
     // Represents the button that sends from alc_logging to the home page (finish)
-    private static Button finishedLoggingDrinks;
+    private static ImageButton finishedLoggingDrinks;
 
     // Represents the back button that sends from alc_logging to alc_select
-    private static Button backButton;
+    private static ImageButton backButton;
 
 
     private static int drinkMinute;
@@ -101,56 +101,60 @@ public class Alc_Logging extends Fragment {
         View root =  inflater.inflate(R.layout.fragment_alc__logging, container, false);
 
         // Set globals to null (reset)
-        Alc_Logging.selectedTemplateFieldList = null;
         Alc_Logging.selectedTemplateImage = null;
         Alc_Logging.selectedTemplate = null;
         Alc_Logging.drinkOccasionTextbox = null;
         Alc_Logging.drinkTimeOfDrinkDialogButton = null;
         Alc_Logging.drinkTimeOfDrinkText = null;
 
-        // Get the drink template list item to populate with template content
-        Alc_Logging.selectedTemplateFieldList = root.findViewById(R.id.drinkLoggingDrinkInformation);
 
         // Get the selected template from alcohol select (should not be null at this point)
         Alc_Logging.selectedTemplate = Alc_Select.GetSelectedTemplate();
-        if (selectedTemplate != null){
+        // Initialize displayed information about the template
+        if (Alc_Logging.selectedTemplate != null){
 
-            // Populate list based on template information
-            List<String> templateFields = new ArrayList<String>();
-            templateFields.add(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.name +
-                    selectedTemplate.GetName()
-            );
-            templateFields.add(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.servings +
-                    Short.toString(selectedTemplate.GetServings())
-            );
-            templateFields.add(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.type +
-                    selectedTemplate.GetType().Get()
-            );
-            templateFields.add(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.price +
-                    Float.toString(selectedTemplate.GetPrice())
-            );
-            templateFields.add(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.calories +
-                    Float.toString(selectedTemplate.GetCalories())
-            );
+            //  Name
+            TextView templateName = root.findViewById(R.id.alcLoggingName);
+            templateName.setTextColor(Alc_Logging.PrimaryLoggingTextColor());
+            templateName.setText(Alc_Logging.selectedTemplate.GetName());
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                    getContext(),
-                    R.layout.alc_logging_list_item,
-                    templateFields
-            );
-            Alc_Logging.selectedTemplateFieldList.setAdapter(adapter);
+            //  Type
+            TextView templateType = root.findViewById(R.id.alcLoggingType);
+            templateType.setTextColor(Alc_Logging.PrimaryLoggingTextColor());
+            templateType.setText(Alc_Logging.selectedTemplate.GetType().Get());
+
+            //  Servings
+            TextView templateServings = root.findViewById(R.id.alcLoggingServings);
+            templateServings.setTextColor(Alc_Logging.PrimaryLoggingTextColor());
+            templateServings.setText(String.valueOf(Alc_Logging.selectedTemplate.GetServings()));
+
+            //  Price
+            TextView templatePrice = root.findViewById(R.id.alcLoggingPrice);
+            templatePrice.setTextColor(Alc_Logging.PrimaryLoggingTextColor());
+            templatePrice.setText(String.valueOf(Alc_Logging.selectedTemplate.GetPrice()));
+
+            //  Calories
+            TextView templateCalories = root.findViewById(R.id.alcLoggingCalories);
+            templateCalories.setTextColor(Alc_Logging.PrimaryLoggingTextColor());
+            templateCalories.setText(String.valueOf(Alc_Logging.selectedTemplate.GetCalories()));
+
+            //  Image
+            ImageView templateImage = root.findViewById(R.id.drinkLoggingImage);
+            if (!Alc_Logging.selectedTemplate.GetImageFilePath().isEmpty()){
+                templateImage.setImageAlpha(255);
+                templateImage.setImageURI(Uri.fromFile(
+                        new File(Alc_Logging.selectedTemplate.GetImageFilePath())
+                ));
+            }
+            else{
+                templateImage.setImageAlpha(0);
+            }
         }
 
         // Set up the occasion textbox
         Alc_Logging.drinkOccasionTextbox = root.findViewById((R.id.drinkLoggingOccassionInput));
         Alc_Logging.drinkOccasionTextbox.setText("");
         Alc_Logging.drinkOccasionTextbox.setTextColor(Alc_Logging.PrimaryLoggingTextColor());
-        Alc_Logging.drinkOccasionTextbox.setHint(Universals.DrinkLoggingUI.UITags.OccasionDefaultText);//display the hint
         Alc_Logging.drinkOccasionTextbox.setSingleLine(false);
         Alc_Logging.drinkOccasionTextbox.setVerticalScrollBarEnabled(true);
         Alc_Logging.drinkOccasionTextbox.setHorizontallyScrolling(false);
@@ -160,7 +164,7 @@ public class Alc_Logging extends Fragment {
         Date currentTime = Calendar.getInstance().getTime();
         Alc_Logging.drinkHour = currentTime.getHours();
         Alc_Logging.drinkMinute = currentTime.getMinutes();
-        Alc_Logging.drinkTimeOfDrinkText.setText(FormatTimeString(Alc_Logging.drinkHour, Alc_Logging.drinkMinute));
+        Alc_Logging.drinkTimeOfDrinkText.setText(MainActivity.FormatTimeString(Alc_Logging.drinkHour, Alc_Logging.drinkMinute));
 
         // Set up the time of drink button
         Alc_Logging.drinkTimeOfDrinkDialogButton = root.findViewById(R.id.alcLoggingTimeSelectorButton);
@@ -186,7 +190,7 @@ public class Alc_Logging extends Fragment {
                             public void onClick(View v) {
                                 Alc_Logging.drinkMinute = picker.getMinute();
                                 Alc_Logging.drinkHour = picker.getHour();
-                                Alc_Logging.drinkTimeOfDrinkText.setText(FormatTimeString(Alc_Logging.drinkHour, Alc_Logging.drinkMinute));
+                                Alc_Logging.drinkTimeOfDrinkText.setText(MainActivity.FormatTimeString(Alc_Logging.drinkHour, Alc_Logging.drinkMinute));
                             }
                         });
                         picker.show(getActivity().getSupportFragmentManager(), "Select Time of Drink");
@@ -206,6 +210,11 @@ public class Alc_Logging extends Fragment {
                                 (short)Alc_Logging.drinkHour,
                                 (short)Alc_Logging.drinkMinute
                         );
+                        Toast.makeText(
+                                MainActivity.GetContentView().getContext(),
+                                "Added 1 " + Alc_Logging.selectedTemplate.GetName(),
+                                Toast.LENGTH_SHORT
+                        ).show();
                         MainActivity.PutDrinkInDrinkList(loggedDrink);
                     }
 
@@ -232,7 +241,7 @@ public class Alc_Logging extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.ChangeActiveFragment(R.id.alc_Select);
+                        MainActivity.ChangeActiveFragment(R.id.alc_Select, MainActivity.FragmentAnimationType.NONE);
                     }
 
                 }
@@ -249,52 +258,5 @@ public class Alc_Logging extends Fragment {
     }
     private static int SecondaryLoggingTextColor(){ return Color.parseColor("#666666");}
 
-    /// <summary>
-    /// Given hours and minutes, this method produces a string in the form:
-    ///     HH:MM A/P
-    /// where HH is hours (0-23)
-    /// where MM is minutes (0-59)
-    /// where A/P is AM or PM
-    /// </summary>
-    private static String FormatTimeString(int hours, int minutes){
 
-        String hoursToken = "";
-        String minutesToken = "";
-        String apToken = "";
-
-        // Hours token
-        if (hours < 0 || hours > 23){
-            hoursToken = "-1";
-        }
-        else if (hours > 11){
-            hours = hours - 12;
-            if (hours < 10){
-                hoursToken += "0";
-            }
-            hoursToken += Integer.toString(hours);
-            apToken = "PM";
-        }
-        else{
-            if (hours < 10){
-                hoursToken += "0";
-            }
-            hoursToken += Integer.toString(hours);
-            apToken = "AM";
-        }
-
-
-        // Minutes token
-        if (minutes < 0 || minutes > 59){
-            minutesToken = "-1";
-        }
-        else{
-            if (minutes < 10){
-                minutesToken += "0";
-            }
-            minutesToken += Integer.toString(minutes);
-        }
-
-        // Return formatted string
-        return hoursToken + ":" + minutesToken + " " + apToken;
-    }
 }
