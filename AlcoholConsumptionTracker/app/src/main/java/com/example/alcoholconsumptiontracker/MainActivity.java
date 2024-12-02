@@ -161,55 +161,6 @@ public class MainActivity extends AppCompatActivity {
                     false);
         }
 
-        // testing
-        /*
-        DrinkTemplate testTemplate = new DrinkTemplate();
-        testTemplate.SetName("test name");
-        drinkTemplateManager.PutTemplate(testTemplate);
-        testTemplate = new DrinkTemplate();
-
-        testTemplate.SetName("a gin n rum matie");
-        testTemplate.SetType((short)2);
-        testTemplate.SetServings((short)1);
-        testTemplate.SetCalories((float)400);
-        testTemplate.SetPrice((float)1000000.98);
-
-        drinkTemplateManager.PutTemplate(testTemplate);
-        testTemplate = new DrinkTemplate();
-
-        testTemplate.SetName("test name 3");
-
-        drinkTemplateManager.PutTemplate(testTemplate);
-        testTemplate = new DrinkTemplate();
-
-        testTemplate.SetName("test name 4");
-
-        drinkTemplateManager.PutTemplate(testTemplate);
-        testTemplate = new DrinkTemplate();
-
-        testTemplate.SetName("test name 5");
-
-        drinkTemplateManager.PutTemplate(testTemplate);
-        testTemplate = new DrinkTemplate();
-
-        testTemplate.SetName("test name 6");
-
-        drinkTemplateManager.PutTemplate(testTemplate);
-        testTemplate = new DrinkTemplate();
-
-        testTemplate.SetName("test name 7");
-
-        drinkTemplateManager.PutTemplate(testTemplate);
-        testTemplate = new DrinkTemplate();
-
-        testTemplate.SetName("test name 8");
-        drinkTemplateManager.PutTemplate(testTemplate);
-        /////// end testing
-
-        // Set the first scene to daily view
-        */
-
-
         MainActivity.ChangeActiveFragment(R.id.daily_View, FragmentAnimationType.FADE);
 
         // Set initialized to true
