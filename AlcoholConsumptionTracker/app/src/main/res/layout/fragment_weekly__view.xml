@@ -44,37 +44,52 @@
         android:text="Money"
         android:textSize="10sp" />
 
-    <EditText
-        android:id="@+id/editTextWeekRange"
-        android:layout_width="219dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="95dp"
-        android:clickable="false"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="none"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        tools:text="11/10 - 11/16" />
-
-    <TextView
-        android:id="@+id/total_value_w"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="60dp"
-        android:text="Total Value: xxx" />
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="515dp"
-        android:layout_marginTop="80dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/color_blind_dark_blue"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/line_chart_w"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="492dp"
-            android:layout_margin="16dp" />
-    </LinearLayout>
+            android:layout_height="515dp"
+            android:layout_marginTop="80dp"
+            android:orientation="vertical">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/line_chart_w"
+                android:layout_width="match_parent"
+                android:layout_height="492dp"
+                android:layout_margin="16dp"
+                android:background="@color/white" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editTextWeekRange"
+            android:layout_width="219dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="95dp"
+            android:textColor="@color/white"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="none"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            tools:text="11/10 - 11/16" />
+
+        <TextView
+            android:id="@+id/total_value_w"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="60dp"
+            android:textColor="@color/white"
+            android:text="Total Value: xxx" />
+
+    </RelativeLayout>
+
+
 
 </FrameLayout>
