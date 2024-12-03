@@ -33,6 +33,7 @@ public class NotificationsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /*
         // Set up nav for daily view
         view.findViewById(R.id.button_to_daily_view).setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.action_nav_reporting_to_daily_view)
@@ -47,7 +48,8 @@ public class NotificationsFragment extends Fragment {
         view.findViewById(R.id.button_to_monthly_view).setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.action_nav_reporting_to_monthly_View)
         );
-    }
+        */
+         }
 
     @Override
     public void onDestroyView() {

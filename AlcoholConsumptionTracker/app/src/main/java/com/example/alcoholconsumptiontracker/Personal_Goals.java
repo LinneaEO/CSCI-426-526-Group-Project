@@ -16,16 +16,55 @@ public class Personal_Goals extends Fragment {
         int goalCalorie;
         String goalWritten;
 
-        personalGoal(double goalPrice, int goalServings, int goalCalorie, String goalWritten) {
-            this.goalPrice = goalPrice;
-            this.goalServings = goalServings;
-            this.goalCalorie = goalCalorie;
-            this.goalWritten = goalWritten;
+        personalGoal(double goalPricePerson, int goalServings, int goalCalorie, String goalWritten) {
+            //this.goalPrice = goalPrice;
+            //this.goalServings = goalServings;
+            //this.goalCalorie = goalCalorie;
+            //this.goalWritten = goalWritten;
+            goalPrice = 0.00;
+            goalServings = 0;
+            goalCalorie = 0;
+            goalWritten = null;
         }
 
+        // Getters
+        public double getGoalPrice() {
+            return this.goalPrice;
+        }
+        public int getGoalServings() {
+            return this.goalServings;
+        }
+        public int getGoalCalorie() {
+            return this.goalCalorie;
+        }
+        public String getGoalWritten() {
+            return this.goalWritten;
+        }
 
+        // Setters - make em void cuz u dont wanna return anything
+        public void setGoalPrice(double newGoalPrice) {
+            this.goalPrice = newGoalPrice;
+        }
+
+        public void setGoalServings(int newGoalServings) {
+            this.goalServings = newGoalServings;
+        }
+
+        public void setGoalCalorie(int newGoalCaolorie) {
+            this.goalCalorie = newGoalCaolorie;
+        }
+
+        public void setGoalWritten(String newGoalWritten) {
+            this.goalWritten = newGoalWritten;
+        }
     }
 
+    public static Personal_Goals newInstance(String param1, String param2) {
+        Personal_Goals fragment = new Personal_Goals();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
