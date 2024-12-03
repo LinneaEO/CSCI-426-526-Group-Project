@@ -253,8 +253,8 @@ public class MainActivity extends AppCompatActivity {
                     return Monthly_View.newInstance(null, null);
                 else if (targetID == R.id.personal_Goals)
                     return Personal_Goals.newInstance(null, null);
-                else if (targetID == R.id.personal_Info)
-                    return Personal_Info.newInstance(null, null);
+                //else if (targetID == R.id.personal_Info)
+                    //return Personal_Info.newInstance(null, null);
                 else if (targetID == R.id.weekly_View)
                     return new Weekly_View();
                 else
