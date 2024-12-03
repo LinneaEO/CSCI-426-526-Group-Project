@@ -11,6 +11,7 @@ import com.example.alcoholconsumptiontracker.system.DatabaseManager;
 import com.example.alcoholconsumptiontracker.system.Drink;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
+import com.example.alcoholconsumptiontracker.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     return MainActivity.ChangeActiveFragment(R.id.daily_View);
                 }
                 else if (itemID == R.id.nav_reporting){
-                    return MainActivity.ChangeActiveFragment(R.id.weekly_View);
+                    return MainActivity.ChangeActiveFragment(R.id.view_Landing);
                 }
                 else{
                     return false;
@@ -208,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentIds.add(R.id.alc_Logging);
         fragmentIds.add(R.id.alc_Programming);
         fragmentIds.add(R.id.daily_View);
+        fragmentIds.add(R.id.view_Landing);
         fragmentIds.add(R.id.monthly_View);
         fragmentIds.add(R.id.personal_Goals);
         fragmentIds.add(R.id.personal_Info);
@@ -253,8 +255,8 @@ public class MainActivity extends AppCompatActivity {
                     return Monthly_View.newInstance(null, null);
                 else if (targetID == R.id.personal_Goals)
                     return Personal_Goals.newInstance(null, null);
-                //else if (targetID == R.id.personal_Info)
-                    //return Personal_Info.newInstance(null, null);
+                else if (targetID == R.id.view_Landing)
+                   return new NotificationsFragment();
                 else if (targetID == R.id.weekly_View)
                     return new Weekly_View();
                 else

@@ -105,6 +105,6 @@
         app:layout_constraintBottom_toTopOf="@+id/alcSelectToAlcLogging"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drinkSelectTextTitle"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/drinkSelectTextTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
