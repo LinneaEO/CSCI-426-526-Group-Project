@@ -346,27 +346,24 @@ public class Alc_Create_Edit extends Fragment {
                         newTemplate.SetType(DrinkType.DrinkTypeFromString(newType));
 
 
-                        // Save changes to template
-                        //  -If exist in the template manager, remove it.
-                        if (MainActivity.GetDrinkTemplateManager().ContainsTemplate(newTemplate.GetName()))
-                            MainActivity.GetDrinkTemplateManager().RemoveTemplate(newTemplate.GetName());
-                        //  Add the new template
-                        MainActivity.GetDrinkTemplateManager().PutTemplate(newTemplate);
-
-
                         // Notify saved changes or created template based on programming mode
                         if (Alc_Programming.GetProgrammingMode() == Alc_Programming.ProgrammingMode.EDITING){
+                            if (MainActivity.GetDrinkTemplateManager().ContainsTemplate(Alc_Create_Edit.OriginalEditingTemplateName())){
+                                MainActivity.GetDrinkTemplateManager().RemoveTemplate(Alc_Create_Edit.OriginalEditingTemplateName());
+                            }
+                            MainActivity.GetDrinkTemplateManager().PutTemplate(newTemplate);
                             Toast.makeText(
                                     MainActivity.GetContentView().getContext(),
                                     "Saved changes to template",
-                                    Toast.LENGTH_LONG
+                                    Toast.LENGTH_SHORT
                             ).show();
                         }
                         else if (Alc_Programming.GetProgrammingMode() == Alc_Programming.ProgrammingMode.CREATING){
+                            MainActivity.GetDrinkTemplateManager().PutTemplate(newTemplate);
                             Toast.makeText(
                                     MainActivity.GetContentView().getContext(),
                                     "Created new template",
-                                    Toast.LENGTH_LONG
+                                    Toast.LENGTH_SHORT
                             ).show();
                         }
 
@@ -559,7 +556,6 @@ public class Alc_Create_Edit extends Fragment {
                         Alc_Create_Edit.GetEditingTemplate().SetImageFilePath(newImagefile.getAbsolutePath());
 
                         File test = new File(newImagefile.getAbsolutePath());
-                        Log.d("testing JOHN", String.valueOf(test.exists()));
 
                         // Retrieve the file and load to template image
                         Bitmap newTemplateImageFile = BitmapFactory.decodeFile(newImagefile.getAbsolutePath());
