@@ -136,6 +136,9 @@ public class Alc_Programming extends Fragment {
                 }
         );
 
+        // Save the templates before any changes are made for error prevention.
+        MainActivity.SaveDrinkTemplates();
+
         // Return root when finished
         return root;
     }

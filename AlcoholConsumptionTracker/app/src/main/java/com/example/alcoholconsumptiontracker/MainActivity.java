@@ -168,15 +168,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /// <summary>
-    ///     Runs when the back button is pressed.
-    ///     Saves templates created in the app.
-    /// </summary>
-    @Override public void onBackPressed() {
-
-        MainActivity.SaveDrinkTemplates();
-        super.onBackPressed();
-    }
 
     /// <summary>
     ///     Runs when the app is killed.
@@ -184,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
     /// </summary>
     @Override public void onDestroy(){
 
-        MainActivity.SaveDrinkTemplates();
+        //MainActivity.SaveDrinkTemplates();
 
         super.onDestroy();
     }
@@ -393,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
     /// <summary>
     ///     Saves all the drink templates in the system to the
     /// </summary>
-    private static void SaveDrinkTemplates(){
+    public static void SaveDrinkTemplates(){
         // If the drink template manager and database manager are initialized, save the
         //  drink template manager templates
         if (MainActivity.initialized){
