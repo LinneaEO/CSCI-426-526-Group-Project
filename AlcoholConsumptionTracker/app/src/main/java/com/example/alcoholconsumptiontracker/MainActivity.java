@@ -1,5 +1,7 @@
 package com.example.alcoholconsumptiontracker;
 
+//import static com.example.alcoholconsumptiontracker.Personal_Info.savedPersonalInfo;
+
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -7,10 +9,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+
 import com.example.alcoholconsumptiontracker.system.DatabaseManager;
 import com.example.alcoholconsumptiontracker.system.Drink;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
+import com.example.alcoholconsumptiontracker.system.PersonalInfoEntry;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -127,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     return MainActivity.ChangeActiveFragment(R.id.alc_Select);
                 }
                 else if (itemID == R.id.navigation_home){
-                    return MainActivity.ChangeActiveFragment(R.id.daily_View);
+                    return MainActivity.ChangeActiveFragment(R.id.personal_Info);
                 }
                 else if (itemID == R.id.nav_reporting){
                     return MainActivity.ChangeActiveFragment(R.id.weekly_View);
@@ -137,6 +141,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Getting personal info stuff
+        Personal_Info.savedPersonalInfo.getUserName();
+        Personal_Info.savedPersonalInfo.getWeight();
+        Personal_Info.savedPersonalInfo.getHeight();
+        Personal_Info.savedPersonalInfo.getSex();
+        Personal_Info.savedPersonalInfo.getAge();
 
 
         // testing

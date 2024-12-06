@@ -1,6 +1,7 @@
 package com.example.alcoholconsumptiontracker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import com.example.alcoholconsumptiontracker.system.PersonalInfoEntry;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +26,13 @@ public class Personal_Info extends Fragment {
     public static EditText sexInput;
     public static EditText weightInput;
     public static EditText heightInput;
+
+    public static PersonalInfoEntry savedPersonalInfo = new PersonalInfoEntry();
+    private static String savedName;
+    private static int savedWeight;
+    private static double savedHeight;
+    private static String savedSex;
+    private static int savedAge;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,9 +87,15 @@ public class Personal_Info extends Fragment {
                 weightInput.setEnabled(false);
                 heightInput.setEnabled(false);
 
-
-
-                String newName = String.valueOf(nameInput.getText());
+                try {
+                    savedName = String.valueOf(nameInput.getText()).trim();
+                    savedWeight = Integer.parseInt(weightInput.getText().toString().trim());
+                    savedHeight = Double.parseDouble(heightInput.getText().toString().trim());
+                    savedSex = String.valueOf(sexInput.getText()).trim();
+                    savedAge = Integer.parseInt(ageInput.getText().toString().trim());
+                } catch (NumberFormatException e){
+                    System.out.println("numbers bad bad :(");
+                }
 
 
             }
