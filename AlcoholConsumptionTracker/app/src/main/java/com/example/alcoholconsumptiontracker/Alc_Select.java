@@ -44,7 +44,7 @@ public class Alc_Select extends Fragment {
 
     // Represents the confirm choice button
     private static ImageButton confirmChoiceButton;
-
+    // Represents the image of the confirm choice button
     private static ImageButton backButton;
 
     // Represents the help box
@@ -90,11 +90,12 @@ public class Alc_Select extends Fragment {
         Alc_Select.helpTextbox = root.findViewById(R.id.alcSelectHelpTextbox);
         Alc_Select.helpSquare = root.findViewById(R.id.alcSelectHelpSquare);
 
-        // Initialize buttons
+        // Initialize buttons and images
         Alc_Select.confirmChoiceButton = root.findViewById(R.id.alcSelectToAlcLogging);
         Alc_Select.backButton = root.findViewById(R.id.alcSelectBackButton);
         //  Set send to alcohol programming to not selectable (until template is selected)
         Alc_Select.confirmChoiceButton.setEnabled(false);
+        Alc_Select.confirmChoiceButton.setImageAlpha(125);
 
 
         // Initialize alcSelect list
@@ -190,6 +191,7 @@ public class Alc_Select extends Fragment {
         Alc_Select.selectedTemplate = newSelectedTemplate;
         if (!Alc_Select.confirmChoiceButton.isEnabled()){
             Alc_Select.confirmChoiceButton.setEnabled(true);
+            Alc_Select.confirmChoiceButton.setImageAlpha(255);
         }
     }
 
