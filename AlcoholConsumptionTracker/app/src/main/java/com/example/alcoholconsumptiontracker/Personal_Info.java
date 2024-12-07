@@ -7,11 +7,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.alcoholconsumptiontracker.system.PersonalInfoEntry;
 
@@ -25,34 +27,47 @@ public class Personal_Info extends Fragment {
     public static EditText ageInput;
     public static EditText sexInput;
     public static EditText weightInput;
-    public static EditText heightInput;
+    // public static EditText heightInput;
 
     public static PersonalInfoEntry savedPersonalInfo = new PersonalInfoEntry();
-    private static String savedName;
-    private static int savedWeight;
-    private static double savedHeight;
-    private static String savedSex;
-    private static int savedAge;
+    public static String savedName;
+    public static String savedWeight;
+    public static String savedSex;
+    public static String savedAge;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_personal__info, container, false);
+
         ImageButton gearIcon = null;
         ImageButton finishIcon = null;
 
-        Personal_Info.nameInput = root.findViewById(R.id.edittextnameid);
-        Personal_Info.ageInput = root.findViewById(R.id.edittextageid);
-        Personal_Info.sexInput = root.findViewById(R.id.edittextsexid);
-        Personal_Info.weightInput = root.findViewById(R.id.edittextweightid);
-        Personal_Info.heightInput = root.findViewById(R.id.edittextheightid);
+        nameInput = root.findViewById(R.id.edittextnameid);
+        ageInput = root.findViewById(R.id.edittextageid);
+        sexInput = root.findViewById(R.id.edittextsexid);
+        weightInput = root.findViewById(R.id.edittextweightid);
 
+//        if (nameInput != null && ageInput != null && sexInput != null && weightInput != null) {
+//            if (savedName != null) nameInput.setText(savedName);
+//            if (savedSex != null) sexInput.setText(savedSex);
+//            if (savedAge > 0) ageInput.setText(String.valueOf(savedAge)); // Assuming 0 is an invalid age.
+//            if (savedWeight > 0) weightInput.setText(String.valueOf(savedWeight)); // Assuming 0 is invalid.
+//        }
+
+
+        nameInput.setText(savedPersonalInfo.getUserName());
+        weightInput.setText(savedPersonalInfo.getWeight());
+        sexInput.setText(savedPersonalInfo.getSex());
+        ageInput.setText(savedPersonalInfo.getAge());
 
 
         gearIcon = root.findViewById(R.id.geariconid);
@@ -62,7 +77,6 @@ public class Personal_Info extends Fragment {
         ageInput.setEnabled(false);
         sexInput.setEnabled(false);
         weightInput.setEnabled(false);
-        heightInput.setEnabled(false);
 
 
         gearIcon.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +87,6 @@ public class Personal_Info extends Fragment {
                 ageInput.setEnabled(true);
                 sexInput.setEnabled(true);
                 weightInput.setEnabled(true);
-                heightInput.setEnabled(true);
             }
         });
 
@@ -81,23 +94,32 @@ public class Personal_Info extends Fragment {
 
             @Override
             public void onClick(View view) {
-                nameInput.setEnabled(false);
-                ageInput.setEnabled(false);
-                sexInput.setEnabled(false);
-                weightInput.setEnabled(false);
-                heightInput.setEnabled(false);
 
                 try {
                     savedName = String.valueOf(nameInput.getText()).trim();
-                    savedWeight = Integer.parseInt(weightInput.getText().toString().trim());
-                    savedHeight = Double.parseDouble(heightInput.getText().toString().trim());
+                    savedWeight = String.valueOf(weightInput.getText()).trim();
                     savedSex = String.valueOf(sexInput.getText()).trim();
-                    savedAge = Integer.parseInt(ageInput.getText().toString().trim());
-                } catch (NumberFormatException e){
-                    System.out.println("numbers bad bad :(");
+                    savedAge = String.valueOf(sexInput.getText()).trim();
+
+
+                    savedPersonalInfo.setUserName(savedName);
+                    savedPersonalInfo.setWeight(savedWeight);
+                    savedPersonalInfo.setSex(savedSex);
+                    savedPersonalInfo.setAge(savedAge);
+
+                    nameInput.setText(savedName);
+                    weightInput.setText(savedWeight);
+                    ageInput.setText(savedAge);
+                    sexInput.setText(savedSex);
+
+                    nameInput.setEnabled(false);
+                    ageInput.setEnabled(false);
+                    sexInput.setEnabled(false);
+                    weightInput.setEnabled(false);
+
+                } catch (NumberFormatException e) {
+                    Log.e("Personal_Info", "Invalid input for numeric fields.", e);
                 }
-
-
             }
         });
         return root;
