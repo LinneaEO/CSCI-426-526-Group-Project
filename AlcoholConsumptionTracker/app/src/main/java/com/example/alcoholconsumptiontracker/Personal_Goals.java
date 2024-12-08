@@ -183,19 +183,19 @@ public class Personal_Goals extends Fragment {
                     monthlyGoalEntry.setWrittenStatement(savedMonthlyWrittenGoal);
 
                     // Daily
-                    goalPriceDailyInput.setText(savedDailyGoalPrice);
+                    goalPriceDailyInput.setText("$" + savedDailyGoalPrice);
                     goalServingsDailyInput.setText(savedDailyGoalServings);
                     goalCalorieDailyInput.setText(savedDailyGoalCalorie);
                     dailyWrittenGoals.setText(savedDailyWrittenGoal);
 
                     // Weekly
-                    goalPriceWeeklyInput.setText(savedWeeklyGoalPrice);
+                    goalPriceWeeklyInput.setText("$" + savedWeeklyGoalPrice);
                     goalServingsWeeklyInput.setText(savedWeeklyGoalServings);
                     goalCalorieWeeklyInput.setText(savedWeeklyGoalCalorie);
                     weeklyWrittenGoals.setText(savedWeeklyWrittenGoal);
 
                     // Monthly
-                    goalPriceMonthlyInput.setText(savedMonthlyGoalPrice);
+                    goalPriceMonthlyInput.setText("$" + savedMonthlyGoalPrice);
                     goalServingsMonthlyInput.setText(savedMonthlyGoalServings);
                     goalCalorieMonthlyInput.setText(savedMonthlyGoalCalorie);
                     monthlyWrittenGoals.setText(savedMonthlyWrittenGoal);
