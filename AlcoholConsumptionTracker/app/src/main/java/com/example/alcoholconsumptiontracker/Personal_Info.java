@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Personal_Info#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class Personal_Info extends Fragment {
