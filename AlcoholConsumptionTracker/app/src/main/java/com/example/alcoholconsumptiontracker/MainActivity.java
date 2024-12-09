@@ -51,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
     /// Represents the fragment manager, an object used to
     /// switch between app scenes.
-    private static FragmentManager fragmentManager;
+    public static FragmentManager fragmentManager;
 
     /// Represents the host fragment (scene) ID
     ///     ID of fragment that contains fragments
     ///     within the main activity.
-    private static int hostFragmentID;
+    public static int hostFragmentID;
 
     /// Represents the id of the current fragment
     ///     hosted within the host Fragment
@@ -251,14 +251,14 @@ public class MainActivity extends AppCompatActivity {
                     return Alc_Logging.newInstance();
                 else if (targetID == R.id.daily_View)
                     return Daily_View.newInstance(null, null);
+                else if (targetID == R.id.weekly_View)
+                    return Weekly_View.newInstance(null, null);
                 else if (targetID == R.id.monthly_View)
                     return Monthly_View.newInstance(null, null);
                 else if (targetID == R.id.personal_Goals)
                     return Personal_Goals.newInstance(null, null);
                 else if (targetID == R.id.view_Landing)
                    return new NotificationsFragment();
-                else if (targetID == R.id.weekly_View)
-                    return new Weekly_View();
                 else
                     return new BlankFragment();
         }
