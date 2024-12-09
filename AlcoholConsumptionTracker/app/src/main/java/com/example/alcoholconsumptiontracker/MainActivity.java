@@ -14,6 +14,8 @@ import com.example.alcoholconsumptiontracker.system.Drink;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
 import com.example.alcoholconsumptiontracker.system.Universals;
+import com.example.alcoholconsumptiontracker.ui.home.HomeFragment;
+import com.example.alcoholconsumptiontracker.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -56,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
     /// Represents the fragment manager, an object used to
     /// switch between app scenes.
-    private static FragmentManager fragmentManager;
+    public static FragmentManager fragmentManager;
 
     /// Represents the host fragment (scene) ID
     ///     ID of fragment that contains fragments
     ///     within the main activity.
-    private static int hostFragmentID;
+    public static int hostFragmentID;
 
     /// Represents the id of the current fragment
     ///     hosted within the host Fragment
@@ -138,10 +140,10 @@ public class MainActivity extends AppCompatActivity {
                     return MainActivity.ChangeActiveFragment(R.id.logging_intermediary, FragmentAnimationType.FADE);
                 }
                 else if (itemID == R.id.navigation_home){
-                    return MainActivity.ChangeActiveFragment(R.id.daily_View, FragmentAnimationType.FADE);
+                    return MainActivity.ChangeActiveFragment(R.id.home_Fragment, FragmentAnimationType.FADE);
                 }
                 else if (itemID == R.id.nav_reporting){
-                    return MainActivity.ChangeActiveFragment(R.id.weekly_View, FragmentAnimationType.FADE);
+                    return MainActivity.ChangeActiveFragment(R.id.view_Landing, FragmentAnimationType.FADE);
                 }
                 else{
                     return false;
@@ -199,10 +201,12 @@ public class MainActivity extends AppCompatActivity {
         //
         MainActivity.fragmentIds = new ArrayList<>(20);
         fragmentIds.add(R.id.alc_Create_Edit);
+        fragmentIds.add(R.id.home_Fragment);
         fragmentIds.add(R.id.alc_Select);
         fragmentIds.add(R.id.alcLoggingBackButton);
         fragmentIds.add(R.id.alc_Programming);
         fragmentIds.add(R.id.daily_View);
+        fragmentIds.add(R.id.view_Landing);
         fragmentIds.add(R.id.monthly_View);
         fragmentIds.add(R.id.personal_Goals);
         fragmentIds.add(R.id.personal_Info);
@@ -246,18 +250,22 @@ public class MainActivity extends AppCompatActivity {
                     return Alc_Logging.newInstance();
                 else if (targetID == R.id.daily_View)
                     return Daily_View.newInstance(null, null);
+                else if (targetID == R.id.weekly_View)
+                    return Weekly_View.newInstance(null, null);
                 else if (targetID == R.id.monthly_View)
                     return Monthly_View.newInstance(null, null);
                 else if (targetID == R.id.personal_Goals)
                     return Personal_Goals.newInstance(null, null);
                 else if (targetID == R.id.personal_Info)
                     return new Personal_Info();
-                else if (targetID == R.id.weekly_View)
-                    return new Weekly_View();
                 else if (targetID == R.id.logging_intermediary)
                     return new Logging_Intermediary();
                 else if (targetID == R.id.alc_drink_tab)
                     return new Drink_Tab();
+                else if (targetID == R.id.home_Fragment)
+                    return HomeFragment.newInstance(null, null);
+                else if (targetID == R.id.view_Landing)
+                   return new NotificationsFragment();
                 else
                     return new BlankFragment();
         }
