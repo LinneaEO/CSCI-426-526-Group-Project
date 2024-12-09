@@ -75,7 +75,7 @@
                     android:layout_marginStart="110dp"
                     android:layout_marginTop="8dp"
                     android:clickable="false"
-                    android:gravity="bottom|left"
+                    android:gravity="start|center_vertical"
                     android:maxLines="1"
                     android:textAlignment="gravity"
                     android:textStyle="bold"
@@ -89,7 +89,7 @@
                     android:layout_marginStart="100dp"
                     android:layout_marginTop="7dp"
                     android:clickable="false"
-                    android:gravity="bottom|left"
+                    android:gravity="start|center_vertical"
                     android:maxLines="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/alcProgrammingTemplateName" />
@@ -102,7 +102,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="2dp"
                     android:clickable="false"
-                    android:gravity="bottom|left"
+                    android:gravity="start|center_vertical"
                     android:maxLines="1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -113,10 +113,10 @@
                     android:id="@+id/alcProgrammingTemplatePrice"
                     android:layout_width="50dp"
                     android:layout_height="26dp"
-                    android:layout_marginStart="75dp"
+                    android:layout_marginStart="78dp"
                     android:layout_marginTop="6dp"
                     android:clickable="false"
-                    android:gravity="bottom|left"
+                    android:gravity="start|center_vertical"
                     android:maxLines="1"
                     app:layout_constraintStart_toEndOf="@+id/alcProgrammingTemplateType"
                     app:layout_constraintTop_toBottomOf="@+id/alcProgrammingTemplateName" />
@@ -125,10 +125,10 @@
                     android:id="@+id/alcProgrammingTemplateCalories"
                     android:layout_width="49dp"
                     android:layout_height="23dp"
-                    android:layout_marginStart="75dp"
+                    android:layout_marginStart="78dp"
                     android:layout_marginTop="4dp"
                     android:clickable="false"
-                    android:gravity="bottom|left"
+                    android:gravity="start|center_vertical"
                     android:maxLines="1"
                     app:layout_constraintStart_toEndOf="@+id/alcProgrammingTemplateServings"
                     app:layout_constraintTop_toBottomOf="@+id/alcProgrammingTemplatePrice" />
@@ -139,12 +139,13 @@
                     android:layout_height="45dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:background="@color/white"
+                    android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:scaleType="fitXY"
+                    app:layout_constraintBottom_toTopOf="@+id/drinkProgrammingTemplateDeleteButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/gear_icon_not_clicked" />
+                    app:layout_constraintTop_toBottomOf="@+id/alcProgrammingTemplateBaseImage"
+                    app:srcCompat="@mipmap/alc_programming_edit_not_clicked" />
 
                 <ImageButton
                     android:id="@+id/drinkProgrammingTemplateDeleteButton"
@@ -152,12 +153,13 @@
                     android:layout_height="45dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="5dp"
-                    android:background="@color/white"
+                    android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:scaleType="fitXY"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/alcProgrammingTemplateBaseImage"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@android:drawable/btn_dialog" />
+                    app:layout_constraintTop_toBottomOf="@+id/drinkProgrammingTemplateEditButton"
+                    app:srcCompat="@mipmap/alc_programming_delete_not_clicked" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

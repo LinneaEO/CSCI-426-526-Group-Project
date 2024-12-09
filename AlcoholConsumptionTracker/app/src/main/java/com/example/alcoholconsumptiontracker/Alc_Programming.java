@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ import androidx.fragment.app.Fragment;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.Universals;
 
+import java.io.File;
+
 public class Alc_Programming extends Fragment {
 
     ///
@@ -36,10 +39,14 @@ public class Alc_Programming extends Fragment {
     private static ImageButton alcProgrammingSendToAlcCreate;
 
     // Represents the button that transitions from alcProgramming to alcSelect
-    private static ImageButton alcProgrammingSendToAlcSelect;
+    private static ImageButton alcProgrammingBackButton;
 
     // Represents the selected drink template's row
     private static View selectedTemplateRow;
+
+    // Represents the help box
+    private static ImageView helpSquare;
+    private static TextView helpTextbox;
 
     // Represents whether the app is programming a template by creating a new one or editing an existing one
     public enum ProgrammingMode {
@@ -82,12 +89,29 @@ public class Alc_Programming extends Fragment {
         Alc_Programming.selectedTemplateRow = null;
         Alc_Programming.alcProgrammingListView = null;
         Alc_Programming.alcProgrammingSendToAlcCreate = null;
-        Alc_Programming.alcProgrammingSendToAlcSelect = null;
+        Alc_Programming.alcProgrammingBackButton = null;
         Alc_Programming.programmingMode = ProgrammingMode.NONE;
+        Alc_Programming.helpSquare = null;
+        Alc_Programming.helpTextbox = null;
 
-        // Initialize alc programming list view
+        // Initialize helpbox
+        Alc_Programming.helpTextbox = root.findViewById(R.id.alcProgrammingHelpTextbox);
+        Alc_Programming.helpSquare = root.findViewById(R.id.alcProgrammingHelpSquare);
+
+        // Initialize alc programming list view and help box
         Alc_Programming.alcProgrammingListView = root.findViewById(R.id.alc_programming_selected_template);
-        Alc_Programming.alcProgrammingListView.setAdapter(new Alc_Programming.alcProgrammingListAdapter(MainActivity.GetContentView().getContext()));
+        // If template exist, populate the listview. Otherwise, display the help text
+        if (!MainActivity.GetDrinkTemplateManager().GetTemplateList().isEmpty()){
+            Alc_Programming.alcProgrammingListView.setVisibility(View.VISIBLE);
+            Alc_Programming.helpSquare.setVisibility(View.INVISIBLE);
+            Alc_Programming.helpTextbox.setVisibility(View.INVISIBLE);
+            Alc_Programming.alcProgrammingListView.setAdapter(new Alc_Programming.alcProgrammingListAdapter(MainActivity.GetContentView().getContext()));
+        }
+        else{
+            Alc_Programming.alcProgrammingListView.setVisibility(View.INVISIBLE);
+            Alc_Programming.helpSquare.setVisibility(View.VISIBLE);
+            Alc_Programming.helpTextbox.setVisibility(View.VISIBLE);
+        }
 
         // Initialize alc create button
         Alc_Programming.alcProgrammingSendToAlcCreate = root.findViewById(R.id.alcProgrammingCreateDrink);
@@ -96,21 +120,24 @@ public class Alc_Programming extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Alc_Programming.SetProgrammingMode(ProgrammingMode.CREATING);
-                        MainActivity.ChangeActiveFragment(R.id.alc_Create_Edit);
+                        MainActivity.ChangeActiveFragment(R.id.alc_Create_Edit, MainActivity.FragmentAnimationType.NONE);
                     }
                 }
         );
 
-        // Initialize alc select button
-        Alc_Programming.alcProgrammingSendToAlcSelect = root.findViewById(R.id.alcProgrammingBackButton);
-        Alc_Programming.alcProgrammingSendToAlcSelect.setOnClickListener(
+        // Initialize back button
+        Alc_Programming.alcProgrammingBackButton = root.findViewById(R.id.alcProgrammingBackButton);
+        Alc_Programming.alcProgrammingBackButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.ChangeActiveFragment(R.id.alc_Select);
+                        MainActivity.ChangeActiveFragment(R.id.logging_intermediary, MainActivity.FragmentAnimationType.FADE);
                     }
                 }
         );
+
+        // Save the templates before any changes are made for error prevention.
+        MainActivity.SaveDrinkTemplates();
 
         // Return root when finished
         return root;
@@ -272,6 +299,16 @@ public class Alc_Programming extends Fragment {
 
             // Image
             drinkImage = (ImageView) row.findViewById(R.id.alcProgrammingTemplateImage);
+            if (!this.templateList[position].GetImageFilePath().isEmpty()){
+                drinkImage.setImageAlpha(255);
+                drinkImage.setImageURI(Uri.fromFile(
+                        new File(this.templateList[position].GetImageFilePath())
+                ));
+            }
+            else{
+                drinkImage.setImageAlpha(0);
+            }
+
 
             // Edit button
             editDrinkTemplate = (ImageButton)  row.findViewById(R.id.drinkProgrammingTemplateEditButton);
@@ -287,7 +324,7 @@ public class Alc_Programming extends Fragment {
                             );
                             Alc_Programming.SetProgrammingMode(ProgrammingMode.EDITING);
                             // Change to alcohol edit
-                            MainActivity.ChangeActiveFragment(R.id.alc_Create_Edit);
+                            MainActivity.ChangeActiveFragment(R.id.alc_Create_Edit, MainActivity.FragmentAnimationType.NONE);
                         }
                     }
             );
