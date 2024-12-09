@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                     false);
         }
 
-        MainActivity.ChangeActiveFragment(R.id.daily_View, FragmentAnimationType.FADE);
+        MainActivity.ChangeActiveFragment(R.id.home_Fragment, FragmentAnimationType.FADE);
 
         // Set initialized to true
         MainActivity.initialized = true;
