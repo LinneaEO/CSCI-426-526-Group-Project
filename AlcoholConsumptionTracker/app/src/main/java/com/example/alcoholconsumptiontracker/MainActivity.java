@@ -11,6 +11,7 @@ import com.example.alcoholconsumptiontracker.system.DatabaseManager;
 import com.example.alcoholconsumptiontracker.system.Drink;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
+import com.example.alcoholconsumptiontracker.ui.home.HomeFragment;
 import com.example.alcoholconsumptiontracker.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     return MainActivity.ChangeActiveFragment(R.id.alc_Select);
                 }
                 else if (itemID == R.id.navigation_home){
-                    return MainActivity.ChangeActiveFragment(R.id.daily_View);
+                    return MainActivity.ChangeActiveFragment(R.id.home_Fragment);
                 }
                 else if (itemID == R.id.nav_reporting){
                     return MainActivity.ChangeActiveFragment(R.id.view_Landing);
@@ -210,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
         //
         MainActivity.fragmentIds = new ArrayList<>(20);
         fragmentIds.add(R.id.alc_Create_Edit);
+        fragmentIds.add(R.id.home_Fragment);
         fragmentIds.add(R.id.alc_Select);
         fragmentIds.add(R.id.alc_Logging);
         fragmentIds.add(R.id.alc_Programming);
@@ -264,6 +266,8 @@ public class MainActivity extends AppCompatActivity {
                     return Personal_Goals.newInstance(null, null);
                 else if (targetID == R.id.personal_Info)
                     return new Personal_Info();
+                else if (targetID == R.id.home_Fragment)
+                    return HomeFragment.newInstance(null, null);
                 else if (targetID == R.id.view_Landing)
                    return new NotificationsFragment();
                 else
