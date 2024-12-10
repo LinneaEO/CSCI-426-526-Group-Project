@@ -99,7 +99,7 @@ public class Personal_Info extends Fragment {
                     savedName = String.valueOf(nameInput.getText()).trim();
                     savedWeight = String.valueOf(weightInput.getText()).trim();
                     savedSex = String.valueOf(sexInput.getText()).trim();
-                    savedAge = String.valueOf(sexInput.getText()).trim();
+                    savedAge = String.valueOf(ageInput.getText()).trim();
 
 
                     savedPersonalInfo.setUserName(savedName);

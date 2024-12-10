@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         // Load previously created templates into the template manager if they exist
         File templateFile = new File(
                 MainActivity.GetDatabaseManager().GetAppRootDirectory(),
@@ -156,12 +157,6 @@ public class MainActivity extends AppCompatActivity {
                     Universals.FileNames.TemplateListFile,
                     false);
         }
-        // Getting personal info stuff
-        Personal_Info.savedPersonalInfo.getUserName();
-        Personal_Info.savedPersonalInfo.getWeight();
-        Personal_Info.savedPersonalInfo.getHeight();
-        Personal_Info.savedPersonalInfo.getSex();
-        Personal_Info.savedPersonalInfo.getAge();
 
         MainActivity.ChangeActiveFragment(R.id.home_Fragment, FragmentAnimationType.FADE);
 
@@ -255,7 +250,8 @@ public class MainActivity extends AppCompatActivity {
                 else if (targetID == R.id.monthly_View)
                     return Monthly_View.newInstance(null, null);
                 else if (targetID == R.id.personal_Goals)
-                    return Personal_Goals.newInstance(null, null);
+                    //return Personal_Goals.newInstance(null, null);
+                    return new Personal_Goals();
                 else if (targetID == R.id.personal_Info)
                     return new Personal_Info();
                 else if (targetID == R.id.logging_intermediary)

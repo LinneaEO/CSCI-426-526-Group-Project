@@ -98,19 +98,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.63" />
 
-        <ImageView
-            android:id="@+id/heightimageid"
-            android:layout_width="324dp"
-            android:layout_height="204dp"
-            android:src="@drawable/blankheight2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.188"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.788" />
+<!--        <ImageView-->
+<!--            android:id="@+id/heightimageid"-->
+<!--            android:layout_width="324dp"-->
+<!--            android:layout_height="204dp"-->
+<!--            android:src="@drawable/blankheight2"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.188"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.788" />-->
 
         <!-- Edit texts portion -->
         <EditText
@@ -133,6 +133,7 @@
 
         <EditText
             android:id="@+id/edittextageid"
+            android:maxLength="3"
             android:layout_width="102dp"
             android:layout_height="48dp"
             android:hint="Enter age"
@@ -184,23 +185,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.611" />
 
-        <EditText
-            android:id="@+id/edittextheightid"
-            android:layout_width="125dp"
-            android:layout_height="52dp"
-            android:hint="Enter height"
-            android:textColor="#96B1FF"
-            android:textCursorDrawable="@null"
-            android:textColorHint="#96B1FF"
-            app:backgroundTint="#96B1FF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.604"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.722" />
+<!--        <EditText-->
+<!--            android:id="@+id/edittextheightid"-->
+<!--            android:layout_width="125dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:hint="Enter height"-->
+<!--            android:textColor="#96B1FF"-->
+<!--            android:textCursorDrawable="@null"-->
+<!--            android:textColorHint="#96B1FF"-->
+<!--            app:backgroundTint="#96B1FF"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.604"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.722" />-->
 
         <!--Buttons-->
         <ImageButton
