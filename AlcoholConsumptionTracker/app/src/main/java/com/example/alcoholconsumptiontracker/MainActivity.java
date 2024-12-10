@@ -1,22 +1,16 @@
 package com.example.alcoholconsumptiontracker;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+
 
 import com.example.alcoholconsumptiontracker.system.DatabaseManager;
 import com.example.alcoholconsumptiontracker.system.Drink;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
 import com.example.alcoholconsumptiontracker.system.DrinkTemplateManager;
-import com.example.alcoholconsumptiontracker.system.Universals;
-import com.example.alcoholconsumptiontracker.ui.home.HomeFragment;
-import com.example.alcoholconsumptiontracker.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.alcoholconsumptiontracker.system.PersonalInfoEntry;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -24,7 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.alcoholconsumptiontracker.databinding.ActivityMainBinding;
 
@@ -58,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
     /// Represents the fragment manager, an object used to
     /// switch between app scenes.
-    public static FragmentManager fragmentManager;
+    private static FragmentManager fragmentManager;
 
     /// Represents the host fragment (scene) ID
     ///     ID of fragment that contains fragments
     ///     within the main activity.
-    public static int hostFragmentID;
+    private static int hostFragmentID;
 
     /// Represents the id of the current fragment
     ///     hosted within the host Fragment
@@ -120,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         // Initialize global DatabaseManager
         this.CreateHelperInitializeDatabaseManager();
 
+
         // Initialize global DrinkTemplateManager
         this.CreateHelperInitializeDrinkTemplateManager();
 
@@ -162,6 +156,12 @@ public class MainActivity extends AppCompatActivity {
                     Universals.FileNames.TemplateListFile,
                     false);
         }
+        // Getting personal info stuff
+        Personal_Info.savedPersonalInfo.getUserName();
+        Personal_Info.savedPersonalInfo.getWeight();
+        Personal_Info.savedPersonalInfo.getHeight();
+        Personal_Info.savedPersonalInfo.getSex();
+        Personal_Info.savedPersonalInfo.getAge();
 
         MainActivity.ChangeActiveFragment(R.id.home_Fragment, FragmentAnimationType.FADE);
 
