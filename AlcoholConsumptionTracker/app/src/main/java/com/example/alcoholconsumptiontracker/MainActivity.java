@@ -142,12 +142,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Getting personal info stuff
-        Personal_Info.savedPersonalInfo.getUserName();
-        Personal_Info.savedPersonalInfo.getWeight();
-        Personal_Info.savedPersonalInfo.getHeight();
-        Personal_Info.savedPersonalInfo.getSex();
-        Personal_Info.savedPersonalInfo.getAge();
+//        // Getting personal info stuff
+//        Personal_Info.savedPersonalInfo.getUserName();
+//        Personal_Info.savedPersonalInfo.getWeight();
+//        Personal_Info.savedPersonalInfo.getHeight();
+//        Personal_Info.savedPersonalInfo.getSex();
+//        Personal_Info.savedPersonalInfo.getAge();
 
 
         // testing
@@ -268,7 +268,8 @@ public class MainActivity extends AppCompatActivity {
                 else if (targetID == R.id.monthly_View)
                     return Monthly_View.newInstance(null, null);
                 else if (targetID == R.id.personal_Goals)
-                    return Personal_Goals.newInstance(null, null);
+                    //return Personal_Goals.newInstance(null, null);
+                    return new Personal_Goals();
                 else if (targetID == R.id.personal_Info)
                     return new Personal_Info();
                 else if (targetID == R.id.weekly_View)
