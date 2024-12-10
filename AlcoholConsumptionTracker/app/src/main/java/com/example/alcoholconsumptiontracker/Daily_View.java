@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,14 +60,18 @@ public class Daily_View extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    private ImageView imageViewDataType;
     private LineChart lineChart;
     private TextView totalTextView;
-    private Button buttonCalories, buttonUnits, buttonBAC, buttonMoney;
+    private ImageButton buttonCalories, buttonUnits, buttonBAC, buttonMoney;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_daily__view, container, false);
+
+        imageViewDataType = view.findViewById(R.id.imageViewDataType);
 
         //  Get id and set the current date to the EditText
         EditText editTextDate = view.findViewById(R.id.editTextDate2);
@@ -81,41 +87,50 @@ public class Daily_View extends Fragment {
         buttonMoney = view.findViewById(R.id.button_money);
 
         // Set up event listeners
-        buttonCalories.setOnClickListener(v ->
-            { setupLineChart(getCaloriesData(),"Calories", buttonCalories);
+        buttonCalories.setOnClickListener(v -> {
+                setupLineChart(getCaloriesData(),"Calories", buttonCalories);
+                updateImageView(R.drawable.totalcaloriesbar);
             });
-        buttonUnits.setOnClickListener(v ->
-            { setupLineChart(getUnitsData(), "Units", buttonUnits);
+        buttonUnits.setOnClickListener(v -> {
+                setupLineChart(getUnitsData(), "Units", buttonUnits);
+                updateImageView(R.drawable.totalunitsbar);
             });
-        buttonBAC.setOnClickListener(v ->
-            { setupLineChart(getBACData(), "BAC", buttonBAC);
+        buttonBAC.setOnClickListener(v -> {
+                setupLineChart(getBACData(), "BAC", buttonBAC);
+                updateImageView(R.drawable.totalbacbar);
             });
-        buttonMoney.setOnClickListener(v ->
-            { setupLineChart(getMoneyData(),"Money", buttonMoney);
+        buttonMoney.setOnClickListener(v -> {
+                setupLineChart(getMoneyData(),"Money", buttonMoney);
+                updateImageView(R.drawable.totalpricebar);
             });
 
         // Use calorie line chart as default
         setupLineChart(getCaloriesData(),"Calories", buttonCalories);
+        updateImageView(R.drawable.totalcaloriesbar);
 
         return view;
     }
 
     // Set up the LineChart
-    private void setupLineChart(ArrayList<Entry> values, String label, Button activeButton) {
+    private void setupLineChart(ArrayList<Entry> values, String label, ImageButton activeButton) {
         LineDataSet lineDataSet = new LineDataSet(values, label);
         lineDataSet.setLineWidth(2f);
         lineDataSet.setCircleRadius(4f);
         lineDataSet.setColor(getResources().getColor(R.color.purple_500));
         lineDataSet.setCircleColor(getResources().getColor(R.color.teal_200));
+        lineDataSet.setValueTextSize(10f);
 
         // Create a LineData object and set it to the chart
         LineData lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
+        lineChart.animateXY(500, 500);
+        lineChart.setScaleEnabled(true);
+        lineChart.setPinchZoom(true);
 
         // Customize the X-axis for weekdays
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setGranularity(1f); // One label per unit
+        xAxis.setGranularity(1f);
         xAxis.setGranularityEnabled(true);
         xAxis.setValueFormatter(new Daily_View.dayValueFormatter()); // custom formatter
         YAxis rightAxis = lineChart.getAxisRight();
@@ -127,36 +142,22 @@ public class Daily_View extends Fragment {
         // Calculate total
         float total = calculateTotal(values);
         if (activeButton == buttonMoney){
-            totalTextView.setText("Total " + label + ": $" + total);
+            totalTextView.setText("$" + total);
             lineChart.getDescription().setText("Money spent today");
         }
         if (activeButton == buttonBAC){
-            totalTextView.setText("Total " + label + ": %" + total);
+            totalTextView.setText(total + "%");
             lineChart.getDescription().setText("BAC levels today");
         }
         if (activeButton == buttonCalories){
-            totalTextView.setText("Total " + label + ": " + total);
+            totalTextView.setText(total + " ");
             lineChart.getDescription().setText("Calories consumed today");
         }
         if (activeButton == buttonUnits){
-            totalTextView.setText("Total " + label + ": #" + total);
+            totalTextView.setText("#" + total);
             lineChart.getDescription().setText("Units drank today");
         }
 
-        highlightActiveButton(activeButton);
-
-    }
-
-
-    private void highlightActiveButton(Button highlightButton){
-        // Set all buttons back to default color
-        buttonCalories.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.default_button));
-        buttonUnits.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.default_button));
-        buttonBAC.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.default_button));
-        buttonMoney.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.default_button));
-
-        // Highlight active button
-        highlightButton.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.active_button));
     }
 
     private ArrayList<Entry> getCaloriesData() {
@@ -188,7 +189,7 @@ public class Daily_View extends Fragment {
         values.add(new Entry(7, 2));
         values.add(new Entry(8, 1));
         values.add(new Entry(9, 0));
-        values.add(new Entry(10, 1.5F));
+        values.add(new Entry(10, 2));
         values.add(new Entry(11, 0));
         values.add(new Entry(12, 1));
         values.add(new Entry(13, 0));
@@ -249,6 +250,7 @@ public class Daily_View extends Fragment {
         }
     }
 
+    // Calculates total number of given metric
     private float calculateTotal(ArrayList<Entry> values) {
         float total = 0.0F;
         for (Entry entry : values) {
@@ -258,6 +260,12 @@ public class Daily_View extends Fragment {
         total = (Math.round(total * 100F) / 100F);
 
         return total;
+    }
+
+    // Update images for totals
+    private void updateImageView(int imageResId) {
+
+        imageViewDataType.setImageResource(imageResId);
     }
 
 }

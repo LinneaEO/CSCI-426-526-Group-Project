@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,10 +33,23 @@ public class Weekly_View extends Fragment {
 
     private LineChart lineChart;
     private TextView totalTextView;
-    private Button buttonCalories, buttonUnits, buttonBAC, buttonMoney;
+    private ImageButton buttonCalories, buttonUnits, buttonBAC, buttonMoney;
+
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    private String mParam1;
+    private String mParam2;
 
     public Weekly_View() {
-        // Required empty public constructor
+        super(layout.fragment_weekly__view);
+    }
+
+    public static Weekly_View newInstance(String param1, String param2) {
+        Weekly_View fragment = new Weekly_View();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -95,16 +109,20 @@ public class Weekly_View extends Fragment {
     }
 
     // Set up the LineChart
-    private void setupLineChart(ArrayList<Entry> values, String label, Button activeButton) {
+    private void setupLineChart(ArrayList<Entry> values, String label, ImageButton activeButton) {
         LineDataSet lineDataSet = new LineDataSet(values, label);
         lineDataSet.setLineWidth(2f);
         lineDataSet.setCircleRadius(4f);
         lineDataSet.setColor(getResources().getColor(R.color.purple_500));
         lineDataSet.setCircleColor(getResources().getColor(R.color.teal_200));
+        lineDataSet.setValueTextSize(10f);
 
         // Create a LineData object and set it to the chart
         LineData lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
+        lineChart.animateXY(500, 500);
+        lineChart.setScaleEnabled(true);
+        lineChart.setPinchZoom(true);
 
         // Customize the X-axis for weekdays
         XAxis xAxis = lineChart.getXAxis();
@@ -121,35 +139,22 @@ public class Weekly_View extends Fragment {
         // Calculate total
         float total = calculateTotal(values);
         if (activeButton == buttonMoney){
-            totalTextView.setText("Total " + label + ": $" + total);
+            totalTextView.setText("$" + total);
             lineChart.getDescription().setText("Money spent this week");
         }
         if (activeButton == buttonBAC){
-            totalTextView.setText("Total " + label + ": %" + total);
+            totalTextView.setText(total + "%");
             lineChart.getDescription().setText("BAC levels this week");
         }
         if (activeButton == buttonCalories){
-            totalTextView.setText("Total " + label + ": " + total);
+            totalTextView.setText(total + " ");
             lineChart.getDescription().setText("Calories consumed this week");
         }
         if (activeButton == buttonUnits){
-            totalTextView.setText("Total " + label + ": #" + total);
+            totalTextView.setText("#" + total);
             lineChart.getDescription().setText("Units drank this week");
         }
 
-        highlightActiveButton(activeButton);
-
-    }
-
-    private void highlightActiveButton(Button highlightButton){
-        // Set all buttons back to default color
-        buttonCalories.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.default_button));
-        buttonUnits.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.default_button));
-        buttonBAC.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.default_button));
-        buttonMoney.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.default_button));
-
-        // Highlight active button
-        highlightButton.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.active_button));
     }
 
     private ArrayList<Entry> getCaloriesData() {
@@ -159,8 +164,8 @@ public class Weekly_View extends Fragment {
         values.add(new Entry(3, 100)); // Tuesday
         values.add(new Entry(4, 0)); // Wednesday
         values.add(new Entry(5, 0)); // Thursday
-        values.add(new Entry(6, 250)); // Friday
-        values.add(new Entry(7, 200)); // Saturday
+        values.add(new Entry(6, 350)); // Friday
+        values.add(new Entry(7, 250)); // Saturday
         return values;
     }
 

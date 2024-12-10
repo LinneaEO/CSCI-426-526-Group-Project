@@ -1,9 +1,9 @@
 package com.example.alcoholconsumptiontracker;
 
 import android.content.Context;
-import android.media.Image;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,14 +15,15 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.alcoholconsumptiontracker.system.DrinkTemplate;
-import com.example.alcoholconsumptiontracker.system.Universals;
+
+import java.io.File;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,10 +43,13 @@ public class Alc_Select extends Fragment {
     private static View selectedTemplateRow;
 
     // Represents the confirm choice button
-    private static Button confirmChoiceButton;
+    private static ImageButton confirmChoiceButton;
+    // Represents the image of the confirm choice button
+    private static ImageButton backButton;
 
-    // Represents the drink mixer button
-    private static Button sendtoAlcoholProgramming;
+    // Represents the help box
+    private static ImageView helpSquare;
+    private static TextView helpTextbox;
 
     // Represents the drink template selected during alcohol select
     private static DrinkTemplate selectedTemplate;
@@ -75,75 +79,88 @@ public class Alc_Select extends Fragment {
         // Instantiate fragment contents from fragment_alc__select to the parent container
         View root = inflater.inflate(R.layout.fragment_alc__select, container, false);
 
-        // Set the drinkTemplate selected to null
+        // Set globals to null
         Alc_Select.alcSelectListView = null;
-
-        // Set selected template to null
         Alc_Select.selectedTemplate = null;
-
-        // Set the selected row to null
         Alc_Select.selectedTemplateRow = null;
+        Alc_Select.helpSquare = null;
+        Alc_Select.helpTextbox = null;
 
-        // Initialize buttons
-        Alc_Select.sendtoAlcoholProgramming = root.findViewById(R.id.alcSelectSendToAlcProgramming);
+        // Initialize help box
+        Alc_Select.helpTextbox = root.findViewById(R.id.alcSelectHelpTextbox);
+        Alc_Select.helpSquare = root.findViewById(R.id.alcSelectHelpSquare);
+
+        // Initialize buttons and images
         Alc_Select.confirmChoiceButton = root.findViewById(R.id.alcSelectToAlcLogging);
+        Alc_Select.backButton = root.findViewById(R.id.alcSelectBackButton);
         //  Set send to alcohol programming to not selectable (until template is selected)
         Alc_Select.confirmChoiceButton.setEnabled(false);
+        Alc_Select.confirmChoiceButton.setImageAlpha(125);
 
 
         // Initialize alcSelect list
         Alc_Select.alcSelectListView = root.findViewById(R.id.alc_logging_selected_template);
-        Alc_Select.alcSelectListView.setAdapter(new alcSelectListAdapter(getContext()));
-        Alc_Select.alcSelectListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        // If template exist, populate the listview. Otherwise, display the help text
+        if (!MainActivity.GetDrinkTemplateManager().GetTemplateList().isEmpty()){
+            Alc_Select.alcSelectListView.setVisibility(View.VISIBLE);
+            Alc_Select.alcSelectListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+            Alc_Select.helpSquare.setVisibility(View.INVISIBLE);
+            Alc_Select.helpTextbox.setVisibility(View.INVISIBLE);
+            Alc_Select.alcSelectListView.setAdapter(new alcSelectListAdapter(MainActivity.GetContentView().getContext()));
 
-        // Set an on click listener for when an item is selected. This represents the user
-        //  selecting a drink template.
-        Alc_Select.alcSelectListView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // Set an on click listener for when an item is selected. This represents the user
+            //  selecting a drink template.
+            Alc_Select.alcSelectListView.setOnItemClickListener(
+                    new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        // If a row was previously selected, show it is unselected
-                        if (Alc_Select.selectedTemplateRow != null){
-                            Alc_Select.ShowUnselectRow(Alc_Select.selectedTemplateRow);
+                            // If a row was previously selected, show it is unselected
+                            if (Alc_Select.selectedTemplateRow != null){
+                                Alc_Select.ShowUnselectRow(Alc_Select.selectedTemplateRow);
+                            }
+
+
+                            // Set the new selected row
+                            TextView incomingView = (TextView)view.findViewById(R.id.alcSelectTemplateName);
+                            Alc_Select.SetSelectedTemplate(MainActivity.GetDrinkTemplateManager().GetTemplate(
+                                    (String) incomingView.getText()
+                            ));
+
+                            // Show the selected row is selected
+                            Alc_Select.selectedTemplateRow = view;
+                            Alc_Select.ShowSelectRow(Alc_Select.selectedTemplateRow);
                         }
-
-
-                        // Set the new selected row
-                        TextView incomingView = (TextView)view.findViewById(R.id.alcoholSelectDrinkNameList);
-                        Alc_Select.SetSelectedTemplate(MainActivity.GetDrinkTemplateManager().GetTemplate(
-                                (String)incomingView.getText().subSequence(
-                                        Universals.DrinkLoggingUI.DrinkTemplateTags.name.length(),
-                                        incomingView.getText().length()
-                                )
-                        ));
-
-                        // Show the selected row is selected
-                        Alc_Select.selectedTemplateRow = view;
-                        Alc_Select.ShowSelectRow(Alc_Select.selectedTemplateRow);
                     }
-                }
-        );
+            );
+        }
+        else{
+            Alc_Select.alcSelectListView.setVisibility(View.INVISIBLE);
+            Alc_Select.helpSquare.setVisibility(View.VISIBLE);
+            Alc_Select.helpTextbox.setVisibility(View.VISIBLE);
+        }
+
 
         // Set confirmation button to go to alc_logging if pressed
         Alc_Select.confirmChoiceButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.ChangeActiveFragment(R.id.alc_Logging);
+                        MainActivity.ChangeActiveFragment(R.id.alcLoggingBackButton, MainActivity.FragmentAnimationType.NONE);
                     }
                 }
         );
 
-        // Set alcohol programming button to go to alc_programming if pressed
-        Alc_Select.sendtoAlcoholProgramming.setOnClickListener(
+        // Set back button to go to logging_intermediary if pressed
+        Alc_Select.backButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.ChangeActiveFragment(R.id.alc_Programming);
+                        MainActivity.ChangeActiveFragment(R.id.logging_intermediary, MainActivity.FragmentAnimationType.FADE);
                     }
                 }
         );
+
 
         return root;
     }
@@ -174,6 +191,7 @@ public class Alc_Select extends Fragment {
         Alc_Select.selectedTemplate = newSelectedTemplate;
         if (!Alc_Select.confirmChoiceButton.isEnabled()){
             Alc_Select.confirmChoiceButton.setEnabled(true);
+            Alc_Select.confirmChoiceButton.setImageAlpha(255);
         }
     }
 
@@ -195,7 +213,6 @@ public class Alc_Select extends Fragment {
         RadioButton selectButton = targetRow.findViewById(R.id.alcSelectListViewRadioButton);
         selectButton.setChecked(true);
         selectButton.setButtonTintList(ColorStateList.valueOf(Alc_Select.ButtonSelectedColor()));
-        targetRow.setBackgroundColor(Alc_Select.RowSelectedColor());
     }
     /// <summary>
     ///  Assumes a row object of type shown in alc_select_list_item.xml
@@ -207,7 +224,6 @@ public class Alc_Select extends Fragment {
         RadioButton selectButton = targetRow.findViewById(R.id.alcSelectListViewRadioButton);
         selectButton.setChecked(false);
         selectButton.setButtonTintList(ColorStateList.valueOf(Alc_Select.ButtonUnselectedColor()));
-        targetRow.setBackgroundColor(Alc_Select.RowUnselectedColor());
     }
 
 
@@ -259,44 +275,48 @@ public class Alc_Select extends Fragment {
             ImageView drinkImage;
 
             // Name
-            drinkName = (TextView) row.findViewById(R.id.alcoholSelectDrinkNameList);
+            drinkName = (TextView) row.findViewById(R.id.alcSelectTemplateName);
             drinkName.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.name +
                     this.templateList[position].GetName()
             );
 
             // Type
-            drinkType = (TextView) row.findViewById(R.id.alcoholSelectDrinkTypeList);
+            drinkType = (TextView) row.findViewById(R.id.alcSelectTemplateType);
             drinkType.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.type +
                     this.templateList[position].GetType().Get()
             );
 
             // Servings
-            drinkServings = (TextView) row.findViewById(R.id.alcoholSelectDrinkServingsList);
+            drinkServings = (TextView) row.findViewById(R.id.alcSelectTemplateServings);
             drinkServings.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.servings +
                     Short.toString(this.templateList[position].GetServings())
             );
 
             // Calories
-            drinkCalories = (TextView) row.findViewById(R.id.alcoholSelectDrinkCaloriesList);
+            drinkCalories = (TextView) row.findViewById(R.id.alcSelectTemplateCalories);
             drinkCalories.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.calories +
                     Double.toString(
                             Math.round(this.templateList[position].GetCalories() * 100.0) / 100.0
                     )
             );
 
             // Price
-            drinkPrice = (TextView) row.findViewById(R.id.alcoholSelectDrinkPriceList);
+            drinkPrice = (TextView) row.findViewById(R.id.alcSelectTemplatePrice);
             drinkPrice.setText(
-                    Universals.DrinkLoggingUI.DrinkTemplateTags.price +
                     Double.toString(
                             Math.round(this.templateList[position].GetPrice() * 100.0) / 100.0
                             )
             );
-            drinkImage = (ImageView) row.findViewById(R.id.alcoholSelectImageList);
+            drinkImage = (ImageView) row.findViewById(R.id.alcSelectTemplateImage);
+            if (!this.templateList[position].GetImageFilePath().isEmpty()){
+                drinkImage.setImageAlpha(255);
+                drinkImage.setImageURI(Uri.fromFile(
+                        new File(this.templateList[position].GetImageFilePath())
+                ));
+            }
+            else{
+                drinkImage.setImageAlpha(0);
+            }
 
             // Set the row as unselected
             row.setBackgroundColor(Alc_Select.RowUnselectedColor());

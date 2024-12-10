@@ -78,7 +78,7 @@ public class Drink {
     // Calories
     public float GetCalories(){return this.calories;}
     // Image
-    public String GetImagefilePath(){return this.imageFilePath;}
+    public String GetImageFilePath(){return this.imageFilePath;}
     // Occasion
     public String GetOccasion(){
         return this.occasion;

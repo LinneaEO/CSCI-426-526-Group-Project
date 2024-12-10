@@ -1,6 +1,7 @@
 package com.example.alcoholconsumptiontracker.ui.notifications;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.alcoholconsumptiontracker.MainActivity;
 import com.example.alcoholconsumptiontracker.databinding.FragmentNotificationsBinding;
 import androidx.navigation.Navigation;
 import com.example.alcoholconsumptiontracker.R;
@@ -17,6 +19,10 @@ import com.example.alcoholconsumptiontracker.R;
 public class NotificationsFragment extends Fragment {
 
     private FragmentNotificationsBinding binding;
+
+    public NotificationsFragment() {
+
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -29,27 +35,38 @@ public class NotificationsFragment extends Fragment {
         return root;
     }
 
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*
+
         // Set up nav for daily view
-        view.findViewById(R.id.button_to_daily_view).setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.action_nav_reporting_to_daily_view)
-        );
+        view.findViewById(R.id.button_to_daily_view).setOnClickListener(v -> {
+            navigateToFragment(R.id.daily_View);
+        });
 
         // Set up nav for weekly view
-        view.findViewById(R.id.button_to_weekly_view).setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.action_nav_reporting_to_weekly_View)
-        );
+        view.findViewById(R.id.button_to_weekly_view).setOnClickListener(v -> {
+            navigateToFragment(R.id.weekly_View);
+        });
 
         // Set up nav for monthly view
-        view.findViewById(R.id.button_to_monthly_view).setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.action_nav_reporting_to_monthly_View)
-        );
-        */
-         }
+        view.findViewById(R.id.button_to_monthly_view).setOnClickListener(v -> {
+            navigateToFragment(R.id.monthly_View);
+        });
+
+    }
+
+    // Helper method to navigate to a fragment
+    private void navigateToFragment(int fragmentId) {
+        Fragment fragment = MainActivity.GetFragmentByID(fragmentId);
+        if (fragment != null) {
+            MainActivity.fragmentManager.beginTransaction().replace(MainActivity.hostFragmentID, fragment).addToBackStack(null).commit();
+        } else {
+            Log.e("NavigationError", "Fragment not found for ID: " + fragmentId);
+        }
+    }
 
     @Override
     public void onDestroyView() {
