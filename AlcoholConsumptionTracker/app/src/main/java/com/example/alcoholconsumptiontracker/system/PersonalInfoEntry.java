@@ -5,59 +5,49 @@ import android.util.Log;
 import com.example.alcoholconsumptiontracker.Personal_Info;
 
 public class PersonalInfoEntry {
-    private  String userName;
-    private  int weight;
-    private  double height;
-    private  String sex;
-    private  int age;
+    private static String userName;
+    private static String weight;
+    private static String sex;
+    private static String age;
 
     public PersonalInfoEntry() {
         this.userName = null;
-        this.weight = 0;
-        this.height = 0.0;
+        this.weight = null;
         this.sex = null;
-        this.age = 0;
+        this.age = null;
     }
 
     // Setterz and getterz
 
     // Getters - when u wanna know
-    public  String getUserName() {
+    public static String getUserName() {
         return userName;
     }
-    public  int getWeight() {
+    public static String getWeight() {
         return weight;
     }
-    public  double getHeight() {
-        return height;
-    }
-    public  String getSex() {
+    public static String getSex() {
         return sex;
     }
-    public  int getAge() {
+    public static String getAge() {
         return age;
     }
 
     // Setters - when u wanna change
-    public  void setUserName(String newUserName) {
-        this.userName = newUserName;
-        Log.d("PersonalInfoEntry", "UserName updated to: " + userName);
+    public static void setUserName(String newUserName) {
+        PersonalInfoEntry.userName = newUserName;
     }
 
-    public  void setWeight(int newWeight) {
-        this.weight = newWeight;
+    public static void setWeight(String newWeight) {
+        PersonalInfoEntry.weight = newWeight;
+    }
+    
+    public static void setSex(String newSex) {
+        PersonalInfoEntry.sex = newSex;
     }
 
-    public  void setHeight(Double newHeight) {
-        this.height = newHeight;
-    }
-
-    public  void setSex(String newSex) {
-        this.sex = newSex;
-    }
-
-    public  void setAge(int newAge) {
-        this.age = newAge;
+    public static void setAge(String newAge) {
+        PersonalInfoEntry.age = newAge;
     }
 
 }
